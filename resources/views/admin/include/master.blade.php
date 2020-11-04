@@ -16,6 +16,8 @@
   <link rel="stylesheet" href="{{asset('admin/bower_components/font-awesome/css/font-awesome.min.css')}}">
   <!-- Ionicons -->
   <link rel="stylesheet" href="{{asset('admin/bower_components/Ionicons/css/ionicons.min.css')}}">
+
+  <link rel="stylesheet" href="{{asset('css/app2.css')}}">
     <!-- jQuery 3 -->
 <script src="{{asset('admin/bower_components/jquery/dist/jquery.min.js')}}"></script>
 

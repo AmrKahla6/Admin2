@@ -69,13 +69,12 @@
                                 </div>
                         </div>
                     </div>
-                    <div class="tab-pane" id="activity1">
+                    <div class="tab-pane" id="activity2">
                         <div class="box">
                             <h3 class="box-title">التقيم</h3>
-                            @include('admin.categories.ratesDesplay', ['rates' => $category->rate, 'category_id' => $category->id])
                                 <div class="table-responsive box-body">
                                     <h4>ضع تقيم</h4>
-                                        <form method="post" action="{{ route('rates.store'   ) }}">
+                                        {{-- <form method="post" action="{{ route('rates.store'   ) }}">
                                             @csrf
                                             <div class="form-group">
                                                 <textarea class="form-control" name="rate"></textarea>
@@ -84,7 +83,21 @@
                                             <div class="form-group">
                                                 <input type="submit" class="btn btn-success" value="Add rate" />
                                             </div>
-                                        </form>
+                                        </form> --}}
+                                        <div class="stars">
+                                             <form method="post" action="{{ route('rates.store'   ) }}">
+                                              <input class="star star-5" id="star-5" type="radio" name="star"/>
+                                              <label class="star star-5" for="star-5"></label>
+                                              <input class="star star-4" id="star-4" type="radio" name="star"/>
+                                              <label class="star star-4" for="star-4"></label>
+                                              <input class="star star-3" id="star-3" type="radio" name="star"/>
+                                              <label class="star star-3" for="star-3"></label>
+                                              <input class="star star-2" id="star-2" type="radio" name="star"/>
+                                              <label class="star star-2" for="star-2"></label>
+                                              <input class="star star-1" id="star-1" type="radio" name="star"/>
+                                              <label class="star star-1" for="star-1"></label>
+                                            </form>
+                                        </div>
                                 </div>
                         </div>
                     </div>
