@@ -225,6 +225,19 @@
             <li  @if($subactive=='user') class="active" @endif><a href="{{asset('adminpanel/users')}}"><i class="fa fa-circle-o"></i>كل الاعضاء</a></li>
           </ul>
 
+        @if($mainactive=='cities')
+          <li class="active treeview">
+        @else
+          <li class="treeview">
+        @endif
+          <a href="#">
+            <i class="fa fa-dashboard"></i> <span>المدن</span><i class="fa fa-angle-left pull-left"></i>
+          </a>
+          <ul class="treeview-menu">
+            <li  @if($subactive=='city') class="active" @endif><a href="{{asset('adminpanel/cities')}}"><i class="fa fa-circle-o"></i>المدن</a></li>
+            <li  @if($subactive=='district') class="active" @endif><a href="{{asset('adminpanel/districts')}}"><i class="fa fa-circle-o"></i>الأحياء</a></li>
+          </ul>
+
           @if($mainactive=='categories')
             <li class="active treeview">
           @else
@@ -237,19 +250,6 @@
 
               <li  @if($subactive=='category') class="active" @endif><a href="{{asset('adminpanel/categories')}}"><i class="fa fa-circle-o"></i>كل المشاغل</a></li>
               {{-- <li  @if($subactive=='wcategory') class="active" @endif><a href="{{asset('adminpanel/wcategories')}}"><i class="fa fa-circle-o"></i>قسم الأوزان </a></li> --}}
-            </ul>
-
-            @if($mainactive=='cities')
-            <li class="active treeview">
-          @else
-            <li class="treeview">
-          @endif
-            <a href="#">
-              <i class="fa fa-dashboard"></i> <span>المدن</span><i class="fa fa-angle-left pull-left"></i>
-            </a>
-            <ul class="treeview-menu">
-              <li  @if($subactive=='city') class="active" @endif><a href="{{asset('adminpanel/cities')}}"><i class="fa fa-circle-o"></i>المدن</a></li>
-              <li  @if($subactive=='district') class="active" @endif><a href="{{asset('adminpanel/districts')}}"><i class="fa fa-circle-o"></i>الأحياء</a></li>
             </ul>
 
 

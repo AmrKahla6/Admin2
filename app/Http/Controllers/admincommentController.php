@@ -8,25 +8,22 @@ use Illuminate\Support\Facades\Auth;
 
 class admincommentController extends Controller
 {
+      /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
     	$request->validate([
             'comment'=>'required',
         ]);
 
-        $comment = new Comment;
+        $input = $request->all();
+        $input['user_id'] = auth()->user()->id;
 
-        $comment->comment     = $request->comment;
-        $comment->category_id = $request->category_id;
-        if(auth()->check())
-        {
-            return auth()->user()->id;
-        }else{
-            return 'amr';
-        }
-        $comment->member_id   = $request->member()->id;
-
-        $comment->save();
+        Comment::create($input);
 
         return back();
     }
