@@ -8,31 +8,26 @@ class CreateRatingsTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
         Schema::create('ratings', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('category_id');
-            $table->integer('parent_id')->unsigned()->nullable();
-            $table->integer('rating');
-
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->increments('id');
             $table->timestamps();
+            $table->integer('rating');
+            $table->morphs('rateable');
+            $table->bigInteger('user_id')->unsigned();
+            $table->index('rateable_id');
+            $table->index('rateable_type');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {
-        Schema::dropIfExists('ratings');
+        Schema::drop('ratings');
     }
 }

@@ -44,8 +44,9 @@ Route::group(['middleware' => ['adminauth:admin']], function () {
   Route::post('adminpanel/contact-us', 'admincontactController@saveContact');
   Route::delete('adminpanel/message/{id}', 'admincontactController@destroy');
   Route::post('adminpanel/comments', 'admincommentController@store')->name('comments.store');
-  Route::post('adminpanel/rates', 'adminrateController@store')->name('rates.store');
-  Route::resource('adminpanel/appointment', 'adminappointmentController');
+  Route::post('adminpanel/categories/rating', 'adminCategoryController@rating')->name('rating.store');
+
+
 });
 
 //admin logout

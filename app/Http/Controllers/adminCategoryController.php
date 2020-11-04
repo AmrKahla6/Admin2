@@ -73,6 +73,7 @@ class adminCategoryController extends Controller
         return back();
     }
 
+
     /**
      * Display the specified resource.
      *
@@ -87,6 +88,20 @@ class adminCategoryController extends Controller
         $category        = Category::find($id);
         $cities          = City::all();
         return view('admin.categories.show', compact('mainactive', 'subactive', 'logo', 'cities' , 'category'));
+        }
+
+        public function rating(Request $request)
+        {
+            request()->validate([
+                'rate' => 'required'
+            ]);
+            $category = Category::find($request->id);
+            $rating   = new \willvincent\Rateable\Rating;
+            $rating->rating = $request->rate;
+            $rating->user_id = auth()->user()->id;
+            $category->ratings()->save($rating);
+            session()->flash('success', 'تم اضافة تقيم');
+            return back();
         }
 
 

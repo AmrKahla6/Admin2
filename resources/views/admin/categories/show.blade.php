@@ -74,36 +74,41 @@
                             <h3 class="box-title">التقيم</h3>
                                 <div class="table-responsive box-body">
                                     <h4>ضع تقيم</h4>
-                                        {{-- <form method="post" action="{{ route('rates.store'   ) }}">
-                                            @csrf
-                                            <div class="form-group">
-                                                <textarea class="form-control" name="rate"></textarea>
-                                                <input type="hidden" name="category_id" value="{{ $category->id }}" />
+                                    <form action="{{ route('rating.store') }}" method="POST">
+                                        {{ csrf_field() }}
+                                        <div class="card">
+                                            <div class="container-fliud">
+                                                <div class="wrapper row">
+                                                    <div class="preview col-md-6">
+                                                        <div class="preview-pic tab-content">
+                                                            <div class="tab-pane active" id="pic-1"><img src="https://dummyimage.com/300x300/0099ff/000" /></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="details col-md-6">
+                                                        <h3 class="product-title">ما هو تقيمك للمشغل</h3>
+                                                        <div class="rating">
+                                                            <input id="input-1" name="rate" class="rating rating-loading" data-min="0" data-max="5" data-step="1" value="{{ $category->userAverageRating }}" data-size="xs">
+                                                            <input type="hidden" name="id" required="" value="{{ $category->id }}">
+                                                            <br/>
+                                                            <button class="btn btn-success">قم بالتقيم</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="form-group">
-                                                <input type="submit" class="btn btn-success" value="Add rate" />
-                                            </div>
-                                        </form> --}}
-                                        <div class="stars">
-                                             <form method="post" action="{{ route('rates.store'   ) }}">
-                                              <input class="star star-5" id="star-5" type="radio" name="star"/>
-                                              <label class="star star-5" for="star-5"></label>
-                                              <input class="star star-4" id="star-4" type="radio" name="star"/>
-                                              <label class="star star-4" for="star-4"></label>
-                                              <input class="star star-3" id="star-3" type="radio" name="star"/>
-                                              <label class="star star-3" for="star-3"></label>
-                                              <input class="star star-2" id="star-2" type="radio" name="star"/>
-                                              <label class="star star-2" for="star-2"></label>
-                                              <input class="star star-1" id="star-1" type="radio" name="star"/>
-                                              <label class="star star-1" for="star-1"></label>
-                                            </form>
                                         </div>
+                                    <
+
                                 </div>
                         </div>
                     </div>
             </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+        $("#input-id").rating();
+    </script>
+
 </section>
 
 @endsection

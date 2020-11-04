@@ -85,6 +85,7 @@
                                     <tr>
 
                                         <th>الاسم</th>
+                                        <th>التقيم</th>
                                         <th>مشاهده</th>
                                         <th>تعديل</th>
                                         <th> حذف</th>
@@ -101,9 +102,15 @@
                                             <td>
                                                 {{ $category->name}}
                                             </td>
+
+                                            <td>
+                                                <input id="input-1" name="input-1" class="rating rating-loading" data-min="0" data-max="5" data-step="0.1" value="{{ $category->averageRating }}" data-size="xs" disabled="">
+                                            </td>
+
                                             <td>
                                                 <a href='{{asset("adminpanel/categories/".$category->id)}}' class="btn btn-info"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                              </td>
+                                            </td>
+
                                             <td>
                                                 <button type="button" class="btn btn-success"  data-toggle="modal" data-target="#modal-upclass{{$category->id}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                                             </td>

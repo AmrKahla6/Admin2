@@ -17,7 +17,8 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "2.4",
         "laravelcollective/html": "^6.2",
-        "pusher/pusher-php-server": "^4.1"
+        "pusher/pusher-php-server": "^4.1",
+        "willvincent/laravel-rateable": "^2.2"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",
