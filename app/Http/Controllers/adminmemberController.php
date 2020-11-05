@@ -116,7 +116,7 @@ class adminmemberController extends Controller
     {
         $upmember = member::find($id);
 
-        if (Input::has('suspensed')) {
+        if (request()->has('suspensed')) {
             if ($upmember->suspensed == 0) {
                 DB::table('members')->where('id', $id)->update(['suspensed' => 1]);
                 session()->flash('success', 'تم تعطيل عضوية العضو بنجاح');

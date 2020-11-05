@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="{{asset('admin/bower_components/font-awesome/css/font-awesome.min.css')}}">
   <!-- Ionicons -->
   <link rel="stylesheet" href="{{asset('admin/bower_components/Ionicons/css/ionicons.min.css')}}">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
 
   <link rel="stylesheet" href="{{asset('css/app2.css')}}">
     <!-- jQuery 3 -->
@@ -272,17 +273,6 @@
             <li  @if($subactive=='addservice') class="active" @endif><a href="{{asset('adminpanel/services')}}"><i class="fa fa-circle-o"></i>كل الخدمات</a></li>
           </ul>
 
-        @if($mainactive=='orders')
-          <li class="active treeview">
-        @else
-          <li class="treeview">
-        @endif
-          <a href="#">
-            <i class="fa fa-dashboard"></i> <span>الطلبات</span><i class="fa fa-angle-left pull-left"></i>
-          </a>
-          <ul class="treeview-menu">
-            <li  @if($subactive=='itemorders') class="active" @endif><a href="{{asset('adminpanel/orders')}}"><i class="fa fa-circle-o"></i>كل الطلبات </a></li>
-          </ul>
 
         @if($mainactive=='booking')
           <li class="active treeview">

@@ -1,5 +1,5 @@
 @extends('admin/include/master')
-@section('title') لوحة التحكم |  الاقسام  @endsection
+@section('title') لوحة التحكم | المدن  @endsection
 @section('content')
 
 <section class="content">

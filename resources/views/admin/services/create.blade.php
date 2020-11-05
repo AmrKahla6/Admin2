@@ -13,9 +13,6 @@
 
               {!! Form::open(array('method' => 'POST','files' => true,'url' =>'adminpanel/services')) !!}
                 <div class="box-body">
-
-
-
                   <div class="form-group col-md-6">
                     <label>اسم الخدمه </label>
                     <input type="text" class="form-control" name="name" placeholder="ادخل اسم الخدمه " value="{{ old('name') }}" required>
@@ -44,12 +41,19 @@
                     </div>
 
                   <div class="form-group col-md-12">
-                      <label>صورة الخدمه</label>
+                      <label>صوره الخدمه</label>
                       <input type="file" name="image" >
                       @if ($errors->has('image'))
                           <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('image') }}</div>
                       @endif
                   </div>
+                  <div class="form-group col-md-12">
+                    <label>صور الخدمه</label>
+                    <input type="file" name="images[]" multiple>
+                    @if ($errors->has('images'))
+                        <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('images') }}</div>
+                    @endif
+                </div>
 
                   <div class="col-md-12">
                       <div class="box box-info">

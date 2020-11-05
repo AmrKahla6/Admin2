@@ -20,6 +20,8 @@ use App\order_item;
 use App\City;
 use App\Booking;
 use App\District;
+use App\Category;
+
 class adminbookingController extends Controller
 {
      /**
@@ -41,7 +43,7 @@ class adminbookingController extends Controller
         $nowmonth        = Carbon::createFromFormat('Y-m-d H:i:s', now())->month;
         $nowweek         = Carbon::createFromFormat('Y-m-d H:i:s', now())->week;
         $nowday          = Carbon::createFromFormat('Y-m-d H:i:s', now())->day;
-        $booking      = Booking::orderBy('id', 'desc')->get();
+        $booking         = Booking::orderBy('id', 'desc')->get();
 
         return view('admin.booking.index', compact('mainactive', 'subactive', 'logo', 'booking', 'daytotal', 'weektotal', 'monthtotal', 'yeartotal', 'mytotal', 'nowyear', 'nowmonth', 'nowweek', 'nowday'));
     }
@@ -71,7 +73,7 @@ class adminbookingController extends Controller
         $showbooking   = Booking::findorfail($id);
         $ownerinfo     = DB::table('members')->where('id', $showbooking->user_id)->first();
         $total       = 0;
-        return view('admin.orders.show', compact('mainactive', 'subactive', 'logo', 'showbooking', 'ownerinfo'));
+        return view('admin.booking.show', compact('mainactive', 'subactive', 'logo', 'showbooking', 'ownerinfo'));
     }
 
         /**
@@ -95,8 +97,9 @@ class adminbookingController extends Controller
     public function update(Request $request, $id)
     {
         $upbooking = Booking::find($id);
-        if (Input::has('accept')) {
-            DB::table('booking')->where('id', $id)->update(['status' => 1]);
+        if (request()->has('accept')) {
+            DB::table('bookings')->where('id', $id)->update(['status' => 1]);
+            // dd($upbooking);
             $notification                = new notification();
             $notification->user_id       = $upbooking->user_id;
             $notification->notification  = 'تم قبول الحجز ';
@@ -126,13 +129,13 @@ class adminbookingController extends Controller
                 $downstreamResponse->tokensToModify();
                 $downstreamResponse->tokensToRetry();
             }
-            session()->flash('success', 'تم قبول الطلب بنجاح');
+            session()->flash('success', 'تم قبول الحجز بنجاح');
             return back();
         } elseif (Input::has('reject')) {
             DB::table('orders')->where('id', $id)->update(['status' => 2]);
             $notification                = new notification();
             $notification->user_id       = $upbooking->user_id;
-            $notification->notification  = 'تم رفض الطلب ';
+            $notification->notification  = 'تم رفض الحجز ';
             $notification->save();
 
             $usertoken = member::where('id', $upbooking->user_id)->where('firebase_token', '!=', null)->where('firebase_token', '!=', 0)->value('firebase_token');
@@ -140,7 +143,7 @@ class adminbookingController extends Controller
                 $optionBuilder = new OptionsBuilder();
                 $optionBuilder->setTimeToLive(60 * 20);
 
-                $notificationBuilder = new PayloadNotificationBuilder('رفض الطلب');
+                $notificationBuilder = new PayloadNotificationBuilder('رفض الحجز');
                 $notificationBuilder->setBody($request->notification)
                     ->setSound('default');
 
@@ -160,7 +163,7 @@ class adminbookingController extends Controller
                 $downstreamResponse->tokensToModify();
                 $downstreamResponse->tokensToRetry();
             }
-            session()->flash('success', 'تم رفض الطلب بنجاح');
+            session()->flash('success', 'تم رفض الحجز بنجاح');
             return back();
         } elseif (Input::has('finish')) {
             DB::table('orders')->where('id', $id)->update(['status' => 3]);
@@ -207,10 +210,10 @@ class adminbookingController extends Controller
     public function destroy($id)
     {
         $booking = Booking::find($id);
-        if ($booking) {
-            Category::where('category_id', $id)->delete();
+        // if ($booking) {
+        //     Category::where('category_id', $id)->delete();
             $booking->delete();
-        }
+        // }
         session()->flash('success', 'تم حذف الحجز بنجاح');
         return back();
     }

@@ -22,6 +22,14 @@
                     @endif
                 </div>
             </div>
+            <div class="form-group col-md-12">
+                <label>صورة المدينة</label>
+                <br>
+                <input type="file" name="image" >
+                <div style="padding: 2%;" class="col-md-3">
+                    <img class="img-thumbnail" style="width:100%; height:10%;" src={{ url("/../users/images/".$category->image)}} alt="Not Found">
+                </div>
+            </div>
             <div class="col-md-12">
                 <div class="box box-info">
                     <div class="box-header">
@@ -46,16 +54,10 @@
                     </select>
                  </div>
             </div
-            <div class="form-group col-md-12">
-                <label>صورة المدينة</label>
-                <br>
-                <input type="file" name="image" >
-                <div style="padding: 2%;" class="col-md-3">
-                    <img class="img-thumbnail" style="width:100%; height:10%;" src="{{asset('users/images/'.$category->image)}}" alt="Not Found">
-                </div>
+            <div class="box-footer">
+                <button style="width: 20%;margin-right: 40%;" type="submit" class="btn btn-success">تعديل</button>
             </div>
-            <button type="submit" class="btn btn-primary col-md-offset-4 col-md-4">تعديل</button>
-            {!! Form::close() !!}
+        {!! Form::close() !!}
         </div>
       </div>
     </div>

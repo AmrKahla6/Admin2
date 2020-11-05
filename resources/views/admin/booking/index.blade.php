@@ -37,17 +37,18 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            {{-- {{ dd(count($booking)) }} --}}
+
                                         @foreach($booking  as $book)
 
                                             <?php
 
                                                 $yearbook     = Carbon::createFromFormat('Y-m-d H:i:s',$book->created_at)->year;
-                                                dd($book) ;
+                                                // dd($book) ;
                                                 $monthbook    = Carbon::createFromFormat('Y-m-d H:i:s',$book->created_at)->month;
                                                 $weekbook     = Carbon::createFromFormat('Y-m-d H:i:s',$book->created_at)->week;
                                                 $daybook      = Carbon::createFromFormat('Y-m-d H:i:s',$book->created_at)->day;
                                             ?>
-                                          {{-- {{ dd($book) }} --}}
                                             @if($daybook == $nowday && $weekbook == $nowweek && $monthbook == $nowmonth && $yearbook == $nowyear)
                                                 <tr>
                                                     <td style="text-align:center;">#{{$book->name}} </td>
@@ -132,9 +133,9 @@
                                         <tbody>
                                         @foreach($booking  as $book)
                                             <?php
-                                                $yearbook     = Carbon::createFromFormat('Y-m-d H:i:s',$booking->created_at)->year;
-                                                $monthbook    = Carbon::createFromFormat('Y-m-d H:i:s',$booking->created_at)->month;
-                                                $weekbook     = Carbon::createFromFormat('Y-m-d H:i:s',$booking->created_at)->week;
+                                                $yearbook     = Carbon::createFromFormat('Y-m-d H:i:s',$book->created_at)->year;
+                                                $monthbook    = Carbon::createFromFormat('Y-m-d H:i:s',$book->created_at)->month;
+                                                $weekbook     = Carbon::createFromFormat('Y-m-d H:i:s',$book->created_at)->week;
                                             ?>
                                             @if($weekbook == $nowweek && $monthbook == $nowmonth && $yearbook == $nowyear)
                                                 <tr>

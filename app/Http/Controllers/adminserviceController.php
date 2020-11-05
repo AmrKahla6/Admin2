@@ -12,6 +12,7 @@ use App\Category;
 use App\order;
 use App\order_item;
 use App\setting;
+use App\Servceimage;
 
 class adminserviceController extends Controller
 {
@@ -69,10 +70,23 @@ class adminserviceController extends Controller
         if ($request->hasFile('image')) {
             $service = $request['image'];
             $img_name = rand(0, 999) . '.' . $service->getClientOriginalExtension();
-            $service->move(base_path('users/images/'), $img_name);
+            $path = public_path() . '/users/images/'. $img_name;
             $newservice->image   = $img_name;
         }
         $newservice->save();
+
+        if ($request->hasFile('images')) {
+            // return count($request['images']);
+            foreach ($request['images'] as $key => $image) {
+                // return $image;
+                $service_img = rand(0, 999) . '.' . $image->getClientOriginalExtension();
+                $image->move(base_path('users/images/'), $service_img);
+                Servceimage::create([
+                    "images"     => $service_img ,
+                    "service_id" => $newservice->id
+                ]);
+            }
+        }
         session()->flash('success', 'تم اضافة المنتج بنجاح');
         return back();
     }
@@ -144,16 +158,29 @@ class adminserviceController extends Controller
             if ($request->hasFile('image')) {
                 $service = $request['image'];
                 $img_name = rand(0, 999) . '.' . $service->getClientOriginalExtension();
-                $service->move(base_path('users/images/'), $img_name);
+                $path = public_path() . 'users/images/'. $img_name;
                 $newservice->image   = $img_name;
             }
 
             $newservice->save();
 
+            if (count($request['images'] > 1)) {
+                return count($request['images']);
+                foreach ($request['images'] as $key => $image) {
+                    // return $image;
+                    $service_img = rand(0, 999) . '.' . $image->getClientOriginalExtension();
+                    $image->move(base_path('users/images/'), $service_img);
+                    Servceimage::create([
+                        "images"     => $service_img ,
+                        "service_id" => $newservice->id
+                    ]);
+                }
+
             session()->flash('success', 'تم تعديل المشغل بنجاح');
             return back();
         }
     }
+}
 
     /**
      * Remove the specified resource from storage.

@@ -38,17 +38,25 @@
                          @endforeach
                         </select>
                      </div>
-                    </div>
+                </div>
 
                   <div class="form-group col-md-12">
                       <label>صورة المنتج</label>
                       <input type="file" name="image" id="">
                       <br>
                       <div style="padding: 2%;" class="col-md-3">
-                          <img class="img-thumbnail" style="width:100%; height:10%;" src="{{asset('users/images/'.$service->image)}}" alt="">
+                          <img class="img-thumbnail" style="width:100%; height:10%;" src={{ url("/../users/images/".$service->image)}} alt="">
                       </div>
-
                   </div>
+
+                  <div class="form-group col-md-12">
+                    <label>صور المنتج</label>
+                    <input type="file" name="images[]" id="" multiple>
+                    <br>
+                    <div style="padding: 2%;" class="col-md-3">
+                        <img class="img-thumbnail" style="width:100%; height:10%;" src="{{asset('users/images/'.$service->image)}}" alt="not found">
+                    </div>
+                </div>
 
                   <div class="col-md-12">
                       <div class="box box-info">

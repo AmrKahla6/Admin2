@@ -29,7 +29,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="col-md-12">
-                                                <img class="img-circle" style="width:100%; height:50%;" src="{{asset('users/images/'.$city->image)}}" alt="">
+                                                <img class="img-circle" style="width:100%; height:50%;" src={{ url("/../users/images/".$city->image)}} alt="">
                                             </div>
                                         </div>
                                     </div>

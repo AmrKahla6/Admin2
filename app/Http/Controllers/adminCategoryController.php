@@ -56,12 +56,13 @@ class adminCategoryController extends Controller
             'name'   => 'required',
             'des'   => 'required',
             'city_id'   => 'required',
+            'image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         $newcategory              = new Category;
-        $newcategory->name = $request['name'];
-        $newcategory->des = $request['des'];
-        $newcategory->city_id = $request['city_id'];
+        $newcategory->name        = $request['name'];
+        $newcategory->des         = $request['des'];
+        $newcategory->city_id     = $request['city_id'];
 
         if ($request->hasFile('image')) {
             $category = $request['image'];
@@ -115,7 +116,13 @@ class adminCategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $mainactive      = 'categories';
+        $subactive       = 'category';
+        $logo            = DB::table('settings')->value('logo');
+        $cities          = City::all();
+        // $allcategories   = category::where('parent',0)->get();
+        $category        = Category::find($id);
+        return view('admin.categories.edit', compact('mainactive', 'subactive', 'logo', 'category' , 'cities'));
     }
 
     /**
@@ -175,11 +182,7 @@ class adminCategoryController extends Controller
     public function destroy($id)
     {
         $delcategory = Category::find($id);
-        // if($delcategory)
-        // {
-        //     self::delete_parent($id);
-        //     session()->flash('success','تم حذف التقطيع بنجاح');
-        // }
+        $delcategory->services()->attach($id);
         $delcategory->delete();
         return back();
     }

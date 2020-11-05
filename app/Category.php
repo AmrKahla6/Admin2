@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Comment;
+use App\Service;
+
 use willvincent\Rateable\Rateable;
 
 class Category extends Model
@@ -22,5 +24,10 @@ class Category extends Model
     {
         return $this->hasMany(Comment::class)->whereNull('parent_id');
     }// end relationship
+
+    public function services()
+    {
+        return $this->belongsToMany(Service::class, 'categories_services');
+    }
 
 }

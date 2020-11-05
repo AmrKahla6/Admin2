@@ -22,7 +22,7 @@ class CreateServicesTable extends Migration
             $table->tinyInteger('servReq')->default(0);
             $table->unsignedBigInteger('category_id');
 
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });
     }
