@@ -50,6 +50,14 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group col-md-12">
+                                    <label>صور المدينه</label>
+                                    <input type="file" name="images[]" multiple>
+                                    @if ($errors->has('images'))
+                                        <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('images') }}</div>
+                                    @endif
+                                </div>
+
 
 
                                 <button type="submit" class="btn btn-primary col-md-offset-4 col-md-4">اضافة</button>

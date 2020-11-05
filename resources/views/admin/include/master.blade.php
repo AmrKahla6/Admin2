@@ -309,7 +309,6 @@
           <ul class="treeview-menu">
 
               <!--<li  @if($subactive=='privacy') class="active" @endif><a href="{{asset('adminpanel/privacy')}}"><i class="fa fa-circle-o"></i>سياسة التطبيق</a></li>-->
-              <li  @if($subactive=='about') class="active" @endif><a href="{{asset('adminpanel/about')}}"><i class="fa fa-circle-o"></i>حول التطبيق</a></li>
               <li  @if($subactive=='conditions') class="active" @endif><a href="{{asset('adminpanel/conditions')}}"><i class="fa fa-circle-o"></i>الشروط والاحكام</a></li>
               <li  @if($subactive=='changelogo') class="active" @endif><a href="{{asset('adminpanel/setapp')}}"><i class="fa fa-circle-o"></i>إعدادات التطبيق</a></li>
           </ul>

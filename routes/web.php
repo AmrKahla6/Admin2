@@ -29,6 +29,7 @@ Route::group(['middleware' => ['adminauth:admin']], function () {
   Route::resource('adminpanel/conditions', 'adminconditionsController');
   Route::resource('adminpanel/setapp', 'adminchangelogoController');
 
+
  //services routes
   Route::resource('adminpanel/services', 'adminserviceController');
   Route::delete('myservicesDeleteAll', 'adminserviceController@deleteAll');

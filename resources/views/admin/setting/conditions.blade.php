@@ -17,7 +17,7 @@
                                 </h3>
                                 </div>
                                 <div class="box-body pad">
-                                    {{-- <textarea id="editor1" name="arconditions" rows="10" cols="80" required>{!! $cancelpolicy->arconditions !!}</textarea> --}}
+                                    <textarea id="editor1" name="arconditions" rows="10" cols="80" required>{!! $cancelpolicy->arconditions !!}</textarea>
                                     @if ($errors->has('arconditions'))
                                         <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('arconditions') }}</div>
                                     @endif

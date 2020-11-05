@@ -75,7 +75,8 @@ class adminserviceController extends Controller
         }
         $newservice->save();
 
-        if ($request->hasFile('images')) {
+        if ($request->hasFile('images'))
+         {
             // return count($request['images']);
             foreach ($request['images'] as $key => $image) {
                 // return $image;

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\City;
 use App\Category;
+use App\Servceimage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -45,7 +46,6 @@ class adminCityController extends Controller
         $this->validate($request,[
             'name_ar'   => 'required|unique:cities',
             'name_en'   => 'required|unique:cities',
-
          ]);
 
         $newcity              = new City();
@@ -60,6 +60,20 @@ class adminCityController extends Controller
         }
         // dd($newcity);
         $newcity->save();
+
+        if ($request->hasFile('images'))
+        {
+           // return count($request['images']);
+           foreach ($request['images'] as $key => $image) {
+               // return $image;
+               $city_img = rand(0, 999) . '.' . $image->getClientOriginalExtension();
+               $image->move(base_path('users/images/'), $city_img);
+               Servceimage::create([
+                   "images"     => $city_img ,
+                   "service_id" => $newservice->id
+               ]);
+           }
+       }
         session()->flash('success','تم إضافة مدينة جديدة');
         return back();
     }
