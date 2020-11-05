@@ -1,0 +1,594 @@
+@extends('admin/include/master')
+@section('title') لوحة التحكم |الحجوزات @endsection
+@section('content')
+
+<?php use Carbon\Carbon; ?>
+<section class="content">
+    <div class="row">
+       <div class="col-md-12">
+            <div class="nav-tabs-custom">
+
+                <ul class="nav nav-tabs">
+                    <li style="margin-right: 0px; width:20%;" class="active"><a href="#activity" data-toggle="tab">حجوزات اليوم</a></li>
+                    <li style="margin-right: 0px; width:20%;"><a href="#activity1" data-toggle="tab">حجوزات الاسبوع</a></li>
+                    <li style="margin-right: 0px; width:20%;"><a href="#activity2" data-toggle="tab">حجوزات الشهر</a></li>
+                    <li style="margin-right: 0px; width:20%;"><a href="#activity3" data-toggle="tab">حجوزات السنة</a></li>
+                    <li style="margin-right: 0px; width:20%;"><a href="#activity4" data-toggle="tab">كل الحجوزات</a></li>
+                </ul>
+
+                <div class="tab-content">
+
+                    <div class="active tab-pane" id="activity">
+                        <div class="box">
+                            <h3 class="box-title">حجوزات اليوم {{$nowday}} - {{$nowmonth}} - {{$nowyear}}</h3>
+                            @if(count($booking) != 0)
+
+                                <div class="table-responsive box-body">
+                                    <button style="margin-bottom: 10px;float:left;" class="btn btn-danger delete_all" data-url="{{ url('mybookingDeleteAll') }}"><i class="fa fa-trash-o" aria-hidden="true"></i> حذف المحدد</button>
+                                    <table id="example3" class="table table-bbooked table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align:center;">الاسم</th>
+                                                <th style="text-align:center;">حالة الطلب</th>
+                                                <th style="text-align:center;">تغيير الحالة</th>
+                                                <th style="text-align:center;">مشاهدة</th>
+                                                <th style="text-align:center;"> حذف</th>
+                                                <th width="50px"><input type="checkbox" id="master"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($booking  as $book)
+
+                                            <?php
+
+                                                $yearbook     = Carbon::createFromFormat('Y-m-d H:i:s',$book->created_at)->year;
+                                                dd($book) ;
+                                                $monthbook    = Carbon::createFromFormat('Y-m-d H:i:s',$book->created_at)->month;
+                                                $weekbook     = Carbon::createFromFormat('Y-m-d H:i:s',$book->created_at)->week;
+                                                $daybook      = Carbon::createFromFormat('Y-m-d H:i:s',$book->created_at)->day;
+                                            ?>
+                                          {{-- {{ dd($book) }} --}}
+                                            @if($daybook == $nowday && $weekbook == $nowweek && $monthbook == $nowmonth && $yearbook == $nowyear)
+                                                <tr>
+                                                    <td style="text-align:center;">#{{$book->name}} </td>
+                                                    <td style="text-align:center;">
+                                                        @if($book->status == 0)
+                                                            <span style="bbook-radius: 3px;bbook: 1px solid green;color: orange;float:left;padding: 3px;font-weight: bold;background: #fff;display: inline-block;margin-top: 4%;" class="ads__item__featured">قيد الانتظار</span>
+                                                        @elseif($book->status == 1)
+                                                             <span style="bbook-radius: 3px;bbook: 1px solid green;color: springgreen;float:left;padding: 3px;font-weight: bold;background: #fff;display: inline-block;margin-top: 4%;" class="ads__item__featured">جارى التجهيز</span>
+                                                        @elseif($book->status == 2)
+                                                             <span style="bbook-radius: 3px;bbook: 1px solid #c22356;float:left;color:crimson;padding: 3px;font-weight: bold;background: #fff;display: inline-block;margin-top: 4%;" class="ads__item__featured">تم رفض الطلب</span>
+                                                        @elseif($book->status == 3)
+                                                             <span style="bbook-radius: 3px;bbook: 1px solid green;float:left;color:green;padding: 3px;font-weight: bold;background: #fff;display: inline-block;margin-top: 4%;" class="ads__item__featured">تم التسليم</span>
+                                                        @endif
+                                                    </td>
+                                                    <td style="text-align:center;">
+                                                        @if($book->status == 0)
+                                                            {{ Form::open(array('method' => 'patch',"onclick"=>"return confirm('هل انت متاكد ؟!')",'files' => true,'url' =>'adminpanel/booking/'.$book->id )) }}
+                                                                    <input type="hidden" name="accept" >
+                                                                    <button type="submit" class="btn btn-success"><i class="fa fa-check" aria-hidden="true"></i> قبول</button>
+                                                            {!! Form::close() !!}
+
+                                                            {{ Form::open(array('method' => 'patch',"onclick"=>"return confirm('هل انت متاكد ؟!')",'files' => true,'url' =>'adminpanel/booking/'.$book->id )) }}
+                                                                    <input type="hidden" name="reject" >
+                                                                    <button type="submit" class="btn btn-danger"><i  class="fa fa-times" aria-hidden="true"></i>رفض</button>
+                                                            {!! Form::close() !!}
+                                                        @elseif($book->status == 1)
+                                                            {{ Form::open(array('method' => 'patch',"onclick"=>"return confirm('هل انت متاكد ؟!')",'files' => true,'url' =>'adminpanel/booking/'.$book->id )) }}
+                                                                    <input type="hidden" name="finish" >
+                                                                    <button type="submit" class="btn btn-primary"><i  class="fa fa-check" aria-hidden="true"></i>إنهاء</button>
+                                                            {!! Form::close() !!}
+                                                        @elseif($book->status == 2)
+                                                           <span style="bbook-radius: 3px;bbook: 1px solid #c22356;float:left;color:crimson;padding: 3px;font-weight: bold;background: #fff;display: inline-block;margin-top: 4%;" class="ads__item__featured">مرفوض</span>
+
+                                                        @else
+                                                            <span style="bbook-radius: 3px;bbook: 1px solid #c22356;float:left;color:crimson;padding: 3px;font-weight: bold;background: #fff;display: inline-block;margin-top: 4%;" class="ads__item__featured">خالص</span>
+                                                        @endif
+                                                    </td>
+                                                    <td style="text-align:center;">
+                                                        <a href='{{asset("adminpanel/booking/".$book->id)}}' class="btn btn-info"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                                    </td style="text-align:center;">
+                                                    <td style="text-align:center;">
+                                                        {{ Form::open(array('method' => 'DELETE','id' => 'del'.$book->id,"onclick"=>"return confirm('هل انت متأكد ؟!')",'files' => true,'url' => array('adminpanel/booking/'.$book->id))) }}
+                                                        <button type="submit" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                                        {!! Form::close() !!}
+                                                    </td>
+                                                    <td><input type="checkbox" class="sub_chk" data-id="{{$book->id}}"></td>
+                                                </tr>
+                                                <?php
+                                                    $daytotal += $book->total;
+                                                ?>
+                                            @endif
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                    <div class="col-md-12">
+                                        <h3>الاجمالى : <span style="color:#500253">{{$daytotal}}</span> ريال</h3>
+                                    </div>
+                                </div>
+                            @else
+                            <p> لا يوجد طلبات </p>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="activity1">
+                        <div class="box">
+                            <h3 class="box-title">طلبات الاسبوع {{$nowweek}} - {{$nowmonth}} - {{$nowyear}}</h3>
+                            @if(count($booking) != 0)
+                                <div class="table-responsive box-body">
+                                    <button style="margin-bottom: 10px;float:left;" class="btn btn-danger delete_all" data-url="{{ url('mybookingDeleteAll') }}"><i class="fa fa-trash-o" aria-hidden="true"></i> حذف المحدد</button>
+                                    <table id="example3" class="table table-bbooked table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align:center;">الاسم</th>
+                                                <th style="text-align:center;">حالة الطلب</th>
+                                                <th style="text-align:center;">تغيير الحالة</th>
+                                                <th style="text-align:center;">مشاهدة</th>
+                                                <th style="text-align:center;"> حذف</th>
+                                                <th width="50px"><input type="checkbox" id="master1"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($booking  as $book)
+                                            <?php
+                                                $yearbook     = Carbon::createFromFormat('Y-m-d H:i:s',$booking->created_at)->year;
+                                                $monthbook    = Carbon::createFromFormat('Y-m-d H:i:s',$booking->created_at)->month;
+                                                $weekbook     = Carbon::createFromFormat('Y-m-d H:i:s',$booking->created_at)->week;
+                                            ?>
+                                            @if($weekbook == $nowweek && $monthbook == $nowmonth && $yearbook == $nowyear)
+                                                <tr>
+                                                    <td style="text-align:center;">#{{$book->name}} </td>
+                                                    <td style="text-align:center;">
+                                                        @if($book->status == 0)
+                                                            <span style="bbook-radius: 3px;bbook: 1px solid green;color: orange;float:left;padding: 3px;font-weight: bold;background: #fff;display: inline-block;margin-top: 4%;" class="ads__item__featured">قيد الانتظار</span>
+                                                        @elseif($book->status == 1)
+                                                             <span style="bbook-radius: 3px;bbook: 1px solid green;color: springgreen;float:left;padding: 3px;font-weight: bold;background: #fff;display: inline-block;margin-top: 4%;" class="ads__item__featured">جارى التجهيز</span>
+                                                        @elseif($book->status == 2)
+                                                             <span style="bbook-radius: 3px;bbook: 1px solid #c22356;float:left;color:crimson;padding: 3px;font-weight: bold;background: #fff;display: inline-block;margin-top: 4%;" class="ads__item__featured">تم رفض الطلب</span>
+                                                        @elseif($book->status == 3)
+                                                             <span style="bbook-radius: 3px;bbook: 1px solid green;float:left;color:green;padding: 3px;font-weight: bold;background: #fff;display: inline-block;margin-top: 4%;" class="ads__item__featured">تم التسليم</span>
+                                                        @endif
+                                                    </td>
+                                                    <td style="text-align:center;">
+                                                        @if($book->status == 0)
+                                                            {{ Form::open(array('method' => 'patch',"onclick"=>"return confirm('هل انت متاكد ؟!')",'files' => true,'url' =>'adminpanel/booking/'.$book->id )) }}
+                                                                    <input type="hidden" name="accept" >
+                                                                    <button type="submit" class="btn btn-success"><i class="fa fa-check" aria-hidden="true"></i> قبول</button>
+                                                            {!! Form::close() !!}
+
+                                                            {{ Form::open(array('method' => 'post',"onclick"=>"return confirm('هل انت متاكد ؟!')",'files' => true,'url' =>'adminpanel/booking/'.$book->id )) }}
+                                                                    <input type="hidden" name="reject" >
+                                                                    <button type="submit" class="btn btn-danger"><i  class="fa fa-times" aria-hidden="true"></i>رفض</button>
+                                                            {!! Form::close() !!}
+                                                        @elseif($book->status == 1)
+                                                            {{ Form::open(array('method' => 'patch',"onclick"=>"return confirm('هل انت متاكد ؟!')",'files' => true,'url' =>'adminpanel/booking/'.$book->id )) }}
+                                                                    <input type="hidden" name="finish" >
+                                                                    <button type="submit" class="btn btn-primary"><i  class="fa fa-check" aria-hidden="true"></i>إنهاء</button>
+                                                            {!! Form::close() !!}
+                                                        @else
+                                                            <span style="bbook-radius: 3px;bbook: 1px solid #c22356;float:left;color:crimson;padding: 3px;font-weight: bold;background: #fff;display: inline-block;margin-top: 4%;" class="ads__item__featured">خالص</span>
+                                                        @endif
+                                                    </td>
+                                                    <td style="text-align:center;">
+                                                        <a href='{{asset("adminpanel/booking/".$book->id)}}' class="btn btn-info"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                                    </td style="text-align:center;">
+                                                    <td style="text-align:center;">
+                                                        {{ Form::open(array('method' => 'DELETE','id' => 'del'.$book->id,"onclick"=>"return confirm('هل انت متأكد ؟!')",'files' => true,'url' => array('adminpanel/booking/'.$book->id))) }}
+                                                        <button type="submit" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                                        {!! Form::close() !!}
+                                                    </td>
+                                                    <td><input type="checkbox" class="sub_chk1" data-id="{{$book->id}}"></td>
+                                                </tr>
+                                                <?php
+                                                    $weektotal += $book->total;
+                                                ?>
+                                            @endif
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                    <div class="col-md-12">
+                                        <h3>الاجمالى : <span style="color:#500253">{{$weektotal}}</span> ريال</h3>
+                                    </div>
+                                </div>
+
+                            @else
+                            <p> لا يوجد طلبات </p>
+                            @endif
+                    </div>
+                    </div>
+
+                    <div class="tab-pane" id="activity2">
+                        <div class="box">
+                            <h3 class="box-title">طلبات الشهر {{$nowmonth}} - {{$nowyear}}</h3>
+                            @if(count($booking) != 0)
+                                <div class="table-responsive box-body">
+                                    <button style="margin-bottom: 10px;float:left;" class="btn btn-danger delete_all" data-url="{{ url('mybookingDeleteAll') }}"><i class="fa fa-trash-o" aria-hidden="true"></i> حذف المحدد</button>
+                                    <table id="example3" class="table table-bbooked table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align:center;">الاسم</th>
+                                                <th style="text-align:center;">تغيير الحالة</th>
+                                                <th style="text-align:center;">مشاهدة</th>
+                                                <th style="text-align:center;"> حذف</th>
+                                                <th width="50px"><input type="checkbox" id="master2"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($booking  as $book)
+                                            <?php
+                                                $yearbooking     = Carbon::createFromFormat('Y-m-d H:i:s',$book->created_at)->year;
+                                                $monthbooking    = Carbon::createFromFormat('Y-m-d H:i:s',$book->created_at)->month;
+                                            ?>
+                                            @if($monthbooking == $nowmonth && $yearbooking == $nowyear)
+                                                <tr>
+                                                    <td style="text-align:center;">#{{$book->name}} </td>
+                                                    <td style="text-align:center;">
+                                                        @if($book->status == 0)
+                                                            <span style="bbook-radius: 3px;bbook: 1px solid green;color: orange;float:left;padding: 3px;font-weight: bold;background: #fff;display: inline-block;margin-top: 4%;" class="ads__item__featured">قيد الانتظار</span>
+                                                        @elseif($book->status == 1)
+                                                             <span style="bbook-radius: 3px;bbook: 1px solid green;color: springgreen;float:left;padding: 3px;font-weight: bold;background: #fff;display: inline-block;margin-top: 4%;" class="ads__item__featured">جارى التجهيز</span>
+                                                        @elseif($book->status == 2)
+                                                             <span style="bbook-radius: 3px;bbook: 1px solid #c22356;float:left;color:crimson;padding: 3px;font-weight: bold;background: #fff;display: inline-block;margin-top: 4%;" class="ads__item__featured">تم رفض الطلب</span>
+                                                        @elseif($book->status == 3)
+                                                             <span style="bbook-radius: 3px;bbook: 1px solid green;float:left;color:green;padding: 3px;font-weight: bold;background: #fff;display: inline-block;margin-top: 4%;" class="ads__item__featured">تم التسليم</span>
+                                                        @endif
+                                                    </td>
+                                                    <td style="text-align:center;">
+                                                        @if($book->status == 0)
+                                                            {{ Form::open(array('method' => 'patch',"onclick"=>"return confirm('هل انت متاكد ؟!')",'files' => true,'url' =>'adminpanel/booking/'.$book->id )) }}
+                                                                    <input type="hidden" name="accept" >
+                                                                    <button type="submit" class="btn btn-success"><i class="fa fa-check" aria-hidden="true"></i> قبول</button>
+                                                            {!! Form::close() !!}
+
+                                                            {{ Form::open(array('method' => 'patch',"onclick"=>"return confirm('هل انت متاكد ؟!')",'files' => true,'url' =>'adminpanel/booking/'.$book->id )) }}
+                                                                    <input type="hidden" name="reject" >
+                                                                    <button type="submit" class="btn btn-danger"><i  class="fa fa-times" aria-hidden="true"></i>رفض</button>
+                                                            {!! Form::close() !!}
+                                                        @elseif($book->status == 1)
+                                                            {{ Form::open(array('method' => 'patch',"onclick"=>"return confirm('هل انت متاكد ؟!')",'files' => true,'url' =>'adminpanel/booking/'.$book->id )) }}
+                                                                    <input type="hidden" name="finish" >
+                                                                    <button type="submit" class="btn btn-primary"><i  class="fa fa-check" aria-hidden="true"></i>إنهاء</button>
+                                                            {!! Form::close() !!}
+                                                        @else
+                                                            <span style="bbook-radius: 3px;bbook: 1px solid #c22356;float:left;color:crimson;padding: 3px;font-weight: bold;background: #fff;display: inline-block;margin-top: 4%;" class="ads__item__featured">خالص</span>
+                                                        @endif
+                                                    </td>
+                                                    <td style="text-align:center;">
+                                                        <a href='{{asset("adminpanel/booking/".$book->id)}}' class="btn btn-info"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                                    </td style="text-align:center;">
+                                                    <td style="text-align:center;">
+                                                        {{ Form::open(array('method' => 'DELETE','id' => 'del'.$book->id,"onclick"=>"return confirm('هل انت متأكد ؟!')",'files' => true,'url' => array('adminpanel/booking/'.$book->id))) }}
+                                                        <button type="submit" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                                        {!! Form::close() !!}
+                                                    </td>
+                                                    <td><input type="checkbox" class="sub_chk2" data-id="{{$book->id}}"></td>
+                                                </tr>
+                                                <?php
+                                                    $monthtotal += $book->total;
+                                                ?>
+                                            @endif
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                    <div class="col-md-12">
+                                        <h3>الاجمالى : <span style="color:#500253">{{$monthtotal}}</span> ريال</h3>
+                                    </div>
+                                </div>
+
+                            @else
+                            <p> لا يوجد طلبات </p>
+                            @endif
+                    </div>
+                    </div>
+
+                    <div class="tab-pane" id="activity3">
+                        <div class="box">
+                            <h3 class="box-title">طلبات السنة {{$nowyear}}</h3>
+                            @if(count($booking) != 0)
+                                <div class="table-responsive box-body">
+                                    <button style="margin-bottom: 10px;float:left;" class="btn btn-danger delete_all" data-url="{{ url('mybookingDeleteAll') }}"><i class="fa fa-trash-o" aria-hidden="true"></i> حذف المحدد</button>
+                                    <table id="example3" class="table table-bbooked table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align:center;">رقم الطلب</th>
+                                                <th style="text-align:center;">إجمالى الطلب</th>
+                                                <th style="text-align:center;">تاريخ الطلب</th>
+                                                <th style="text-align:center;">حالة الطلب</th>
+                                                <th style="text-align:center;">تغيير الحالة</th>
+                                                <th style="text-align:center;">مشاهدة</th>
+                                                <th style="text-align:center;"> حذف</th>
+                                                <th width="50px"><input type="checkbox" id="master3"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($booking  as $book)
+                                            <?php
+                                                $yearbooking = Carbon::createFromFormat('Y-m-d H:i:s',$book->created_at)->year;
+                                            ?>
+                                            @if($yearbooking == $nowyear)
+                                                <tr>
+                                                    <td style="text-align:center;">#{{$book->book_number}} </td>
+                                                    <td style="text-align:center;">{{$book->total}} ريال</td>
+                                                    <td style="text-align:center;">{{$book->created_at}} </td>
+                                                    <td style="text-align:center;">
+                                                        @if($book->status == 0)
+                                                            <span style="bbook-radius: 3px;bbook: 1px solid green;color: orange;float:left;padding: 3px;font-weight: bold;background: #fff;display: inline-block;margin-top: 4%;" class="ads__item__featured">قيد الانتظار</span>
+                                                        @elseif($book->status == 1)
+                                                             <span style="bbook-radius: 3px;bbook: 1px solid green;color: springgreen;float:left;padding: 3px;font-weight: bold;background: #fff;display: inline-block;margin-top: 4%;" class="ads__item__featured">جارى التجهيز</span>
+                                                        @elseif($book->status == 2)
+                                                             <span style="bbook-radius: 3px;bbook: 1px solid #c22356;float:left;color:crimson;padding: 3px;font-weight: bold;background: #fff;display: inline-block;margin-top: 4%;" class="ads__item__featured">تم رفض الطلب</span>
+                                                        @elseif($book->status == 3)
+                                                             <span style="bbook-radius: 3px;bbook: 1px solid green;float:left;color:green;padding: 3px;font-weight: bold;background: #fff;display: inline-block;margin-top: 4%;" class="ads__item__featured">تم التسليم</span>
+                                                        @endif
+                                                    </td>
+                                                    <td style="text-align:center;">
+                                                        @if($book->status == 0)
+                                                            {{ Form::open(array('method' => 'patch',"onclick"=>"return confirm('هل انت متاكد ؟!')",'files' => true,'url' =>'adminpanel/booking/'.$book->id )) }}
+                                                                    <input type="hidden" name="accept" >
+                                                                    <button type="submit" class="btn btn-success"><i class="fa fa-check" aria-hidden="true"></i> قبول</button>
+                                                            {!! Form::close() !!}
+
+                                                            {{ Form::open(array('method' => 'patch',"onclick"=>"return confirm('هل انت متاكد ؟!')",'files' => true,'url' =>'adminpanel/booking/'.$book->id )) }}
+                                                                    <input type="hidden" name="reject" >
+                                                                    <button type="submit" class="btn btn-danger"><i  class="fa fa-times" aria-hidden="true"></i>رفض</button>
+                                                            {!! Form::close() !!}
+                                                        @elseif($book->status == 1)
+                                                            {{ Form::open(array('method' => 'patch',"onclick"=>"return confirm('هل انت متاكد ؟!')",'files' => true,'url' =>'adminpanel/booking/'.$book->id )) }}
+                                                                    <input type="hidden" name="finish" >
+                                                                    <button type="submit" class="btn btn-primary"><i  class="fa fa-check" aria-hidden="true"></i>إنهاء</button>
+                                                            {!! Form::close() !!}
+                                                        @else
+                                                            <span style="bbook-radius: 3px;bbook: 1px solid #c22356;float:left;color:crimson;padding: 3px;font-weight: bold;background: #fff;display: inline-block;margin-top: 4%;" class="ads__item__featured">خالص</span>
+                                                        @endif
+                                                    </td>
+                                                    <td style="text-align:center;">
+                                                        <a href='{{asset("adminpanel/booking/".$book->id)}}' class="btn btn-info"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                                    </td style="text-align:center;">
+                                                    <td style="text-align:center;">
+                                                        {{ Form::open(array('method' => 'DELETE','id' => 'del'.$book->id,"onclick"=>"return confirm('هل انت متأكد ؟!')",'files' => true,'url' => array('adminpanel/booking/'.$book->id))) }}
+                                                        <button type="submit" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                                        {!! Form::close() !!}
+                                                    </td>
+                                                    <td><input type="checkbox" class="sub_chk3" data-id="{{$book->id}}"></td>
+                                                </tr>
+                                                <?php
+                                                    $yeartotal += $book->total;
+                                                ?>
+                                            @endif
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                    <div class="col-md-12">
+                                        <h3>الاجمالى : <span style="color:#500253">{{$yeartotal}}</span> ريال</h3>
+                                    </div>
+                                </div>
+
+                            @else
+                            <p> لا يوجد طلبات </p>
+                            @endif
+                    </div>
+                    </div>
+
+                    <div class="tab-pane" id="activity4">
+                        <div class="box">
+                            <h3 class="box-title">كل الطلبات</h3>
+                            @if(count($booking) != 0)
+                                <div class="table-responsive box-body">
+                                    <button style="margin-bottom: 10px;float:left;" class="btn btn-danger delete_all" data-url="{{ url('mybookingDeleteAll') }}"><i class="fa fa-trash-o" aria-hidden="true"></i> حذف المحدد</button>
+                                    <table id="example3" class="table table-bbooked table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align:center;">رقم الطلب</th>
+                                                <th style="text-align:center;">إجمالى الطلب</th>
+                                                <th style="text-align:center;">تاريخ الطلب</th>
+                                                <th style="text-align:center;">حالة الطلب</th>
+                                                <th style="text-align:center;">تغيير الحالة</th>
+                                                <th style="text-align:center;">مشاهدة</th>
+                                                <th style="text-align:center;"> حذف</th>
+                                                <th width="50px"><input type="checkbox" id="master4"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($booking  as $book)
+
+                                                <tr>
+                                                    <td style="text-align:center;">#{{$book->book_number}} </td>
+                                                    <td style="text-align:center;">{{$book->total}} ريال</td>
+                                                    <td style="text-align:center;">{{$book->created_at}} </td>
+                                                    <td style="text-align:center;">
+                                                        @if($book->status == 0)
+                                                            <span style="bbook-radius: 3px;bbook: 1px solid green;color: orange;float:left;padding: 3px;font-weight: bold;background: #fff;display: inline-block;margin-top: 4%;" class="ads__item__featured">قيد الانتظار</span>
+                                                        @elseif($book->status == 1)
+                                                             <span style="bbook-radius: 3px;bbook: 1px solid green;color: springgreen;float:left;padding: 3px;font-weight: bold;background: #fff;display: inline-block;margin-top: 4%;" class="ads__item__featured">جارى التجهيز</span>
+                                                        @elseif($book->status == 2)
+                                                             <span style="bbook-radius: 3px;bbook: 1px solid #c22356;float:left;color:crimson;padding: 3px;font-weight: bold;background: #fff;display: inline-block;margin-top: 4%;" class="ads__item__featured">تم رفض الطلب</span>
+                                                        @elseif($book->status == 3)
+                                                             <span style="bbook-radius: 3px;bbook: 1px solid green;float:left;color:green;padding: 3px;font-weight: bold;background: #fff;display: inline-block;margin-top: 4%;" class="ads__item__featured">تم التسليم</span>
+                                                        @endif
+                                                    </td>
+                                                    <td style="text-align:center;">
+                                                        @if($book->status == 0)
+                                                            {{ Form::open(array('method' => 'patch',"onclick"=>"return confirm('هل انت متاكد ؟!')",'files' => true,'url' =>'adminpanel/booking/'.$book->id )) }}
+                                                                    <input type="hidden" name="accept" >
+                                                                    <button type="submit" class="btn btn-success"><i class="fa fa-check" aria-hidden="true"></i> قبول</button>
+                                                            {!! Form::close() !!}
+
+                                                            {{ Form::open(array('method' => 'patch',"onclick"=>"return confirm('هل انت متاكد ؟!')",'files' => true,'url' =>'adminpanel/booking/'.$book->id )) }}
+                                                                    <input type="hidden" name="reject" >
+                                                                    <button type="submit" class="btn btn-danger"><i  class="fa fa-times" aria-hidden="true"></i>رفض</button>
+                                                            {!! Form::close() !!}
+                                                        @elseif($book->status == 1)
+                                                            {{ Form::open(array('method' => 'patch',"onclick"=>"return confirm('هل انت متاكد ؟!')",'files' => true,'url' =>'adminpanel/booking/'.$book->id )) }}
+                                                                    <input type="hidden" name="finish" >
+                                                                    <button type="submit" class="btn btn-primary"><i  class="fa fa-check" aria-hidden="true"></i>إنهاء</button>
+                                                            {!! Form::close() !!}
+                                                        @else
+                                                            <span style="bbook-radius: 3px;bbook: 1px solid #c22356;float:left;color:crimson;padding: 3px;font-weight: bold;background: #fff;display: inline-block;margin-top: 4%;" class="ads__item__featured">خالص</span>
+                                                        @endif
+                                                    </td>
+                                                    <td style="text-align:center;">
+                                                        <a href='{{asset("adminpanel/booking/".$book->id)}}' class="btn btn-info"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                                    </td style="text-align:center;">
+                                                    <td style="text-align:center;">
+                                                        {{ Form::open(array('method' => 'DELETE','id' => 'del'.$book->id,"onclick"=>"return confirm('هل انت متأكد ؟!')",'files' => true,'url' => array('adminpanel/booking/'.$book->id))) }}
+                                                        <button type="submit" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                                        {!! Form::close() !!}
+                                                    </td>
+                                                    <td><input type="checkbox" class="sub_chk4" data-id="{{$book->id}}"></td>
+                                                </tr>
+                                                <?php
+                                                    $mytotal += $book->total;
+                                                ?>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                    <div class="col-md-12">
+                                        <h3>الاجمالى : <span style="color:#500253">{{$mytotal}}</span> ريال</h3>
+                                    </div>
+                                </div>
+
+                            @else
+                            <p> لا يوجد طلبات </p>
+                            @endif
+                    </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#master').on('click', function(e) {
+         if($(this).is(':checked',true))
+         {
+            $(".sub_chk").prop('checked', true);
+         } else {
+            $(".sub_chk").prop('checked',false);
+         }
+        });
+
+        $('#master1').on('click', function(e) {
+         if($(this).is(':checked',true))
+         {
+            $(".sub_chk1").prop('checked', true);
+         } else {
+            $(".sub_chk1").prop('checked',false);
+         }
+        });
+
+        $('#master2').on('click', function(e) {
+         if($(this).is(':checked',true))
+         {
+            $(".sub_chk2").prop('checked', true);
+         } else {
+            $(".sub_chk2").prop('checked',false);
+         }
+        });
+
+        $('#master3').on('click', function(e) {
+         if($(this).is(':checked',true))
+         {
+            $(".sub_chk3").prop('checked', true);
+         } else {
+            $(".sub_chk3").prop('checked',false);
+         }
+        });
+
+        $('#master4').on('click', function(e) {
+         if($(this).is(':checked',true))
+         {
+            $(".sub_chk4").prop('checked', true);
+         } else {
+            $(".sub_chk4").prop('checked',false);
+         }
+        });
+
+
+        $('.delete_all').on('click', function(e) {
+            var allVals = [];
+            $(".sub_chk:checked").each(function() {
+                allVals.push($(this).attr('data-id'));
+            });
+
+
+            if(allVals.length <=0)
+            {
+                alert("حدد عنصر واحد ع الاقل ");
+            }  else {
+
+
+                var check = confirm("هل انت متاكد؟");
+                if(check == true){
+                    var join_selected_values = allVals.join(",");
+                    $.ajax({
+                        url: $(this).data('url'),
+                        type: 'DELETE',
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        data: 'ids='+join_selected_values,
+                        success: function (data) {
+                            if (data['success']) {
+                                $(".sub_chk:checked").each(function() {
+                                    $(this).parents("tr").remove();
+                                });
+                                alert(data['success']);
+                            } else if (data['error']) {
+                                alert(data['error']);
+                            } else {
+                                alert('Whoops Something went wrong!!');
+                            }
+                        },
+                        error: function (data) {
+                            alert(data.responseText);
+                        }
+                    });
+
+
+                  $.each(allVals, function( index, value ) {
+                      $('table tr').filter("[data-row-id='" + value + "']").remove();
+                  });
+                }
+            }
+        });
+
+
+        $('[data-toggle=confirmation]').confirmation({
+            rootSelector: '[data-toggle=confirmation]',
+            onConfirm: function (event, element) {
+                element.trigger('confirm');
+            }
+        });
+
+
+        $(document).on('confirm', function (e) {
+            var ele = e.target;
+            e.preventDefault();
+
+            $.ajax({
+                url: ele.href,
+                type: 'DELETE',
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                success: function (data) {
+                    if (data['success']) {
+                        $("#" + data['tr']).slideUp("slow");
+                        alert(data['success']);
+                    } else if (data['error']) {
+                        alert(data['error']);
+                    } else {
+                        alert('Whoops Something went wrong!!');
+                    }
+                },
+                error: function (data) {
+                    alert(data.responseText);
+                }
+            });
+            return false;
+        });
+    });
+</script>
+@endsection

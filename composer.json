@@ -17,6 +17,7 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "2.4",
         "laravelcollective/html": "^6.2",
+        "nesbot/carbon": "^2.41",
         "pusher/pusher-php-server": "^4.1",
         "willvincent/laravel-rateable": "^2.2"
     },

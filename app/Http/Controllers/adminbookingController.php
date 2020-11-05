@@ -18,20 +18,19 @@ use App\item;
 use App\order;
 use App\order_item;
 use App\City;
+use App\Booking;
 use App\District;
-
-
-class adminorderController extends Controller
+class adminbookingController extends Controller
 {
-    /**
+     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $mainactive      = 'orders';
-        $subactive       = 'itemorders';
+        $mainactive      = 'bookings';
+        $subactive       = 'booking';
         $logo            = DB::table('settings')->value('logo');
         $daytotal        = 0;
         $weektotal       = 0;
@@ -42,21 +41,12 @@ class adminorderController extends Controller
         $nowmonth        = Carbon::createFromFormat('Y-m-d H:i:s', now())->month;
         $nowweek         = Carbon::createFromFormat('Y-m-d H:i:s', now())->week;
         $nowday          = Carbon::createFromFormat('Y-m-d H:i:s', now())->day;
-        $itemorders      = order::orderBy('id', 'desc')->get();
+        $booking      = Booking::orderBy('id', 'desc')->get();
 
-        return view('admin.orders.index', compact('mainactive', 'subactive', 'logo', 'itemorders', 'daytotal', 'weektotal', 'monthtotal', 'yeartotal', 'mytotal', 'nowyear', 'nowmonth', 'nowweek', 'nowday'));
+        return view('admin.booking.index', compact('mainactive', 'subactive', 'logo', 'booking', 'daytotal', 'weektotal', 'monthtotal', 'yeartotal', 'mytotal', 'nowyear', 'nowmonth', 'nowweek', 'nowday'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-    }
-
-    /**
+      /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -67,7 +57,7 @@ class adminorderController extends Controller
         //
     }
 
-    /**
+      /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -75,19 +65,16 @@ class adminorderController extends Controller
      */
     public function show($id)
     {
-        $mainactive  = 'orders';
-        $subactive   = 'all';
-        $logo        = DB::table('settings')->value('logo');
-        $showorder   = order::findorfail($id);
-        $ownerinfo   = DB::table('members')->where('id', $showorder->user_id)->first();
-        $itemorders  = order_item::where('order_id', $id)->get();
-         $city  = City::where('id', $showorder->city_id)->first();
-
+        $mainactive    = 'bookings';
+        $subactive     = 'booking';
+        $logo          = DB::table('settings')->value('logo');
+        $showbooking   = Booking::findorfail($id);
+        $ownerinfo     = DB::table('members')->where('id', $showbooking->user_id)->first();
         $total       = 0;
-        return view('admin.orders.show', compact('mainactive', 'subactive', 'logo', 'showorder', 'ownerinfo', 'itemorders','city'));
+        return view('admin.orders.show', compact('mainactive', 'subactive', 'logo', 'showbooking', 'ownerinfo'));
     }
 
-    /**
+        /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -98,7 +85,7 @@ class adminorderController extends Controller
         //
     }
 
-    /**
+     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -107,14 +94,14 @@ class adminorderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $uporder = order::find($id);
+        $upbooking = Booking::find($id);
         if (Input::has('accept')) {
-            DB::table('orders')->where('id', $id)->update(['status' => 1]);
+            DB::table('booking')->where('id', $id)->update(['status' => 1]);
             $notification                = new notification();
-            $notification->user_id       = $uporder->user_id;
-            $notification->notification  = 'تم قبول الطلب ';
+            $notification->user_id       = $upbooking->user_id;
+            $notification->notification  = 'تم قبول الحجز ';
             $notification->save();
-            $usertoken = member::where('id', $uporder->user_id)->where('firebase_token', '!=', null)->where('firebase_token', '!=', 0)->value('firebase_token');
+            $usertoken = member::where('id', $upbooking->user_id)->where('firebase_token', '!=', null)->where('firebase_token', '!=', 0)->value('firebase_token');
             if ($usertoken) {
                 $optionBuilder = new OptionsBuilder();
                 $optionBuilder->setTimeToLive(60 * 20);
@@ -144,11 +131,11 @@ class adminorderController extends Controller
         } elseif (Input::has('reject')) {
             DB::table('orders')->where('id', $id)->update(['status' => 2]);
             $notification                = new notification();
-            $notification->user_id       = $uporder->user_id;
+            $notification->user_id       = $upbooking->user_id;
             $notification->notification  = 'تم رفض الطلب ';
             $notification->save();
 
-            $usertoken = member::where('id', $uporder->user_id)->where('firebase_token', '!=', null)->where('firebase_token', '!=', 0)->value('firebase_token');
+            $usertoken = member::where('id', $upbooking->user_id)->where('firebase_token', '!=', null)->where('firebase_token', '!=', 0)->value('firebase_token');
             if ($usertoken) {
                 $optionBuilder = new OptionsBuilder();
                 $optionBuilder->setTimeToLive(60 * 20);
@@ -178,10 +165,10 @@ class adminorderController extends Controller
         } elseif (Input::has('finish')) {
             DB::table('orders')->where('id', $id)->update(['status' => 3]);
             $notification                = new notification();
-            $notification->user_id       = $uporder->user_id;
+            $notification->user_id       = $upbooking->user_id;
             $notification->notification  = 'تم تسليم الطلب ';
             $notification->save();
-            $usertoken = member::where('id', $uporder->user_id)->where('firebase_token', '!=', null)->where('firebase_token', '!=', 0)->value('firebase_token');
+            $usertoken = member::where('id', $upbooking->user_id)->where('firebase_token', '!=', null)->where('firebase_token', '!=', 0)->value('firebase_token');
             if ($usertoken) {
                 $optionBuilder = new OptionsBuilder();
                 $optionBuilder->setTimeToLive(60 * 20);
@@ -219,25 +206,25 @@ class adminorderController extends Controller
      */
     public function destroy($id)
     {
-        $delorder = order::find($id);
-        if ($delorder) {
-            order_item::where('order_id', $id)->delete();
-            transfer::where('bill_number', $delorder->order_number)->delete();
-            $delorder->delete();
+        $booking = Booking::find($id);
+        if ($booking) {
+            Category::where('category_id', $id)->delete();
+            $booking->delete();
         }
-        session()->flash('success', 'تم حذف الطلب بنجاح');
+        session()->flash('success', 'تم حذف الحجز بنجاح');
         return back();
     }
 
     public function deleteAll(Request $request)
     {
         $ids            = $request->ids;
-        $selectedorders = DB::table("orders")->whereIn('id', explode(",", $ids))->get();
-        foreach ($selectedorders as $order) {
-            order_item::where('order_id', $order->id)->delete();
-            transfer::where('bill_number', $order->order_number)->delete();
-            order::where('id', $order->id)->delete();
+        $selectebooking = DB::table("orders")->whereIn('id', explode(",", $ids))->get();
+        foreach ($selectebooking as $booking) {
+            Category::where('id', $category->id)->delete();
         }
-        return response()->json(['success' => "تم الحذف بنجاح"]);
+        return response()->json(['success' => "تم الحذف جميع الحجوزات"]);
     }
+
+
+
 }

@@ -13,6 +13,8 @@ use Carbon\Carbon;
 use App\order_item;
 use App\Category;
 use App\City;
+use App\Comment;
+use App\Rate;
 
 class adminCategoryController extends Controller
 {
@@ -191,4 +193,37 @@ class adminCategoryController extends Controller
     //     }
     //     return response()->json(['success' => "تم الحذف بنجاح"]);
     // }
+
+    public function showcomments($id)
+    {
+        $mainactive = 'categories';
+        $subactive  = 'categorycomments';
+        $logo       = DB::table('settings')->value('logo');
+        $comments   = comment::where('category_id', $id)->get();
+        return view('admin.categories.showcomments', compact('mainactive', 'logo', 'subactive', 'comments'));
+    }
+
+    public function showrates($id)
+    {
+        $mainactive   = 'categories';
+        $subactive    ='category';
+        $logo         = DB::table('settings')->value('logo');
+        $convdates    = array();
+        $showitem     = category::find($id);
+        $allrates     = rate::where('category_id',$id)->orderby('created_date','desc')->get();
+
+
+        foreach($allrates as $comment)
+        {
+            $date_arr[]= date('j F Y', strtotime($comment->created_date));
+            foreach($date_arr as $convdate)
+            {
+                if (!in_array($convdate, $convdates))
+                {
+                    array_push($convdates, $convdate);
+                }
+            }
+        }
+        return view('admin.categories.showrates',compact('mainactive','logo','subactive','allrates','showitem','convdates'));
+    }
 }

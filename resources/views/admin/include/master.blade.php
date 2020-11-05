@@ -250,12 +250,12 @@
             <li class="treeview">
           @endif
             <a href="#">
-              <i class="fa fa-dashboard"></i> <span>المشاغل</span><i class="fa fa-angle-left pull-left"></i>
+              <i class="fa fa-dashboard"></i> <span>الصالونات</span><i class="fa fa-angle-left pull-left"></i>
             </a>
             <ul class="treeview-menu">
 
-              <li  @if($subactive=='category') class="active" @endif><a href="{{asset('adminpanel/categories')}}"><i class="fa fa-circle-o"></i>كل المشاغل</a></li>
-              {{-- <li  @if($subactive=='wcategory') class="active" @endif><a href="{{asset('adminpanel/wcategories')}}"><i class="fa fa-circle-o"></i>قسم الأوزان </a></li> --}}
+              <li  @if($subactive=='category') class="active" @endif><a href="{{asset('adminpanel/categories')}}"><i class="fa fa-circle-o"></i>كل الصالونات</a></li>
+              {{-- <li  @if($subactive=='categoriescomments') class="active" @endif><a href="{{asset('adminpanel/comments')}}"><i class="fa fa-circle-o"></i>كل التعليقات </a></li> --}}
             </ul>
 
 
@@ -284,7 +284,7 @@
             <li  @if($subactive=='itemorders') class="active" @endif><a href="{{asset('adminpanel/orders')}}"><i class="fa fa-circle-o"></i>كل الطلبات </a></li>
           </ul>
 
-        @if($mainactive=='appointments')
+        @if($mainactive=='booking')
           <li class="active treeview">
         @else
           <li class="treeview">
@@ -293,19 +293,7 @@
             <i class="fa fa-dashboard"></i> <span>الحجوزات</span><i class="fa fa-angle-left pull-left"></i>
           </a>
           <ul class="treeview-menu">
-            <li  @if($subactive=='appointment') class="active" @endif><a href="{{asset('adminpanel/appointment')}}"><i class="fa fa-circle-o"></i>كل الحجوزات </a></li>
-          </ul>
-
-        @if($mainactive=='transfers')
-          <li class="active treeview">
-        @else
-          <li class="treeview">
-        @endif
-          <a href="#">
-            <i class="fa fa-dashboard"></i> <span>التحويلات البنكية</span><i class="fa fa-angle-left pull-left"></i>
-          </a>
-          <ul class="treeview-menu">
-              <li  @if($subactive=='transfer') class="active" @endif><a href="{{asset('adminpanel/transfers')}}"><i class="fa fa-circle-o"></i>كل التحويلات</a></li>
+            <li  @if($subactive=='book') class="active" @endif><a href="{{asset('adminpanel/booking')}}"><i class="fa fa-circle-o"></i>كل الحجوزات </a></li>
           </ul>
 
           @if($mainactive=='transfers')
