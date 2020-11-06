@@ -104,7 +104,7 @@
                                         <th>مشاهدة</th>
                                         <th> تعديل </th>
                                         <th> حذف</th>
-                                        <th width="50px"><input type="checkbox" id="master"></th>
+                                        {{-- <th width="50px"><input type="checkbox" id="master"></th> --}}
                                     </tr>
                                 </thead>
 
@@ -131,7 +131,7 @@
                                             <button type="submit" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                                             {!! Form::close() !!}
                                         </td>
-                                        <td><input type="checkbox" class="sub_chk" data-id="{{$category->id}}"></td>
+                                        {{-- <td><input type="checkbox" class="sub_chk" data-id="{{$category->id}}"></td> --}}
                                     </tr>
 
                                     {{-- <div class="modal fade" id="modal-upclass{{$category->id}}" style="display: none;">

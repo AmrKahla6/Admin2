@@ -21,7 +21,7 @@
                                             <th> تعطيل </th>
                                             <th> تعديل </th>
                                             <th> حذف</th>
-                                            <th width="50px"><input type="checkbox" id="master"></th>
+                                            {{-- <th width="50px"><input type="checkbox" id="master"></th> --}}
                                         </tr>
                                     </thead>
 
@@ -56,7 +56,7 @@
                                                     {!! Form::close() !!}
                                                 </td>
 
-                                                 <td><input type="checkbox" class="sub_chk" data-id="{{$user->id}}"></td>
+                                                 {{-- <td><input type="checkbox" class="sub_chk" data-id="{{$user->id}}"></td> --}}
                                             </tr>
                                     @endforeach
                                     </tbody>

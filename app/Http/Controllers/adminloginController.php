@@ -19,14 +19,14 @@ class adminloginController extends Controller
     public function index()
     {
         if (Auth::guard('admin')->check()) {
-            $mainactive           = 'dashboard';
-            $subactive            = 'dashboardcont';
-            $logo                 = setting::value('logo');
-            $allmembers           = count(DB::table('members')->get());
-            $allitems             = count(DB::table('items')->get());
-            $itemorders           = count(DB::table('orders')->get());
-            $alltransfers         = count(DB::table('transfers')->get());
-            return view('admin.dashboard', compact('mainactive', 'subactive', 'logo', 'allmembers', 'allitems', 'itemorders', 'alltransfers'));
+            $mainactive              = 'dashboard';
+            $subactive               = 'dashboardcont';
+            $logo                    = setting::value('logo');
+            $allmembers              = count(DB::table('members')->get());
+            $allcats                 = count(DB::table('categories')->get());
+            $allbooking              = count(DB::table('bookings')->get());
+            $allservices             = count(DB::table('services')->get());
+            return view('admin.dashboard', compact('mainactive', 'subactive', 'logo', 'allmembers', 'allcats', 'allbooking', 'allservices'));
         } else {
             $logo = setting::value('logo');
             return view('admin.login', compact('logo'));

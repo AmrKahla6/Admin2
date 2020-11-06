@@ -28,6 +28,7 @@ Route::group(['middleware' => ['adminauth:admin']], function () {
   //setting routes
   Route::resource('adminpanel/conditions', 'adminconditionsController');
   Route::resource('adminpanel/setapp', 'adminchangelogoController');
+  Route::resource('adminpanel/provider', 'providerController');
 
 
  //services routes
