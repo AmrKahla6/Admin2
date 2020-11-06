@@ -131,13 +131,15 @@
                                                             @endif
                                                         </div>
                                                     </div>
+
                                                     <div class="form-group col-md-12">
                                                         <label>صورة المدينه</label>
                                                         <input type="file" name="image" >
                                                         @if ($errors->has('image'))
                                                             <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('image') }}</div>
                                                         @endif
-                                                      </div>
+                                                    </div>
+
                                                     <button type="submit" class="btn btn-primary col-md-offset-4 col-md-4">تعديل</button>
                                                 {!! Form::close() !!}
                                             </div>

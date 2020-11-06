@@ -24,6 +24,12 @@
                     <label>اسم المشغل</label>
                      <input type="text" class="form-control" value="{{$newservice ? $newservice->name : ''}}" readonly>
                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label>(Icon) ايكون الخدمه</label>
+                        <input type="text" class="form-control" value="{{$showservice->icon}}" readonly>
+                    </div>
+
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -45,7 +51,7 @@
             </div>
 
             <div class="col-md-6">
-            <h6 class="box-title" style="float:left;"> تاريخ الاعلان : {{ $showservice->created_at }}</h6><br>
+            <h6 class="box-title" style="float:left;"> تاريخ الخدمه : {{ $showservice->created_at }}</h6><br>
 
                 <h4 style="float:right;margin-top: 5%;">
                      @if($showservice->suspensed == 0)
@@ -57,7 +63,7 @@
 
 
                 <div class="col-md-12">
-                      <img class="img-thumbnail" style="width:100%; height:30%;" src="{{asset('users/images/'.$showservice->image)}}" alt="">
+                      <img class="img-thumbnail" style="width:100%; height:30%;" src="{{asset('/../users/images/'.$showservice->image)}}" alt="">
                 </div>
 
 

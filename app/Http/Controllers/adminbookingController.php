@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Cutting;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
 use LaravelFCM\Message\OptionsBuilder;
 use LaravelFCM\Message\PayloadDataBuilder;
 use LaravelFCM\Message\PayloadNotificationBuilder;
@@ -131,7 +130,7 @@ class adminbookingController extends Controller
             }
             session()->flash('success', 'تم قبول الحجز بنجاح');
             return back();
-        } elseif (Input::has('reject')) {
+        } elseif (request()->has('reject')) {
             DB::table('orders')->where('id', $id)->update(['status' => 2]);
             $notification                = new notification();
             $notification->user_id       = $upbooking->user_id;
@@ -165,7 +164,7 @@ class adminbookingController extends Controller
             }
             session()->flash('success', 'تم رفض الحجز بنجاح');
             return back();
-        } elseif (Input::has('finish')) {
+        } elseif (request()->has('finish')) {
             DB::table('orders')->where('id', $id)->update(['status' => 3]);
             $notification                = new notification();
             $notification->user_id       = $upbooking->user_id;

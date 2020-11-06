@@ -40,22 +40,24 @@
                      </div>
                 </div>
 
-                  <div class="form-group col-md-12">
-                      <label>صورة المنتج</label>
-                      <input type="file" name="image" id="">
-                      <br>
-                      <div style="padding: 2%;" class="col-md-3">
-                          <img class="img-thumbnail" style="width:100%; height:10%;" src={{ url("/../users/images/".$service->image)}} alt="">
-                      </div>
-                  </div>
+                <div class="form-group col-md-12">
+                    <label style="margin-bottom: 15px">ايكون</label>
+                    <div class="form-group col-md-12">
+                        <select name="icon" id="">
+                         {{-- <option value="">اختر المدينة</option> --}}
+                         @foreach ($icons as $icon)
+                               <option  value="{{$icon->id}}">{{$icon->icon}}</option>
+                         @endforeach
+                        </select>
+                     </div>
+                </div>
 
-                  <div class="form-group col-md-12">
-                    <label>صور المنتج</label>
-                    <input type="file" name="images[]" id="" multiple>
-                    <br>
-                    <div style="padding: 2%;" class="col-md-3">
-                        <img class="img-thumbnail" style="width:100%; height:10%;" src="{{asset('users/images/'.$service->image)}}" alt="not found">
-                    </div>
+                <div class="form-group col-md-12">
+                    <label>صورة المنتج</label>
+                    <input type="file" name="image" >
+                    @if ($errors->has('image'))
+                        <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('image') }}</div>
+                    @endif
                 </div>
 
                   <div class="col-md-12">

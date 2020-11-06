@@ -18,7 +18,7 @@ class CreateDistrictsTable extends Migration
             $table->string('name');
             $table->unsignedBigInteger('cities_id');
 
-            $table->foreign('cities_id')->references('id')->on('cities');
+            $table->foreign('cities_id')->references('id')->on('cities')->onDelete('cascade');
 
             $table->timestamps();
         });

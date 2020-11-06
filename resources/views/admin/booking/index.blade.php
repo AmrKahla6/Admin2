@@ -24,7 +24,7 @@
                             @if(count($booking) != 0)
 
                                 <div class="table-responsive box-body">
-                                    <button style="margin-bottom: 10px;float:left;" class="btn btn-danger delete_all" data-url="{{ url('mybookingDeleteAll') }}"><i class="fa fa-trash-o" aria-hidden="true"></i> حذف المحدد</button>
+                                    {{-- <button style="margin-bottom: 10px;float:left;" class="btn btn-danger delete_all" data-url="{{ url('mybookingDeleteAll') }}"><i class="fa fa-trash-o" aria-hidden="true"></i> حذف المحدد</button> --}}
                                     <table id="example3" class="table table-bbooked table-striped">
                                         <thead>
                                             <tr>
@@ -33,7 +33,7 @@
                                                 <th style="text-align:center;">تغيير الحالة</th>
                                                 <th style="text-align:center;">مشاهدة</th>
                                                 <th style="text-align:center;"> حذف</th>
-                                                <th width="50px"><input type="checkbox" id="master"></th>
+                                                {{-- <th width="50px"><input type="checkbox" id="master"></th> --}}
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -94,7 +94,7 @@
                                                         <button type="submit" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                                                         {!! Form::close() !!}
                                                     </td>
-                                                    <td><input type="checkbox" class="sub_chk" data-id="{{$book->id}}"></td>
+                                                    {{-- <td><input type="checkbox" class="sub_chk" data-id="{{$book->id}}"></td> --}}
                                                 </tr>
                                                 <?php
                                                     $daytotal += $book->total;
@@ -118,7 +118,7 @@
                             <h3 class="box-title">طلبات الاسبوع {{$nowweek}} - {{$nowmonth}} - {{$nowyear}}</h3>
                             @if(count($booking) != 0)
                                 <div class="table-responsive box-body">
-                                    <button style="margin-bottom: 10px;float:left;" class="btn btn-danger delete_all" data-url="{{ url('mybookingDeleteAll') }}"><i class="fa fa-trash-o" aria-hidden="true"></i> حذف المحدد</button>
+                                    {{-- <button style="margin-bottom: 10px;float:left;" class="btn btn-danger delete_all" data-url="{{ url('mybookingDeleteAll') }}"><i class="fa fa-trash-o" aria-hidden="true"></i> حذف المحدد</button> --}}
                                     <table id="example3" class="table table-bbooked table-striped">
                                         <thead>
                                             <tr>
@@ -127,7 +127,7 @@
                                                 <th style="text-align:center;">تغيير الحالة</th>
                                                 <th style="text-align:center;">مشاهدة</th>
                                                 <th style="text-align:center;"> حذف</th>
-                                                <th width="50px"><input type="checkbox" id="master1"></th>
+                                                {{-- <th width="50px"><input type="checkbox" id="master1"></th> --}}
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -179,7 +179,7 @@
                                                         <button type="submit" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                                                         {!! Form::close() !!}
                                                     </td>
-                                                    <td><input type="checkbox" class="sub_chk1" data-id="{{$book->id}}"></td>
+                                                    {{-- <td><input type="checkbox" class="sub_chk1" data-id="{{$book->id}}"></td> --}}
                                                 </tr>
                                                 <?php
                                                     $weektotal += $book->total;
@@ -204,7 +204,7 @@
                             <h3 class="box-title">طلبات الشهر {{$nowmonth}} - {{$nowyear}}</h3>
                             @if(count($booking) != 0)
                                 <div class="table-responsive box-body">
-                                    <button style="margin-bottom: 10px;float:left;" class="btn btn-danger delete_all" data-url="{{ url('mybookingDeleteAll') }}"><i class="fa fa-trash-o" aria-hidden="true"></i> حذف المحدد</button>
+                                    {{-- <button style="margin-bottom: 10px;float:left;" class="btn btn-danger delete_all" data-url="{{ url('mybookingDeleteAll') }}"><i class="fa fa-trash-o" aria-hidden="true"></i> حذف المحدد</button> --}}
                                     <table id="example3" class="table table-bbooked table-striped">
                                         <thead>
                                             <tr>
@@ -212,7 +212,7 @@
                                                 <th style="text-align:center;">تغيير الحالة</th>
                                                 <th style="text-align:center;">مشاهدة</th>
                                                 <th style="text-align:center;"> حذف</th>
-                                                <th width="50px"><input type="checkbox" id="master2"></th>
+                                                {{-- <th width="50px"><input type="checkbox" id="master2"></th> --}}
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -263,7 +263,7 @@
                                                         <button type="submit" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                                                         {!! Form::close() !!}
                                                     </td>
-                                                    <td><input type="checkbox" class="sub_chk2" data-id="{{$book->id}}"></td>
+                                                    {{-- <td><input type="checkbox" class="sub_chk2" data-id="{{$book->id}}"></td> --}}
                                                 </tr>
                                                 <?php
                                                     $monthtotal += $book->total;
@@ -288,7 +288,7 @@
                             <h3 class="box-title">طلبات السنة {{$nowyear}}</h3>
                             @if(count($booking) != 0)
                                 <div class="table-responsive box-body">
-                                    <button style="margin-bottom: 10px;float:left;" class="btn btn-danger delete_all" data-url="{{ url('mybookingDeleteAll') }}"><i class="fa fa-trash-o" aria-hidden="true"></i> حذف المحدد</button>
+                                    {{-- <button style="margin-bottom: 10px;float:left;" class="btn btn-danger delete_all" data-url="{{ url('mybookingDeleteAll') }}"><i class="fa fa-trash-o" aria-hidden="true"></i> حذف المحدد</button> --}}
                                     <table id="example3" class="table table-bbooked table-striped">
                                         <thead>
                                             <tr>
@@ -299,7 +299,7 @@
                                                 <th style="text-align:center;">تغيير الحالة</th>
                                                 <th style="text-align:center;">مشاهدة</th>
                                                 <th style="text-align:center;"> حذف</th>
-                                                <th width="50px"><input type="checkbox" id="master3"></th>
+                                                {{-- <th width="50px"><input type="checkbox" id="master3"></th> --}}
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -351,7 +351,7 @@
                                                         <button type="submit" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                                                         {!! Form::close() !!}
                                                     </td>
-                                                    <td><input type="checkbox" class="sub_chk3" data-id="{{$book->id}}"></td>
+                                                    {{-- <td><input type="checkbox" class="sub_chk3" data-id="{{$book->id}}"></td> --}}
                                                 </tr>
                                                 <?php
                                                     $yeartotal += $book->total;
@@ -376,7 +376,7 @@
                             <h3 class="box-title">كل الطلبات</h3>
                             @if(count($booking) != 0)
                                 <div class="table-responsive box-body">
-                                    <button style="margin-bottom: 10px;float:left;" class="btn btn-danger delete_all" data-url="{{ url('mybookingDeleteAll') }}"><i class="fa fa-trash-o" aria-hidden="true"></i> حذف المحدد</button>
+                                    {{-- <button style="margin-bottom: 10px;float:left;" class="btn btn-danger delete_all" data-url="{{ url('mybookingDeleteAll') }}"><i class="fa fa-trash-o" aria-hidden="true"></i> حذف المحدد</button> --}}
                                     <table id="example3" class="table table-bbooked table-striped">
                                         <thead>
                                             <tr>
@@ -387,7 +387,7 @@
                                                 <th style="text-align:center;">تغيير الحالة</th>
                                                 <th style="text-align:center;">مشاهدة</th>
                                                 <th style="text-align:center;"> حذف</th>
-                                                <th width="50px"><input type="checkbox" id="master4"></th>
+                                                {{-- <th width="50px"><input type="checkbox" id="master4"></th> --}}
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -436,7 +436,7 @@
                                                         <button type="submit" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                                                         {!! Form::close() !!}
                                                     </td>
-                                                    <td><input type="checkbox" class="sub_chk4" data-id="{{$book->id}}"></td>
+                                                    {{-- <td><input type="checkbox" class="sub_chk4" data-id="{{$book->id}}"></td> --}}
                                                 </tr>
                                                 <?php
                                                     $mytotal += $book->total;

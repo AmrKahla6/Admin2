@@ -13,7 +13,7 @@ use App\order;
 use App\order_item;
 use App\setting;
 use App\Servceimage;
-
+use App\Icon;
 class adminserviceController extends Controller
 {
     /**
@@ -43,7 +43,8 @@ class adminserviceController extends Controller
         $subactive    = 'addservice';
         $logo         = DB::table('settings')->value('logo');
         $categories   = Category::get();
-        return view('admin.services.create', compact('mainactive', 'subactive', 'logo' ,'categories'));
+        $icons        = Icon::get();
+        return view('admin.services.create', compact('mainactive', 'subactive', 'logo' ,'categories' , 'icons'));
     }
 
     /**
@@ -59,36 +60,26 @@ class adminserviceController extends Controller
             'name'              => 'required|max:200',
             'des'               => 'required',
             'price'             => 'required',
+            'icon'              => 'required',
             'category_id'       => 'required',
         ]);
         $newservice                        = new Service;
         $newservice->name                  = $request['name'];
         $newservice->price                 = $request['price'];
         $newservice->des                   = $request['des'];
+        $newservice->icon                   = $request['icon'];
         $newservice->category_id           = $request['category_id'];
 
         if ($request->hasFile('image')) {
-            $service = $request['image'];
-            $img_name = rand(0, 999) . '.' . $service->getClientOriginalExtension();
-            $path = public_path() . '/users/images/'. $img_name;
+            $city = $request['image'];
+            $img_name = rand(0, 999) . '.' . $city->getClientOriginalExtension();
+            $city->move(base_path('users/images/'), $img_name);
             $newservice->image   = $img_name;
         }
+        // dd($newservice);
         $newservice->save();
 
-        if ($request->hasFile('images'))
-         {
-            // return count($request['images']);
-            foreach ($request['images'] as $key => $image) {
-                // return $image;
-                $service_img = rand(0, 999) . '.' . $image->getClientOriginalExtension();
-                $image->move(base_path('users/images/'), $service_img);
-                Servceimage::create([
-                    "images"     => $service_img ,
-                    "service_id" => $newservice->id
-                ]);
-            }
-        }
-        session()->flash('success', 'تم اضافة المنتج بنجاح');
+        session()->flash('success', 'تم اضافة الخدمه بنجاح');
         return back();
     }
 
@@ -105,7 +96,8 @@ class adminserviceController extends Controller
         $logo            = DB::table('settings')->value('logo');
         $showservice     = Service::findorfail($id);
         $category        = Service::all();
-        return view('admin.services.show', compact('mainactive', 'logo', 'subactive', 'showservice','category'));
+        $icons           = Icon::first();
+        return view('admin.services.show', compact('mainactive', 'logo', 'subactive', 'showservice','category' ,'icons'));
     }
 
     /**
@@ -121,7 +113,8 @@ class adminserviceController extends Controller
         $logo         = DB::table('settings')->value('logo');
         $categories   = Category::all();
         $service      = Service::findorfail($id);
-        return view('admin.services.edit', compact('mainactive', 'logo', 'subactive', 'service' , 'categories'));
+        $icons        = Icon::get();
+        return view('admin.services.edit', compact('mainactive', 'logo', 'subactive', 'service' , 'categories', 'icons'));
     }
 
     /**
@@ -134,7 +127,7 @@ class adminserviceController extends Controller
     public function update(Request $request, $id)
     {
         $newservice = Service::find($id);
-        if (Input::has('servReq')) {
+        if (request()->has('servReq')) {
             if ($newservice->servReq == 0) {
                 DB::table('services')->where('id', $id)->update(['servReq' => 1]);
                 session()->flash('success', 'تم طلب الخدمه بنجاح');
@@ -149,39 +142,30 @@ class adminserviceController extends Controller
                 'name'              => 'required|max:200',
                 'des'               => 'required',
                'price'              => 'required',
+               'icon'               => 'required',
               'category_id'         => 'required|exists:categories,id',
             ]);
             $newservice->name                  = $request['name'];
             $newservice->price                 = $request['price'];
             $newservice->des                   = $request['des'];
+            $newservice->icon                  = $request['icon'];
             $newservice->category_id           = $request['category_id'];
 
             if ($request->hasFile('image')) {
-                $service = $request['image'];
-                $img_name = rand(0, 999) . '.' . $service->getClientOriginalExtension();
-                $path = public_path() . 'users/images/'. $img_name;
+                $city = $request['image'];
+                $img_name = rand(0, 999) . '.' . $city->getClientOriginalExtension();
+                $city->move(base_path('users/images/'), $img_name);
                 $newservice->image   = $img_name;
             }
+            //  dd($newservice);
 
             $newservice->save();
 
-            if (count($request['images'] > 1)) {
-                return count($request['images']);
-                foreach ($request['images'] as $key => $image) {
-                    // return $image;
-                    $service_img = rand(0, 999) . '.' . $image->getClientOriginalExtension();
-                    $image->move(base_path('users/images/'), $service_img);
-                    Servceimage::create([
-                        "images"     => $service_img ,
-                        "service_id" => $newservice->id
-                    ]);
-                }
-
-            session()->flash('success', 'تم تعديل المشغل بنجاح');
+            session()->flash('success', 'تم تعديل الخدمه بنجاح');
             return back();
         }
     }
-}
+
 
     /**
      * Remove the specified resource from storage.
@@ -191,38 +175,9 @@ class adminserviceController extends Controller
      */
     public function destroy($id)
     {
-
         $delitem = Service::find($id);
-        // if ($delservice) {
-        //     $categories = Category::where('category_id', $delitem->id)->get();
-        //     foreach ($categories as $category) {
-        //         $order =  order::where('id', $order_item->order_id)->first();
-        //         if ($order) {
-        //             $order->delete();
-        //         }
-        //         $order_item->delete();
-        //     }
-        // }
         $delitem->delete();
-        session()->flash('success', 'تم حذف المنتج بنجاح');
+        session()->flash('success', 'تم حذف الخدمه بنجاح');
         return back();
-    }
-
-    public function deleteAll(Request $request)
-    {
-        $ids           = $request->ids;
-        $selecteditems = DB::table("members")->whereIn('id', explode(",", $ids))->get();
-        foreach ($selecteditems as $item) {
-            $order_items = order_item::where('item_id', $item->id)->get();
-            foreach ($order_items as $order_item) {
-                $order =  order::where('id', $order_item->order_id)->first();
-                if ($order) {
-                    $order->delete();
-                }
-                $order_item->delete();
-            }
-            $item->delete();
-        }
-        return response()->json(['success' => "تم الحذف بنجاح"]);
     }
 }

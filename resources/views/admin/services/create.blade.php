@@ -40,20 +40,28 @@
                      </div>
                     </div>
 
-                  <div class="form-group col-md-12">
-                      <label>صوره الخدمه</label>
-                      <input type="file" name="image" >
-                      @if ($errors->has('image'))
-                          <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('image') }}</div>
-                      @endif
-                  </div>
-                  <div class="form-group col-md-12">
-                    <label>صور الخدمه</label>
-                    <input type="file" name="images[]" multiple>
-                    @if ($errors->has('images'))
-                        <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('images') }}</div>
-                    @endif
-                </div>
+                    <div class="form-group col-md-12">
+                        <label>صورة الخدمه</label>
+                        <input type="file" name="image" >
+                        @if ($errors->has('image'))
+                            <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('image') }}</div>
+                        @endif
+                    </div>
+
+
+                    <div class="form-group col-md-12">
+                        <label>اختر ايكون</label>
+                        <div class="form-group col-md-12">
+                            <select name="icon" id="">
+                                <option value="">اختر ايكون</option>
+                                @foreach ($icons as $icon)
+
+                            <option value="{{$icon->id}}">{{$icon->icon}}</option>
+
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
 
                   <div class="col-md-12">
                       <div class="box box-info">

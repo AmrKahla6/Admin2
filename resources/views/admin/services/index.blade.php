@@ -11,7 +11,7 @@
                 </div>
 
                 <div class="table-responsive box-body">
-                   <button style="margin-bottom: 10px;float:left;" class="btn btn-danger delete_all" data-url="{{ url('myservicesDeleteAll') }}"><i class="fa fa-trash-o" aria-hidden="true"></i> حذف المحدد</button>
+                   {{-- <button style="margin-bottom: 10px;float:left;" class="btn btn-danger delete_all" data-url="{{ url('myservicesDeleteAll') }}"><i class="fa fa-trash-o" aria-hidden="true"></i> حذف المحدد</button> --}}
                     <table id="example3" class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -30,7 +30,7 @@
                                 <th>
                                   حذف
                                 </th>
-                                <th width="50px"><input type="checkbox" id="master"></th>
+                                {{-- <th width="50px"><input type="checkbox" id="master"></th> --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -61,7 +61,7 @@
                                     <button type="submit" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                                     {!! Form::close() !!}
                                 </td>
-                                <td><input type="checkbox" class="sub_chk" data-id="{{$service->id}}"></td>
+                                {{-- <td><input type="checkbox" class="sub_chk" data-id="{{$service->id}}"></td> --}}
                             </tr>
                         @endforeach
                         </tbody>
