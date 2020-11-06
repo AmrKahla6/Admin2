@@ -18,7 +18,7 @@ class Sliders extends Migration
             $table->string('artitle');
             $table->string('entitle');
             $table->string('url');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->boolean('top')->default(0);
             $table->boolean('suspensed')->default(0);
         });

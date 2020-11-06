@@ -22,6 +22,17 @@
                                                 <label>تفاصيل المشغل</label>
                                                 <input type="text" class="form-control" value="{{$category->des}}" readonly>
                                             </div>
+
+                                            <div class="form-group col-md-12">
+                                                <label>خط الطول (lat)</label>
+                                                <input type="text" class="form-control" value="{{$category->lat}}" readonly>
+                                            </div>
+
+                                             <div class="form-group col-md-12">
+                                                <label>خط العرض (lng)</label>
+                                                <input type="text" class="form-control" value="{{$category->lng}}" readonly>
+                                            </div>
+
                                             <?php
                                                $city  = DB::table('cities')->where('id',$category->city_id)->first();
                                              ?>
@@ -31,11 +42,16 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6">
-                                            <div class="col-md-12">
-                                                <img class="img-circle" style="width:100%; height:50%;" rc={{ url("/../users/images/".$category->image)}} alt="">
-                                            </div>
-                                        </div>
+                                          <div class="form-group col-md-12">
+                                              <label>صور العنصر</label>
+                                              <br>
+                                              @foreach($adimages as $image)
+                                              {{-- {{dd($image)}} --}}
+                                              <div style="padding: 2%;" class="col-md-3">
+                                                  <img class="img-thumbnail" style="width:100%; height:10%;" src={{ url("/../users/images/".$image->image)}} alt="">
+                                              </div>
+                                              @endforeach
+                                          </div>
                                     </div>
                                 </div>
             </div>

@@ -15,6 +15,7 @@ use App\Category;
 use App\City;
 use App\Comment;
 use App\Rate;
+use App\Categoryimages;
 
 class adminCategoryController extends Controller
 {
@@ -29,8 +30,9 @@ class adminCategoryController extends Controller
         $subactive       = 'category';
         $logo            = DB::table('settings')->value('logo');
         $cities          = City::all();
+        $categories      = Category::orderBy('id', 'desc')->get();
         // $allcategories   = category::where('parent',0)->get();
-        $categories = Category::all();
+        // $categories = Category::all();
         return view('admin.categories.index', compact('mainactive', 'subactive', 'logo', 'categories' , 'cities'));
     }
 
@@ -53,26 +55,33 @@ class adminCategoryController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name'   => 'required',
-            'des'   => 'required',
+            'name'      => 'required',
+            'des'       => 'required',
             'city_id'   => 'required',
-            'image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
-
         $newcategory              = new Category;
         $newcategory->name        = $request['name'];
         $newcategory->des         = $request['des'];
         $newcategory->city_id     = $request['city_id'];
+        $newcategory->lat         = $request['lat'];
+        $newcategory->lng         = $request['lng'];
 
-        if ($request->hasFile('image')) {
-            $category = $request['image'];
-            $img_name = rand(0, 999) . '.' . $category->getClientOriginalExtension();
-            $category->move(base_path('users/images/'), $img_name);
-            $newcategory->image   = $img_name;
+        $newcategory->save();
+
+        $items = $request['items'];
+        if ($items) {
+            foreach ($items as $item) {
+                $newimg = new Categoryimages;
+                $img_name = rand(0, 999) . '.' . $item->getClientOriginalExtension();
+                $item->move(base_path('users/images/'), $img_name);
+                $newimg->image   = $img_name;
+                $newimg->category_id = $newcategory->id;
+                $newimg->save();
+            }
         }
 
         $newcategory->save();
-        session()->flash('success', 'تم اضافة نوع تقطيع جديد');
+        session()->flash('success', 'تم اضافة  صالون جديد');
         return back();
     }
 
@@ -90,7 +99,9 @@ class adminCategoryController extends Controller
         $logo            = DB::table('settings')->value('logo');
         $category        = Category::find($id);
         $cities          = City::all();
-        return view('admin.categories.show', compact('mainactive', 'subactive', 'logo', 'cities' , 'category'));
+        $adimg           = Categoryimages::where('category_id', $id)->first();
+        $adimages        = Categoryimages::where('category_id', $id)->get();
+        return view('admin.categories.show', compact('mainactive', 'subactive', 'logo', 'cities' , 'category' , 'adimg' , 'adimages'));
         }
 
         public function rating(Request $request)
@@ -119,7 +130,8 @@ class adminCategoryController extends Controller
         $mainactive      = 'categories';
         $subactive       = 'category';
         $logo            = DB::table('settings')->value('logo');
-        $cities          = City::all();
+        $cities          = City::orderBy('id', 'desc')->get();
+        $adimages        = Categoryimages::where('category_id', $id)->get();
         // $allcategories   = category::where('parent',0)->get();
         $category        = Category::find($id);
         return view('admin.categories.edit', compact('mainactive', 'subactive', 'logo', 'category' , 'cities'));
@@ -144,34 +156,29 @@ class adminCategoryController extends Controller
         $upcategory->name        = $request['name'];
         $upcategory->des         = $request['des'];
         $upcategory->city_id     = $request['city_id'];
-
-        if ($request->hasFile('image')) {
-            $category  = $request['image'];
-            $img_name  = rand(0, 999) . '.' . $category->getClientOriginalExtension();
-            $category->move(base_path('users/images/'), $img_name);
-            $upcategory->image   = $img_name;
-        }
-
+        $upcategory->lat         = $request['lat'];
+        $upcategory->lng         = $request['lng'];
 
         $upcategory->save();
-        session()->flash('success', 'تم تعديل اسم التقطيع بنجاح');
+
+        $items = $request['items'];
+
+        if ($items) {
+            foreach ($items as $item) {
+                $newimg   = new Categoryimages;
+                $img_name = rand(0, 999) . '.' . $item->getClientOriginalExtension();
+                $item->move(base_path('users/images/'), $img_name);
+                $newimg->image   = $img_name;
+                $newimg->category_id = $id;
+                $newimg->save();
+            }
+        }
+
+        session()->flash('success', 'تم تعديل الصالون بنجاح');
         return back();
     }
 
-    // public static function delete_parent($id)
-    // {
-    //     $category_parent = Cutting::where('parent', $id)->get();
-    //     foreach ($category_parent as $sub)
-    //     {
-    //         self::delete_parent($sub->id);
-    //         $subdepartment = Cutting::find($sub->id);
-    //         if (!empty($subdepartment))
-    //         {
-    //             $subdepartment->delete();
-    //         }
-    //     }
-    //     $dep = Cutting::find($id)->delete();
-    // }
+
 
     /**
      * Remove the specified resource from storage.
@@ -181,10 +188,17 @@ class adminCategoryController extends Controller
      */
     public function destroy($id)
     {
-        $delcategory = Category::find($id);
-        $delcategory->services()->attach($id);
-        $delcategory->delete();
-        return back();
+        if (request()->has('del-single-image')) {
+            $delimg = Categoryimages::find($id)->delete();
+            session()->flash('success', 'تم حذف الصورة بنجاح');
+            return back();
+        } else {
+            $delcat = Category::find($id);
+            Categoryimages::where('category_id', $id)->delete();
+            $delcat->delete();
+            session()->flash('success', 'تم حذف المنتج بنجاح');
+            return back();
+        }
     }
 
     // public function deleteAll(Request $request)

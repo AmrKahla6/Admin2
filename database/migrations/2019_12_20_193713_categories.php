@@ -17,6 +17,8 @@ class Categories extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('des');
+            $table->float('lat')->nullable();
+            $table->float('lng')->nullable();
             $table->string('image')->nullable();
             $table->unsignedBigInteger('city_id');
 

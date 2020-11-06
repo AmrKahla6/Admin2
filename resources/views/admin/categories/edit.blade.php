@@ -8,6 +8,7 @@
       <div class="box box-primary">
         <div class="box-header with-border">
           <h3 class="box-title">تعديل بيانات الصالون </h3>
+          <br><br>
           <p> {{ $category->name}} </p>
         </div>
 
@@ -22,14 +23,15 @@
                     @endif
                 </div>
             </div>
+
             <div class="form-group col-md-12">
-                <label>صورة المدينة</label>
-                <br>
-                <input type="file" name="image" >
-                <div style="padding: 2%;" class="col-md-3">
-                    <img class="img-thumbnail" style="width:100%; height:10%;" src={{ url("/../users/images/".$category->image)}} alt="Not Found">
-                </div>
+                <label>صور اكثر عن الاعلان [يمكنك رفع اكثر من صورة]</label>
+                <input type="file" name="items[]" multiple>
+                @if ($errors->has('items'))
+                    <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('items') }}</div>
+                @endif
             </div>
+
             <div class="col-md-12">
                 <div class="box box-info">
                     <div class="box-header">
@@ -42,7 +44,24 @@
                         @endif
                     </div>
                 </div>
-            </div
+            </div>
+
+            <div class="form-group col-md-6">
+                <label>خط الطول(lat)</label>
+                <input type="text" name="lat" value="{{$category->lat}}" class="form-control" placeholder = 'خط الطول '>
+                @if ($errors->has('lat'))
+                    <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('lat') }}</div>
+                @endif
+            </div>
+
+            <div class="form-group col-md-6">
+                <label>خط العرض(lng)</label>
+                <input type="text" name="lng" value="{{$category->lng}}" class="form-control" placeholder = 'خط العرض '>
+                @if ($errors->has('lng'))
+                    <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('lng') }}</div>
+                @endif
+            </div>
+
             <div class="form-group col-md-12">
                 <label>اختر المدينة</label>
                 <div class="form-group col-md-12">

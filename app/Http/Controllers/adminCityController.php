@@ -61,19 +61,6 @@ class adminCityController extends Controller
         // dd($newcity);
         $newcity->save();
 
-        if ($request->hasFile('images'))
-        {
-           // return count($request['images']);
-           foreach ($request['images'] as $key => $image) {
-               // return $image;
-               $city_img = rand(0, 999) . '.' . $image->getClientOriginalExtension();
-               $image->move(base_path('users/images/'), $city_img);
-               Servceimage::create([
-                   "images"     => $city_img ,
-                   "service_id" => $newservice->id
-               ]);
-           }
-       }
         session()->flash('success','تم إضافة مدينة جديدة');
         return back();
     }
@@ -145,12 +132,14 @@ class adminCityController extends Controller
     public function destroy($id)
     {
         $delcity = City::find($id);
-        // if($delcategory)
+        //  dd($delcity);
+        $delcity->delete();
+        session()->flash('success','تم حذف اسم المدينة بنجاح');
+        return back();
+        // if($delcity)
         // {
         //     self::delete_parent($id);
         //     session()->flash('success','تم حذف التقطيع بنجاح');
         // }
-        $delcity->delete();
-        return back();
     }
 }

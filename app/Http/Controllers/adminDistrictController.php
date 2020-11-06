@@ -18,10 +18,10 @@ class adminDistrictController extends Controller
     {
         $mainactive      = 'cities';
         $subactive       = 'district';
-       
-        $logo = DB::table('settings')->value('logo');
-        $cities = City::all();
-        $districts= District::all();
+
+        $logo       = DB::table('settings')->value('logo');
+        $cities     = City::all();
+        $districts  = District::all();
         return view('admin.cities.indexx',compact('logo','cities','districts','mainactive','subactive'));
     }
 
@@ -51,7 +51,7 @@ class adminDistrictController extends Controller
         $newdistrict              = new District();
         $newdistrict->name = $request['name'];
         $newdistrict->cities_id = $request['city'];
-       
+
         $newdistrict->save();
         session()->flash('success','تم إضافة حي جديد');
         return back();
@@ -91,13 +91,13 @@ class adminDistrictController extends Controller
         $updistrict = District::find($id);
         $this->validate($request,[
             'name'   => 'required|unique:districts,name,'.$id,
-            
+
          ]);
 
         $updistrict->name     = $request['name'];
         $updistrict->cities_id     = $request['city'];
-        
-        
+
+
         $updistrict->save();
         session()->flash('success','تم تعديل اسم الحي بنجاح');
         return back();
@@ -118,6 +118,6 @@ class adminDistrictController extends Controller
         //     session()->flash('success','تم حذف التقطيع بنجاح');
         // }
         $deldistrict->delete();
-        return back(); 
+        return back();
     }
 }

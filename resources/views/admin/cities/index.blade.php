@@ -49,17 +49,6 @@
                                         <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('image') }}</div>
                                     @endif
                                 </div>
-
-                                <div class="form-group col-md-12">
-                                    <label>صور المدينه</label>
-                                    <input type="file" name="images[]" multiple>
-                                    @if ($errors->has('images'))
-                                        <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('images') }}</div>
-                                    @endif
-                                </div>
-
-
-
                                 <button type="submit" class="btn btn-primary col-md-offset-4 col-md-4">اضافة</button>
                             {!! Form::close() !!}
                         </div>
@@ -143,24 +132,12 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-group col-md-12">
-                                                        <label>صورة المنتج</label>
+                                                        <label>صورة المدينه</label>
                                                         <input type="file" name="image" >
                                                         @if ($errors->has('image'))
                                                             <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('image') }}</div>
                                                         @endif
                                                       </div>
-
-                                                    <div class="form-group col-md-12">
-                                                        <label>صورة المدينة</label>
-                                                        <br>
-
-                                                        <div style="padding: 2%;" class="col-md-3">
-                                                            <img class="img-thumbnail" style="width:100%; height:10%;" src="{{asset('users/images/'.$city->image)}}" alt="Not Found">
-                                                        </div>
-
-                                                    </div>
-
-
                                                     <button type="submit" class="btn btn-primary col-md-offset-4 col-md-4">تعديل</button>
                                                 {!! Form::close() !!}
                                             </div>

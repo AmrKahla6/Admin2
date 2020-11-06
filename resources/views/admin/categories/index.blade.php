@@ -1,5 +1,5 @@
 @extends('admin/include/master')
-@section('title') لوحة التحكم |  الاقسام  @endsection
+@section('title') لوحة التحكم |  الصالونات  @endsection
 @section('content')
 
 <section class="content">
@@ -44,28 +44,43 @@
                                             @endif
                                         </div>
                                     </div>
-                                </div>
-
-                                <div class="form-group col-md-12">
-                                    <label>المدينه</label>
-                                    <div class="form-group col-md-12">
-                                        <input style="width:100%;" type="text" class="form-control" name="city_id" placeholder="اسم المدينه"  required>
-                                        @if ($errors->has('name'))
-                                        <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('city_id') }}</div>
+                                    <div class="form-group col-md-6">
+                                        <label>خط الطول(lat)</label>
+                                        <input type="text" name="lat" class="form-control" placeholder = 'خط الطول '>
+                                        @if ($errors->has('lat'))
+                                            <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('lat') }}</div>
                                         @endif
                                     </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label>خط العرض(lng)</label>
+                                        <input type="text" name="lng" class="form-control" placeholder = 'خط العرض '>
+                                        @if ($errors->has('lng'))
+                                            <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('lng') }}</div>
+                                        @endif
+                                    </div>
+
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label>اختر المدينة</label>
+                                    <div class="form-group col-md-12">
+                                        <select name="city_id" id="">
+                                            <option value="">اختر المدينة</option>
+                                            @foreach ($cities as $city)
+                                                <option value="{{$city->id}}">{{$city->name_ar}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                {{-- {{dd($city)}} --}}
+                                <div class="form-group col-md-12">
+                                    <label>صور اكثر عن الصالون [يمكنك رفع اكثر من صورة]</label>
+                                    <input type="file" name="items[]" multiple>
+                                    @if ($errors->has('items'))
+                                        <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('items') }}</div>
+                                    @endif
                                 </div>
 
-                                <div class="input-group control-group increment" >
-                                    <label>صورة المشغل</label>
-                                    <input type="file" name="image[]" class="form-control">
-                                    @if ($errors->has('image'))
-                                        <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('image') }}</div>
-                                    @endif
-                                    <div class="input-group-btn">
-                                      <button class="btn btn-success" type="button"><i class="glyphicon glyphicon-plus"></i>Add</button>
-                                    </div>
-                                  </div>
                                 <button type="submit" class="btn btn-primary col-md-offset-4 col-md-4">اضافة</button>
                             {!! Form::close() !!}
                         </div>
@@ -119,7 +134,7 @@
                                         <td><input type="checkbox" class="sub_chk" data-id="{{$category->id}}"></td>
                                     </tr>
 
-                                    <div class="modal fade" id="modal-upclass{{$category->id}}" style="display: none;">
+                                    {{-- <div class="modal fade" id="modal-upclass{{$category->id}}" style="display: none;">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                             <div class="modal-header">
@@ -165,13 +180,12 @@
                                                     </div>
 
                                                     <div class="form-group col-md-12">
-                                                        <label>صورة الصالون</label>
-                                                        <input type="file" name="image[]" id="">
-                                                        <br>
-                                                        <div style="padding: 2%;" class="col-md-3">
-                                                            <img class="img-thumbnail" style="width:100%; height:10%;" src="{{asset('users/images/'.$category->image)}}" alt="">
-                                                        </div>
-                                                    </div>
+                                                        <label>صور اكثر عن الصالون [يمكنك رفع اكثر من صورة]</label>
+                                                        <input type="file" name="items[]" multiple>
+                                                        @if ($errors->has('items'))
+                                                            <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('items') }}</div>
+                                                        @endif
+                                                      </div>
 
                                                     <button type="submit" class="btn btn-primary col-md-offset-4 col-md-4">تعديل</button>
                                                 {!! Form::close() !!}
@@ -181,7 +195,7 @@
                                             </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 @endforeach
                                 </tbody>
                             </table>
