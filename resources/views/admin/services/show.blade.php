@@ -24,10 +24,12 @@
                     <label>اسم المشغل</label>
                      <input type="text" class="form-control" value="{{$newservice ? $newservice->name : ''}}" readonly>
                    </div>
-
+                    @php
+                        $icon = \App\Icon::find($showservice->icon_id);
+                    @endphp
                     <div class="form-group col-md-12">
                         <label>(Icon) ايكون الخدمه</label>
-                        <input type="text" class="form-control" value="{{$showservice->icon}}" readonly>
+                        <input type="text" class="form-control" value="{{ $icon ? $icon->icon : ''}}" readonly>
                     </div>
 
                 <table class="table table-bordered">

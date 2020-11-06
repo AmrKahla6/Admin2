@@ -19,7 +19,8 @@
         "laravelcollective/html": "^6.2",
         "nesbot/carbon": "^2.41",
         "pusher/pusher-php-server": "^4.1",
-        "willvincent/laravel-rateable": "^2.2"
+        "willvincent/laravel-rateable": "^2.2",
+        "intervention/image": "dev-master"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",

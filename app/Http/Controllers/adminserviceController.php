@@ -60,14 +60,14 @@ class adminserviceController extends Controller
             'name'              => 'required|max:200',
             'des'               => 'required',
             'price'             => 'required',
-            'icon'              => 'required',
+            'icon_id'           => 'required',
             'category_id'       => 'required',
         ]);
         $newservice                        = new Service;
         $newservice->name                  = $request['name'];
         $newservice->price                 = $request['price'];
         $newservice->des                   = $request['des'];
-        $newservice->icon                   = $request['icon'];
+        $newservice->icon_id               = $request['icon_id'];
         $newservice->category_id           = $request['category_id'];
 
         if ($request->hasFile('image')) {
@@ -142,13 +142,13 @@ class adminserviceController extends Controller
                 'name'              => 'required|max:200',
                 'des'               => 'required',
                'price'              => 'required',
-               'icon'               => 'required',
+               'icon_id'               => 'required',
               'category_id'         => 'required|exists:categories,id',
             ]);
             $newservice->name                  = $request['name'];
             $newservice->price                 = $request['price'];
             $newservice->des                   = $request['des'];
-            $newservice->icon                  = $request['icon'];
+            $newservice->icon_id               = $request['icon_id'];
             $newservice->category_id           = $request['category_id'];
 
             if ($request->hasFile('image')) {

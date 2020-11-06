@@ -7,6 +7,7 @@ use App\Category;
 use App\Servceimage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Image;
 
 class adminCityController extends Controller
 {
@@ -121,6 +122,24 @@ class adminCityController extends Controller
         $upcity->save();
         session()->flash('success','تم تعديل اسم المدينة بنجاح');
         return back();
+    }
+
+    public function districts(Request $request)
+    {
+        // $districts = \App\District::where('cities_id',$request->id)->get();
+        $districts = City::find($request->id)->districts()->get();
+        return $districts;
+
+        $delcity = City::find($id);
+        //  dd($delcity);
+        $delcity->delete();
+        session()->flash('success','تم حذف اسم المدينة بنجاح');
+        return back();
+        // if($delcity)
+        // {
+        //     self::delete_parent($id);
+        //     session()->flash('success','تم حذف التقطيع بنجاح');
+        // }
     }
 
     /**

@@ -22,7 +22,7 @@ class Categories extends Migration
             $table->string('image')->nullable();
             $table->unsignedBigInteger('city_id');
 
-            $table->foreign('city_id')->references('id')->on('cities');
+            $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
             $table->timestamps();
         });
     }

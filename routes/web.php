@@ -50,6 +50,7 @@ Route::group(['middleware' => ['adminauth:admin']], function () {
   Route::resource('adminpanel/cities', 'adminCityController');
   Route::resource('adminpanel/districts', 'adminDistrictController');
   Route::get('adminpanel/list_cities', 'adminCityController@list_cities')->name('admin.list_cities');
+  Route::post('districts', 'adminCityController@districts')->name('city.districts');
 
   //Booking
   Route::resource('adminpanel/booking', 'adminbookingController');

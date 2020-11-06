@@ -54,17 +54,21 @@ class adminCategoryController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request;
         $this->validate($request, [
-            'name'      => 'required',
-            'des'       => 'required',
-            'city_id'   => 'required',
+            'name'          => 'required',
+            'des'           => 'required',
+            'city_id'       => 'required',
+            'district_id'   => 'required',
         ]);
-        $newcategory              = new Category;
-        $newcategory->name        = $request['name'];
-        $newcategory->des         = $request['des'];
-        $newcategory->city_id     = $request['city_id'];
-        $newcategory->lat         = $request['lat'];
-        $newcategory->lng         = $request['lng'];
+
+        $newcategory                  = new Category;
+        $newcategory->name            = $request['name'];
+        $newcategory->des             = $request['des'];
+        $newcategory->city_id         = $request['city_id'];
+        $newcategory->district_id     = $request['district_id'];
+        $newcategory->lat             = $request['lat'];
+        $newcategory->lng             = $request['lng'];
 
         $newcategory->save();
 
@@ -148,16 +152,19 @@ class adminCategoryController extends Controller
     {
         $upcategory = Category::find($id);
         $this->validate($request, [
-            'name'      => 'required',
-            'des'       => 'required',
-            'city_id'   => 'required',
+            'name'          => 'required',
+            'des'           => 'required',
+            'city_id'       => 'required',
+            'district_id'   => 'required',
+
         ]);
 
-        $upcategory->name        = $request['name'];
-        $upcategory->des         = $request['des'];
-        $upcategory->city_id     = $request['city_id'];
-        $upcategory->lat         = $request['lat'];
-        $upcategory->lng         = $request['lng'];
+        $upcategory->name            = $request['name'];
+        $upcategory->des             = $request['des'];
+        $upcategory->city_id         = $request['city_id'];
+        $upcategory->district_id     = $request['district_id'];
+        $upcategory->lat             = $request['lat'];
+        $upcategory->lng             = $request['lng'];
 
         $upcategory->save();
 

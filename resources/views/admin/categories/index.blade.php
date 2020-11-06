@@ -64,11 +64,22 @@
                                 <div class="form-group col-md-12">
                                     <label>اختر المدينة</label>
                                     <div class="form-group col-md-12">
-                                        <select name="city_id" id="">
+                                        <select name="city_id" id="city_id">
                                             <option value="">اختر المدينة</option>
                                             @foreach ($cities as $city)
                                                 <option value="{{$city->id}}">{{$city->name_ar}}</option>
                                             @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                @php
+                                    // $districts = /App/District::all();
+                                @endphp
+                                <div class="form-group col-md-12">
+                                    <label>اختر الحي</label>
+                                    <div class="form-group col-md-12">
+                                        <select name="district_id" id="district_id">
+
                                         </select>
                                     </div>
                                 </div>
@@ -207,6 +218,46 @@
     </div>
 </section>
 
+<script>
+    var CSRF_TOKEN  = $('meta[name="csrf-token"]').attr('content');
+    var id          = $('#city_id').val();
+    var action      =  "{{route('city.districts')}}";
+    $.ajax({
+        url:  action,
+        type: 'POST',
+        dataType: 'JSON',
+        data: {_token: CSRF_TOKEN, id: id},
+        success: function(data, status){
+            console.log(data);
+            $('#district_id').empty();
+
+            var i = 0;
+            for(i; i < data.length; i++) {
+                $('#district_id').append(`<option value="${data[i].id}">${data[i].name}</option>`);
+            }
+
+        }
+    });
+    $('#city_id').change(function () {
+        var CSRF_TOKEN  = $('meta[name="csrf-token"]').attr('content');
+        var id          = $('#city_id').val();
+        var action      =  "{{route('city.districts')}}";
+        $.ajax({
+            url:  action,
+            type: 'POST',
+            dataType: 'JSON',
+            data: {_token: CSRF_TOKEN, id: id},
+            success: function(data, status){
+                $('#district_id').empty();
+                var i = 0;
+                for(i; i < data.length; i++) {
+                    $('#district_id').append(`<option value="${data[i].id}">${data[i].name}</option>`);
+                }
+
+            }
+        });
+    });
+</script>
 <script type="text/javascript">
     $(document).ready(function () {
 
@@ -300,8 +351,8 @@
             return false;
         });
     });
-</script>
-<script type="text/javascript">
+</>
+< type="text/javascript">
 
     $(document).ready(function() {
 
@@ -316,6 +367,6 @@
 
     });
 
-</script>
+</>
 
 @endsection

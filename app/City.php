@@ -15,4 +15,9 @@ class City extends Model
     {
         return $this->belongsToMany(Citiesimage::class);
     }
+
+    public function districts()
+    {
+        return $this->hasMany(District::class,'cities_id');
+    }
 }

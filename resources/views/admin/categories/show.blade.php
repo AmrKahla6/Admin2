@@ -38,9 +38,16 @@
                                              ?>
                                             <div class="form-group col-md-12">
                                                 <label>المدينه</label>
-                                                <input type="text" class="form-control" value="{{$city->name_ar}}" readonly>
+                                                <input type="text" class="form-control" value="{{$city ? $city->name_ar : ""}}" readonly>
                                             </div>
-                                        </div>
+                                            <?php
+                                                $district  = DB::table('districts')->where('id',$category->district_id)->first();
+                                            ?>
+                                            <div class="form-group col-md-12">
+                                                <label>الحي</label>
+                                                <input type="text" class="form-control" value="{{$district ? $district->name : ''}}" readonly>
+                                            </div>
+                                           </div>
 
                                           <div class="form-group col-md-12">
                                               <label>صور العنصر</label>

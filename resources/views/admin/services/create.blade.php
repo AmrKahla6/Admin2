@@ -52,12 +52,10 @@
                     <div class="form-group col-md-12">
                         <label>اختر ايكون</label>
                         <div class="form-group col-md-12">
-                            <select name="icon" id="">
+                            <select name="icon_id" id="">
                                 <option value="">اختر ايكون</option>
                                 @foreach ($icons as $icon)
-
-                            <option value="{{$icon->id}}">{{$icon->icon}}</option>
-
+                                    <option value="{{$icon->id}}">{{$icon->icon}}</option>
                                 @endforeach
                             </select>
                         </div>

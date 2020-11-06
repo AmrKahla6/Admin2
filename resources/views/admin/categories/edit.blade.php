@@ -65,14 +65,26 @@
             <div class="form-group col-md-12">
                 <label>اختر المدينة</label>
                 <div class="form-group col-md-12">
-                    <select name="city_id" id="">
+                    <select name="city_id" id="city_id">
                      {{-- <option value="">اختر المدينة</option> --}}
                      @foreach ($cities as $city)
-                           <option  value="{{$city->id}}">{{$city->name_ar}}</option>
+                        <option value="{{ $city->id }}" {{ old('city_id') == $city->id || $category->city_id == $city->id  ? 'selected' : '' }} >{{ $city->name_ar }}</option>
                      @endforeach
                     </select>
                  </div>
-            </div
+            </div>
+
+            <div class="form-group col-md-12">
+                <label>اختر الحي</label>
+                <div class="form-group col-md-12">
+                    <select name="district_id" id="district_id">
+                     {{-- <option value="">اختر المدينة</option> --}}
+                     @foreach ( \App\District::where('cities_id' , $category->city_id)->get() as $district)
+                        <option value="{{ $district->id }}" {{ old('district_id') == $district->id || $category->district_id == $district->id  ? 'selected' : '' }} >{{ $district->name }}</option>
+                     @endforeach
+                    </select>
+                 </div>
+            </div>
             <div class="box-footer">
                 <button style="width: 20%;margin-right: 40%;" type="submit" class="btn btn-success">تعديل</button>
             </div>
@@ -81,6 +93,29 @@
       </div>
     </div>
 </section>
+
+<script>
+
+    $('#city_id').change(function () {
+        var CSRF_TOKEN  = $('meta[name="csrf-token"]').attr('content');
+        var id          = $('#city_id').val();
+        var action      =  "{{route('city.districts')}}";
+        $.ajax({
+            url:  action,
+            type: 'POST',
+            dataType: 'JSON',
+            data: {_token: CSRF_TOKEN, id: id},
+            success: function(data, status){
+                $('#district_id').empty();
+                var i = 0;
+                for(i; i < data.length; i++) {
+                    $('#district_id').append(`<option value="${data[i].id}">${data[i].name}</option>`);
+                }
+
+            }
+        });
+    });
+</script>
 
 <script type="text/javascript">
         $("#country").change(function(){

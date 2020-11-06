@@ -16,12 +16,12 @@ class CreateIconsTable extends Migration
         Schema::create('icons', function (Blueprint $table) {
             $table->id();
             $table->string('icon');
-            $table->unsignedBigInteger('service_id');
 
-            $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
             $table->timestamps();
         });
     }
+
+
 
     /**
      * Reverse the migrations.
