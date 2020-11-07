@@ -17,7 +17,7 @@ class Members extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('phone')->unique();
-            $table->string('mobile')->unique()->nullable();
+            $table->string('email')->unique();
             $table->string('password');
             $table->string('firebase_token')->nullable();
             $table->string('forgetcode')->nullable();

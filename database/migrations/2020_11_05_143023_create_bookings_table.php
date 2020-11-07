@@ -23,13 +23,16 @@ class CreateBookingsTable extends Migration
             $table->boolean('paid')->default(0);
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('service_id');
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('members')->onDelete('cascade');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
 
             $table->timestamps();
 
         });
+
     }
 
     /**

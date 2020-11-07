@@ -1,7 +1,7 @@
 @extends('admin/include/master')
 @section('title') لوحة التحكم | تعديل بيانات العضو @endsection
 @section('content')
-   
+
 <section class="content">
     <div class="row">
       <div class="col-xs-12">
@@ -10,7 +10,7 @@
           <h3 class="box-title">تعديل بيانات العضو </h3>
           <p> {{ $eduser->name }} </p>
         </div>
-        
+
         {!! Form::open(array('method' => 'patch','files' => true,'url' =>'adminpanel/users/'.$eduser->id)) !!}
         <div class="box-body">
 
@@ -19,22 +19,22 @@
                     <input type="text" class="form-control" name="name" placeholder="ادخل الاسم بالكامل " value="{{$eduser->name}}" required>
                     @if ($errors->has('name'))
                         <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('name') }}</div>
-                    @endif  
+                    @endif
                 </div>
                 <div class="form-group col-md-6">
                     <label>رقم الهاتف</label>
                     <input type="text" class="form-control" name="phone" placeholder=" أدخل رقم الهاتف" value="{{$eduser->phone}}"  required>
                     @if ($errors->has('phone'))
                         <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('phone') }}</div>
-                    @endif    
+                    @endif
                 </div>
 
                 <div class="form-group col-md-6">
-                    <label>رقم الجوال</label>
-                    <input type="text" class="form-control" name="mobile" placeholder="ادخل رقم الجوال" value="{{ $eduser->mobile }}" required>
-                    @if ($errors->has('mobile'))
-                        <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('mobile') }}</div>
-                    @endif  
+                    <label>البريد الالكتروني</label>
+                    <input type="email" class="form-control" name="email" placeholder="ادخل البريد الاكتروني" value="{{ $eduser->email }}" required>
+                    @if ($errors->has('email'))
+                        <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('email') }}</div>
+                    @endif
                 </div>
 
                 <div class="form-group col-md-6">
@@ -44,7 +44,7 @@
                     <div class="figure" id="strength_human2"></div>
                     @if ($errors->has('pass'))
                         <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('pass') }}</div>
-                    @endif  
+                    @endif
                 </div>
                  <div class="form-group col-md-6">
                     <label>إعادة كلمة المرور الجديدة  </label>
@@ -52,8 +52,8 @@
                     <!--<div style="color: crimson;font-size: 12px;display:none;" class="error" id="errorconfirm"></div>-->
                     @if ($errors->has('confirmpass'))
                         <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('confirmpass') }}</div>
-                    @endif  
-                </div> 
+                    @endif
+                </div>
 
           </div>
 
@@ -61,8 +61,8 @@
             <button style="width: 20%;margin-right: 40%;" type="submit" class="btn btn-success">تعديل</button>
           </div>
           {!! Form::close() !!}
-        </div> 
-      </div>  
-    </div> 
-</section>                          
-@endsection 
+        </div>
+      </div>
+    </div>
+</section>
+@endsection

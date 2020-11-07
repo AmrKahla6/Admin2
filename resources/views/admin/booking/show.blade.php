@@ -38,14 +38,23 @@
             @elseif($showbooking->paid == 2)
                   <span style="border-radius: 3px;border: 1px solid green;float:left;color:green;padding: 3px;font-weight: bold;background: #fff;display: inline-block;margin-top: 4%;margin-left: 5px;" class="ads__item__featured">تم الدفع</span>
             @endif
+            <?php
+            $cat  = DB::table('categories')->where('id',$showbooking->category_id)->first();
+            $serv  = DB::table('services')->where('id',$showbooking->service_id)->first();
+
+             ?>
 
 
           صاحب الحجز
           <address>
            <a href="{{asset('adminpanel/users/'.$ownerinfo->id)}}">
             <strong>{{$showbooking->name}}</strong> </a> <br>
+              صالون :<strong> {{$cat->name}}  </strong>  <br>
+              الخدمه :<strong> {{$serv->name}}  </strong>  <br>
+              السعر :<strong> {{$serv->price}} ريال سعودي  </strong>  <br>
              رقم الهاتف : {{$showbooking->phone}}<br>
              رقم الحجز : {{$showbooking->booking_number}}<br>
+
           </address>
         </div>
 

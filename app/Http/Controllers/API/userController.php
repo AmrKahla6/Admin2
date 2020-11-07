@@ -20,21 +20,22 @@ use DB;
 
 class userController extends BaseController
 {
-    //registeration process 
+    //registeration process
     public function register(Request $request)
     {
+        // return $request;
         $validator = Validator::make(
             $request->all(),
             [
                 'name'           => 'required',
-                'mobile'          => 'required|unique:members',
+                'email'          => 'required|unique:members',
                 'phone'          => 'required|unique:members',
                 'password'       => 'required|min:6',
             ],
             [
                 'name.required'         => 'هذا الحقل مطلوب',
-                'mobile.required'        => 'هذا الحقل مطلوب',
-                'mobile.unique'          => 'تم اخذ هذا الجوال سابقا',
+                'email.required'        => 'هذا الحقل مطلوب',
+                'email.unique'          => 'تم اخذ هذا البريد سابقا',
                 'phone.required'        => 'هذا الحقل مطلوب',
                 'phone.unique'          => 'تم اخذ هذا الهاتف سابقا',
                 'password.required'     => 'هذا الحقل مطلوب',
@@ -48,23 +49,23 @@ class userController extends BaseController
 
         $newmember                 = new member;
         $newmember->name           = $request['name'];
-        $newmember->mobile          = $request['mobile'];
+        $newmember->email          = $request['email'];
         $newmember->phone          = $request['phone'];
         $newmember->password       = Hash::make($request['password']);
-        $newmember->firebase_token = $request['firebase_token'];
-        $newmember->suspensed    = 2;
-        
-        $randomcode        = substr(str_shuffle("0123456789"), 0, 6);
-        $newmember->activation_code  = $randomcode;
+        // $newmember->firebase_token = $request['firebase_token'];
+        // $newmember->suspensed    = 2;
+
+        // $randomcode        = substr(str_shuffle("0123456789"), 0, 6);
+        // $newmember->activation_code  = $randomcode;
         $newmember->save();
         $reguser = member::find($newmember->id);
-        
+
         //remove the first digit (0) from phone number and replace it with saudi  key
         $phone = $newmember->mobile;
         $newphone = "+966" . substr($phone, 1);
-        
-        
-        
+
+
+
         //set POST variables
                 $url = 'https://www.hisms.ws/api.php/send_sms';
                 $fields_string = '';
@@ -76,31 +77,31 @@ class userController extends BaseController
                     'message'  => urlencode($newmember->activation_code.'كود التفعيل هو   '),
                     'send_sms' => urlencode(''),
                 );
-                
+
                 //url-ify the data for the POST
                 foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
                 rtrim($fields_string, '&');
-                
+
                 //open connection
                 $ch = curl_init();
-                
+
                 //set the url, number of POST vars, POST data
                 curl_setopt($ch,CURLOPT_URL, $url);
                 curl_setopt($ch,CURLOPT_POST, count($fields));
                 curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-                
+
                 //execute post
                 $result = curl_exec($ch);
-                
+
                 //close connection
-                curl_close($ch);   
-                
-                
+                curl_close($ch);
+
+
 
         return $this->sendResponse('success', $reguser);
     }
-    
+
     //account activation process
     public function account_activation(Request $request)
     {
@@ -108,7 +109,7 @@ class userController extends BaseController
         if($user){
             $user->suspensed = 0;
             $user->save();
-            
+
         $notification                = new notification();
         $notification->user_id       = $user->id;
         $notification->notification  = 'تم تفعيل حسابك بنجاح';
@@ -118,21 +119,21 @@ class userController extends BaseController
             return $this->sendError('success', 'هذا الكود غير صحيح');
         }
     }
-    
+
     // resending activation code process
     public function resend_activation_code(Request $request)
     {
         $user = member::where('id',$request->user_id)->first();
         if($user){
-            
+
         $randomcode        = substr(str_shuffle("0123456789"), 0, 6);
         $user->activation_code  = $randomcode;
         $user->save();
-        
+
         //remove the first digit (0) from phone number and replace it with saudi  key
         $phone = $user->mobile;
         $newphone = "+966" . substr($phone, 1);
-        
+
         //set POST variables
                 $url = 'https://www.hisms.ws/api.php/send_sms';
                 $fields_string = '';
@@ -144,28 +145,28 @@ class userController extends BaseController
                     'message'  => urlencode($user->activation_code.'كود التفعيل هو   '),
                     'send_sms' => urlencode(''),
                 );
-                
+
                 //url-ify the data for the POST
                 foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
                 rtrim($fields_string, '&');
-                
+
                 //open connection
                 $ch = curl_init();
-                
+
                 //set the url, number of POST vars, POST data
                 curl_setopt($ch,CURLOPT_URL, $url);
                 curl_setopt($ch,CURLOPT_POST, count($fields));
                 curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-                
+
                 //execute post
                 $result = curl_exec($ch);
-                
+
                 //close connection
-                curl_close($ch);   
-                
-                
-            
+                curl_close($ch);
+
+
+
             return $this->sendResponse('success', 'تم إعادة إرسال كود التفعيل  ');
         }else{
             return $this->sendError('success', 'هذا المستخدم غير موجود');
@@ -177,10 +178,10 @@ class userController extends BaseController
     {
 
         $validator = Validator::make($request->all(), [
-            'phone'          => 'required',
+            'email'          => 'required',
             'password'       => 'required',
         ], [
-            'phone.required' => 'هذا الحقل مطلوب',
+            'email.required' => 'هذا الحقل مطلوب',
         ]);
 
 
@@ -188,13 +189,13 @@ class userController extends BaseController
             return $this->sendError('success', $validator->errors());
         }
 
-        if (Auth::attempt(['phone' => $request->phone, 'password' => $request->password])) {
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user                 = Auth::user();
             $user->firebase_token = $request->firebase_token;
             $user->save();
             return $this->sendResponse('success', $user);
         } else {
-            $errormessage = 'رقم الجوال أو كلمة المرور غير صحيحة';
+            $errormessage = ' البريد الالكتروني أو كلمة المرور غير صحيحة';
             return $this->sendError('success', $errormessage);
         }
     }
@@ -202,27 +203,27 @@ class userController extends BaseController
     //forgetpassword process
     public function forgetpassword(Request $request)
     {
-        $user = member::where('phone', $request->phone)->first();
+        $user = member::where('email', $request->email)->first();
         if (!$user) {
-            $errormessage = ' الهاتف غير صحيح';
+            $errormessage = ' البريد غير صحيح';
             return $this->sendError('success', $errormessage);
         } else {
-            $randomcode        = substr(str_shuffle("0123456789"), 0, 4);
-            $user->forgetcode  = $randomcode;
-            $user->save();
+            // $randomcode        = substr(str_shuffle("0123456789"), 0, 4);
+            // $user->forgetcode  = $randomcode;
+            // $user->save();
 
-            // $to      = $request->email;
-            // $subject = "Confirm Code";
-            // $txt     = "Confirm Code :". $user->forgetcode;
-            // $headers = "From: kabsh@eltamiuz.net";
-            // if(mail($to,$subject,$txt,$headers))
-            // {
-            //     return $this->sendResponse('success',$randomcode);
-            // }
-            // else
-            // {
-            //     return $this->sendError('success','Failed Sent Email');
-            // }
+            $to      = $request->email;
+            $subject = "Confirm Code";
+            $txt     = "Confirm Code :". $user->forgetcode;
+            $headers = "From: kabsh@eltamiuz.net";
+            if(mail($to,$subject,$txt,$headers))
+            {
+                return $this->sendResponse('success',$randomcode);
+            }
+            else
+            {
+                return $this->sendError('success','Failed Sent Email');
+            }
 
             return $this->sendResponse('success', $user->forgetcode);
         }
@@ -284,7 +285,7 @@ class userController extends BaseController
         if ($upuser) {
             $validator = Validator::make($request->all(), [
                 'name'        => 'required',
-                'mobile'       => 'required|unique:members,mobile,' . $upuser->id,
+                'email'       => 'required|unique:members,email,' . $upuser->id,
                 'phone'       => 'required|unique:members,phone,' . $upuser->id,
 
             ]);
@@ -294,7 +295,7 @@ class userController extends BaseController
             }
 
             $upuser->name      = $request['name'];
-            $upuser->mobile     = $request['mobile'];
+            $upuser->email     = $request['email'];
             $upuser->phone     = $request['phone'];
             $upuser->password  = $request['password'] ? Hash::make($request['password']) : $upuser->password;
             $upuser->save();

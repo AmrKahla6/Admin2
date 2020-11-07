@@ -57,7 +57,7 @@ class adminmemberController extends Controller
     {
         $this->validate($request, [
             'name'        => 'required',
-            'mobile'       => 'required|unique:members',
+            'email'       => 'required|unique:members',
             'phone'       => 'required|unique:members',
             'pass'        => 'required|min:6',
             'confirmpass' => 'required|same:pass',
@@ -65,7 +65,7 @@ class adminmemberController extends Controller
 
         $newmember            = new member;
         $newmember->name      = $request['name'];
-        $newmember->mobile      = $request['mobile'];
+        $newmember->email     = $request['email'];
         $newmember->phone     = $request['phone'];
         $newmember->password  = Hash::make($request['pass']);
         $newmember->save();
@@ -85,9 +85,9 @@ class adminmemberController extends Controller
         $subactive         = 'user';
         $logo              = DB::table('settings')->value('logo');
         $showuser          = member::find($id);
-        $myorders          = order::where('user_id', $id)->orderBy('id', 'desc')->get();
-        $mytotal           = 0;
-        return view('admin.users.show', compact('mainactive', 'subactive', 'logo', 'showuser', 'myorders', 'mytotal'));
+        // $myorders          = order::where('user_id', $id)->orderBy('id', 'desc')->get();
+        // $mytotal           = 0;
+        return view('admin.users.show', compact('mainactive', 'subactive', 'logo', 'showuser'));
     }
 
     /**

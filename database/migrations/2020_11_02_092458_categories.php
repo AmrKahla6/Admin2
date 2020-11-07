@@ -21,7 +21,9 @@ class Categories extends Migration
             $table->float('lng')->nullable();
             $table->string('image')->nullable();
             $table->unsignedBigInteger('city_id');
+            $table->unsignedBigInteger('district_id')->nullable();
 
+            $table->foreign('district_id')->references('id')->on('districts')->onDelete('cascade');
             $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
             $table->timestamps();
         });

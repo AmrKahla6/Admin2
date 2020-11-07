@@ -9,12 +9,12 @@ use DB;
 use App\setting;
 use App\contact;
 use App\Cutting;
-use App\item;
+use App\Category;
 use App\member;
 use App\City;
 use App\District;
 use App\notification;
-use App\transfer;
+use App\Booking;
 use App\weight;
 use Settings;
 use LaravelFCM\Message\OptionsBuilder;
@@ -36,7 +36,7 @@ class appsettingController  extends BaseController
     public function home(Request $request)
     {
 
-        $items = item::where('suspensed', 0)->orderBy('id', 'desc')->get();
+        $items = Category::orderBy('id', 'desc')->get();
 
         return $this->sendResponse('success', $items);
     }
@@ -44,7 +44,7 @@ class appsettingController  extends BaseController
     public function districts(Request $request)
     {
 
-        $districts = District::where('cities_id', $request->city_id)->get();
+        $districts = District::where('cities_id', $request->cities_id)->get();
         if ($districts) {
             return $this->sendResponse('success', $districts);
         } else {
@@ -53,56 +53,5 @@ class appsettingController  extends BaseController
     }
 
 
-    public function addtransfer(Request $request)
-    {
-        $newtransfer                = new transfer();
-        $newtransfer->name          = $request->name;
-        $newtransfer->phone         = $request->phone;
-        $newtransfer->bank_name         = $request->bank_name;
-        $info =  DB::table('orders')->where('order_number', $request->bill_number)->first();
 
-        if ($info) {
-            $newtransfer->bill_number   = $request->bill_number;
-        }
-
-        if ($request->hasFile('image')) {
-            $image    = $request['image'];
-            $filename = rand(0, 9999) . '.' . $image->getClientOriginalExtension();
-            $image->move(base_path('users/images/'), $filename);
-            $newtransfer->image = $filename;
-        }
-        $newtransfer->save();
-
-        $notification                = new notification();
-        $notification->user_id       = $info->user_id;
-        $notification->notification  = 'تم انشاء طلب جديد ';
-        $notification->save();
-        $usertoken = member::where('id', $request->user_id)->where('firebase_token', '!=', null)->where('firebase_token', '!=', 0)->value('firebase_token');
-        if ($usertoken) {
-            $optionBuilder = new OptionsBuilder();
-            $optionBuilder->setTimeToLive(60 * 20);
-
-            $notificationBuilder = new PayloadNotificationBuilder('إنشاء طلب جديد');
-            $notificationBuilder->setBody($request->notification)
-                ->setSound('default');
-
-            $dataBuilder = new PayloadDataBuilder();
-            $dataBuilder->addData(['a_type' => 'message']);
-            $option       = $optionBuilder->build();
-            $notification = $notificationBuilder->build();
-            $data         = $dataBuilder->build();
-            $token        = $usertoken;
-
-            $downstreamResponse = FCM::sendTo($token, $option, $notification, $data);
-
-            $downstreamResponse->numberSuccess();
-            $downstreamResponse->numberFailure();
-            $downstreamResponse->numberModification();
-            $downstreamResponse->tokensToDelete();
-            $downstreamResponse->tokensToModify();
-            $downstreamResponse->tokensToRetry();
-        }
-        $errormessage = 'تم ارسال التحويل بنجاح';
-        return $this->sendResponse('success', $errormessage);
-    }
 }

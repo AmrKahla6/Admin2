@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 */
 
 //user Controller routes
-Route::post('register', 'API\userController@register');
+Route::POST('register', 'API\userController@register');
 Route::post('login', 'API\userController@login');
 Route::post('profile', 'API\userController@profile');
 Route::post('rechangepass', 'API\userController@rechangepass');
@@ -25,25 +25,31 @@ Route::post('mynotification', 'API\userController@mynotification');
 Route::post('updatefirebasebyid', 'API\userController@updatefirebasebyid');
 Route::post('deletenotification', 'API\userController@deletenotification');
 Route::post('account_activation', 'API\userController@account_activation');
-Route::post('resend_activation_code', 'API\userController@resend_activation_code');
+// Route::post('resend_activation_code', 'API\userController@resend_activation_code');
 
 
 //App Setting Controller
 Route::post('settinginfo', 'API\appsettingController@settingindex');
 Route::post('home', 'API\appsettingController@home');
-Route::post('addtransfer', 'API\appsettingController@addtransfer');
+// Route::post('addbooking', 'API\appsettingController@addbooking');
 Route::post('districts', 'API\appsettingController@districts');
 
 
-//Item Controller
-Route::post('showitem', 'API\itemController@showitem');
-Route::post('allcities', 'API\itemController@allcities');
+//category Controller
+Route::post('allcities', 'API\catController@allcities');
+Route::post('showcat', 'API\catController@showcat');
 
 
-//Order Controller
-Route::post('makeorder', 'API\orderController@makeorder');
-Route::post('myorders', 'API\orderController@myorders');
-Route::post('showorder', 'API\orderController@showorder');
+//servies Controller
+Route::post('allcat', 'API\serviceController@allcat');
+Route::post('allicons', 'API\serviceController@allicons');
+Route::post('showservice', 'API\serviceController@showservice');
+
+
+//Booking Controller
+Route::post('makebooking', 'API\bookingController@makebooking');
+Route::post('mybooking', 'API\bookingController@mybooking');
+Route::post('showbooking', 'API\bookingController@showbooking');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
