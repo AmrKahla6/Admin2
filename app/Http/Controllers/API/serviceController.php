@@ -63,22 +63,14 @@ class serviceController extends BaseController
     {
         $showserv = Service::find($request->service_id);
         if ($showserv) {
-            $iteminfo     = array();
-            $icons        = array();
+            $servinfo     = array();
             $current      = array();
 
-            // $icons = Icon::where('icon_id', $showserv->id)->get();
-            // $cuttings = Cutting::all();
-            $setting = setting::first();
             if ($request->category_id) {
-                // dd($request);
-                $cats = Category::where('category_id', $request->category_id)->get();
-                $current['categories'] = $cats;
+                $category = City::find($request->category_id);
+                $current['category'] = $category;
             }
-            $current['iteminfo'] = $showserv;
-            // $current['icons'] = $icons;
-            // $current['cuttings'] = $cuttings;
-
+            $current['servinfo'] = $showserv;
             return $this->sendResponse('success', $current);
         } else {
             $errormessage =  'الخدمه غير موجود';

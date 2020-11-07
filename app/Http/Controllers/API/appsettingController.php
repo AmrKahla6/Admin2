@@ -41,16 +41,7 @@ class appsettingController  extends BaseController
         return $this->sendResponse('success', $items);
     }
 
-    public function districts(Request $request)
-    {
 
-        $districts = District::where('cities_id', $request->cities_id)->get();
-        if ($districts) {
-            return $this->sendResponse('success', $districts);
-        } else {
-            return $this->sendError('success', 'لا توجد أحياء في هذه المدينة');
-        }
-    }
 
 
 

@@ -28,25 +28,39 @@ Route::post('account_activation', 'API\userController@account_activation');
 // Route::post('resend_activation_code', 'API\userController@resend_activation_code');
 
 
-//App Setting Controller
+//App Setting routes
 Route::post('settinginfo', 'API\appsettingController@settingindex');
 Route::post('home', 'API\appsettingController@home');
 // Route::post('addbooking', 'API\appsettingController@addbooking');
-Route::post('districts', 'API\appsettingController@districts');
 
 
-//category Controller
+
+//category routes
 Route::post('allcities', 'API\catController@allcities');
+Route::post('alldistricts', 'API\catController@alldistricts');
+Route::post('citydistricts', 'API\catController@citydistricts');
 Route::post('showcat', 'API\catController@showcat');
 
 
-//servies Controller
+//servies routes
 Route::post('allcat', 'API\serviceController@allcat');
 Route::post('allicons', 'API\serviceController@allicons');
 Route::post('showservice', 'API\serviceController@showservice');
 
+//comments routes
+Route::post('makecomment', 'API\commentsController@makecomment');
+Route::post('mycomment', 'API\commentsController@mycomment');
+Route::post('showcomments', 'API\commentsController@showcomments');
+Route::post('deletecomment', 'API\commentsController@deletecomment');
 
-//Booking Controller
+//rates routes
+Route::post('makerate', 'API\ratesController@makerate');
+Route::post('myrate', 'API\ratesController@myrate');
+Route::post('showrates', 'API\ratesController@showrates');
+Route::post('deleterate', 'API\ratesController@deleterate');
+
+
+//Booking routes
 Route::post('makebooking', 'API\bookingController@makebooking');
 Route::post('mybooking', 'API\bookingController@mybooking');
 Route::post('showbooking', 'API\bookingController@showbooking');

@@ -308,7 +308,7 @@ class userController extends BaseController
 
     public function mynotification(Request $request)
     {
-        DB::table('notifications')->where('user_id', $request->user_id)->update(['readed' => 1]);
+        DB::table('notifications')->where('user_id', $request->user_id);
         $mynotifs = notification::where('user_id', $request->user_id)->orderBy('id', 'desc')->get();
         if (count($mynotifs) != 0) {
             return $this->sendResponse('success', $mynotifs);

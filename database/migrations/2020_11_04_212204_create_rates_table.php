@@ -23,7 +23,7 @@ class CreateRatesTable extends Migration
             $table->date('created_date')->nullable();
             $table->time('created_time');
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('members')->onDelete('cascade');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }

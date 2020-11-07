@@ -41,17 +41,43 @@ class catController extends BaseController
         }
     }
 
+    public function alldistricts(Request $request)
+    {
+
+        $districts = District::where('cities_id', $request->cities_id)->get();
+        if ($districts) {
+            return $this->sendResponse('success', $districts);
+        } else {
+            return $this->sendError('success', 'لا توجد أحياء في هذه المدينة');
+        }
+    }
+
+    public function citydistricts(Request $request)
+    {
+        $showdis = District::find($request->district_id);
+        // dd($showdis);
+        if ($showdis) {
+            $districtinfo     = array();
+            $current          = array();
+            if ($request->cities_id) {
+                $cities = City::find($request->cities_id);
+                $current['cities'] = $cities;
+            }
+            $current['districtinfo'] = $showdis;
+            return $this->sendResponse('success', $current);
+        } else {
+            $errormessage =  'الصالون غير موجود';
+            return $this->sendError('success', $errormessage);
+        }
+    }
+
     public function showcat(Request $request)
     {
         $showcat = Category::find($request->category_id);
+        // dd($showcat);
         if ($showcat) {
             $catinfo     = array();
-            // $weights     = array();
-            // $cuttings     = array();
             $current      = array();
-
-            // $weights = weight::where('cat_id', $showcat->id)->get();
-            // $cuttings = Cutting::all();
             $setting = setting::first();
             if ($request->city_id) {
                 $districts = District::where('cities_id', $request->city_id)->get();
