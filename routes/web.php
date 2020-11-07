@@ -56,10 +56,6 @@ Route::group(['middleware' => ['adminauth:admin']], function () {
   Route::resource('adminpanel/booking', 'adminbookingController');
   Route::delete('mybookingDeleteAll', 'adminbookingController@deleteAll');
 
-  //rates
-  Route::get('adminpanel/catrates/{id}', 'adminCategoryController@showrates');
-  Route::delete('adminpanel/ratedel/{id}', 'adminCategoryController@delerates');
-
   //contact us
   Route::get('adminpanel/contact-us', 'admincontactController@getContact');
   Route::get('adminpanel/contact-us/{id}', 'admincontactController@showContact');
@@ -68,7 +64,11 @@ Route::group(['middleware' => ['adminauth:admin']], function () {
 
   //comments
   Route::get('adminpanel/showcomments/{id}', 'adminCategoryController@showcomments');
+  Route::delete('adminpanel/delcomment/{id}', 'adminCategoryController@delcomment');
 
+  //rates
+  Route::get('adminpanel/catrates/{id}', 'adminCategoryController@showrates');
+  Route::delete('adminpanel/delerates/{id}', 'adminCategoryController@delerates');
 
 });
 

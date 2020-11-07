@@ -26,7 +26,7 @@
                                 </div>
                                 <br>
                                 <div class="timeline-footer">
-                                {{ Form::open(array('method' => 'DELETE',"onclick"=>"return confirm('هل انت متأكد ؟!')",'files' => true,'url' => array('adminpanel/categories/'.$comm->id))) }}
+                                {{ Form::open(array('method' => 'DELETE',"onclick"=>"return confirm('هل انت متأكد ؟!')",'files' => true,'url' => array('adminpanel/delcomment/'.$comm->id))) }}
                                 <input type="hidden" name="delcomment">
                                 <button style="width: 10%;" type="submit" class="btn btn-danger btn-xs"><i class="fa fa-trash-o" aria-hidden="true"></i> حذف </button>
                                 {!! Form::close() !!}

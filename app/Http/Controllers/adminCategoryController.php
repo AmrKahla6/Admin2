@@ -227,6 +227,14 @@ class adminCategoryController extends Controller
         return view('admin.categories.showcomments', compact('mainactive', 'logo', 'subactive', 'comments'));
     }
 
+    public function delcomment($id)
+    {
+        $delcomment =  Comment::find($id);
+
+        $delcomment->delete();
+        return back();
+    }
+
     public function showrates($id)
     {
         $mainactive   = 'categories';
@@ -250,4 +258,14 @@ class adminCategoryController extends Controller
         }
         return view('admin.categories.showrates',compact('mainactive','logo','subactive','allrates','showitem','convdates'));
     }
+
+    public function delerates($id)
+    {
+        $delrate =  Rate::find($id);
+
+        $delrate->delete();
+        return back();
+    }
+
+
 }

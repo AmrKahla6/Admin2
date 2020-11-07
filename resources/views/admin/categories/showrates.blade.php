@@ -42,7 +42,7 @@
                                 </div>
                                 <br>
                                 <div class="timeline-footer">
-                                {{ Form::open(array('method' => 'DELETE',"onclick"=>"return confirm('هل انت متأكد ؟!')",'files' => true,'url' => array('adminpanel/ratedel/'.$comm->id))) }}
+                                {{ Form::open(array('method' => 'DELETE',"onclick"=>"return confirm('هل انت متأكد ؟!')",'files' => true,'url' => array('adminpanel/delerates/'.$comm->id))) }}
                                 <input type="hidden" name="delrate" >
                                 <button style="width: 10%;" type="submit" class="btn btn-danger btn-xs"><i class="fa fa-trash-o" aria-hidden="true"></i> حذف </button>
                                 {!! Form::close() !!}
