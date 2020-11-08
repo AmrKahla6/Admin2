@@ -5,7 +5,7 @@
   المطورين
   <small>Preview sample</small>
 </h1>
-@endsection 
+@endsection
 
 @section('content')
 
@@ -25,7 +25,7 @@
                     @if(session()->has('exituser'))
                     <div style="color: crimson;font-size: 18px;" class="error">{{ session('exituser')}}</div>
                     <?php session()->forget('exituser'); ?>
-                    @endif 
+                    @endif
                 </div>
 
                 <div class="form-group col-md-6">
@@ -42,7 +42,7 @@
                     <div>
                     <div style="color: crimson;font-size: 12px;display:none;background-color:crimson;padding:1%;" class="error" id="errorpass"></div>
                     <div class="figure" id="strength_human1"></div>
-                    
+
                     </div>
                     @if ($errors->has('pass'))
                       <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('pass') }}</div>
@@ -68,13 +68,13 @@
     </div>
     {!! Form::close() !!}
        </div>
-</div> 
+</div>
 
 
 
 <div class="row">
     <div class="box">
-        
+
         <!-- /.box-header -->
         <div class="table-responsive box-body">
             <table id="example3" class="table table-bordered table-striped">
@@ -88,10 +88,10 @@
                 </thead>
                 <tbody>
                 @foreach($providers as $provider)
-                    <tr> 
+                    <tr>
                         <td>{{$provider->username}}</td>
                         <td>
-                        <img class="img-circle" style="width:100px; height:100px;" src="{{asset('users/images/'.$provider->image)}}" alt="" >
+                        <img class="img-circle" style="width:100px; height:100px;" src="{{asset("/../users/images/".$provider->image)}}" alt="" >
                         </td>
                         <td> <a href='{{asset("adminpanel/provider/".$provider->id)}}/edit' class="btn btn-success"><i class="fa fa-pencil-square-o " aria-hidden="true"></i></a> </td>
                         <td>
@@ -106,4 +106,4 @@
         </div>        <!-- /.box-body -->
     </div>
 </div>
-@endsection 
+@endsection

@@ -138,9 +138,9 @@
     <!-- Logo -->
     <a href="{{asset('adminpanel')}}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><img style="width:44%;margin-top: 7px;" src="{{asset('users/images/'.$logo)}}" class="img-circle" alt="Logo"></span>
+      <span class="logo-mini"><img style="width:44%;margin-top: 7px;" src="{{asset("/../users/images/".$logo)}}" class="img-circle" alt="Logo"></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><img style="margin-top: 2px;width:25%;" src="{{asset('users/images/'.$logo)}}" alt="Logo"></span>
+      <span class="logo-lg"><img style="margin-top: 2px;width:25%;" src="{{asset("/../users/images/".$logo)}}" alt="Logo"></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">

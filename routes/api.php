@@ -64,6 +64,7 @@ Route::post('deleterate', 'API\ratesController@deleterate');
 Route::post('makebooking', 'API\bookingController@makebooking');
 Route::post('mybooking', 'API\bookingController@mybooking');
 Route::post('showbooking', 'API\bookingController@showbooking');
+Route::post('delbooking', 'API\bookingController@delbooking');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

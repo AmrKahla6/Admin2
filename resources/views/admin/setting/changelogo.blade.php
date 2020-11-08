@@ -9,7 +9,7 @@
                 <h3 class="box-title">اعدادات التطبيق</h3>
             </div>
                 <div class="box">
-                    {{ Form::open(array('method' => 'PATCH','files' => true,'url' =>'adminpanel/setapp/')) }}
+                    {{ Form::open(array('method' => 'PATCH','files' => true,'url' =>'adminpanel/setapp/'.$changelogo->id)) }}
                         <input type="hidden" name="addbrand">
                         <div class="box-body">
 
@@ -25,56 +25,56 @@
                          <div class="form-group col-md-6">
                             <label>صورة لوجو  التطبيق </label>
                             <div style="margin-bottom: 0;" class="login-logo">
-                                {{-- <img class="img-thumbnail" style="height: 10%;" src="{{asset('users/images/'.$changelogo->logo)}}" alt="Logo"><br> --}}
+                                <img class="img-thumbnail" style="height: 10%;" src="{{asset("/../users/images/".$changelogo->logo)}}" alt="Logo"><br>
                             </div>
                         </div>
 
                         <div class="form-group col-md-6">
                             <label>رقم الجوال  </label>
-                            {{-- <input style="width:100%;" value="{{$changelogo->mobile}}" type="text" class="form-control" name="mobile"> --}}
-                            {{$changelogo}}
+                            <input style="width:100%;" value="{{$changelogo->mobile}}" type="text" class="form-control" name="mobile">
+                            {{-- {{$changelogo}} --}}
                             @if ($errors->has('mobile'))
                             <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('mobile') }}</div>
                             @endif
                         </div>
                         <div class="form-group col-md-6">
                             <label> رقم الهاتف</label>
-                            {{-- <input style="width:100%;" type="text" value="{{$changelogo->phone}}" class="form-control" name="phone"> --}}
+                            <input style="width:100%;" type="text" value="{{$changelogo->phone}}" class="form-control" name="phone">
                             @if ($errors->has('phone'))
                             <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('phone') }}</div>
                             @endif
                         </div>
                         <div class="form-group col-md-6">
                             <label> الإنستجرام</label>
-                            {{-- <input style="width:100%;" type="text" value="{{$changelogo->instgram}}" class="form-control" name="instgram"> --}}
+                            <input style="width:100%;" type="text" value="{{$changelogo->instgram}}" class="form-control" name="instgram">
                             @if ($errors->has('instgram'))
                             <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('instgram') }}</div>
                             @endif
                         </div>
                         <div class="form-group col-md-6">
                             <label> سناب شات</label>
-                            {{-- <input style="width:100%;" type="text" value="{{$changelogo->snapchat}}" class="form-control" name="snapchat"> --}}
+                            <input style="width:100%;" type="text" value="{{$changelogo->snapchat}}" class="form-control" name="snapchat">
                             @if ($errors->has('snapchat'))
                             <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('snapchat') }}</div>
                             @endif
                         </div>
                         <div class="form-group col-md-6">
                             <label>تويتر  </label>
-                            {{-- <input style="width:100%;" type="text" value="{{$changelogo->twitter}}" class="form-control" name="twitter"> --}}
+                            <input style="width:100%;" type="text" value="{{$changelogo->twitter}}" class="form-control" name="twitter">
                             @if ($errors->has('twitter'))
                             <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('twitter') }}</div>
                             @endif
                         </div>
-                        <div class="form-group col-md-6">
+                        {{-- <div class="form-group col-md-6">
                             <label>واتس آب  </label>
-                            {{-- <input style="width:100%;" type="text" value="{{$changelogo->whatsapp}}" class="form-control" name="whatsapp"> --}}
+                            <input style="width:100%;" type="text" value="{{$changelogo->whatsapp}}" class="form-control" name="whatsapp">
                             @if ($errors->has('whatsapp'))
                             <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('whatsapp') }}</div>
                             @endif
-                        </div>
+                        </div> --}}
                         <div class="form-group col-md-6">
                             <label> الموقع الإلكتروني</label>
-                            {{-- <input style="width:100%;" type="text" value="{{$changelogo->website}}" class="form-control" name="website"> --}}
+                            <input style="width:100%;" type="text" value="{{$changelogo->website}}" class="form-control" name="website">
                             @if ($errors->has('website'))
                             <div style="color: crimson;font-size: 18px;" class="error">{{ $errors->first('website') }}</div>
                             @endif

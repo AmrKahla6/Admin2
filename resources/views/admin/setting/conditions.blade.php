@@ -5,7 +5,7 @@
 <section class="content">
         <div class="row">
                 <div class="col-xs-12">
-              {{ Form::open(array('method' => 'patch','url' => 'adminpanel/conditions/' )) }}
+              {{ Form::open(array('method' => 'patch','url' => 'adminpanel/conditions/'. $cancelpolicy->id )) }}
                 <div class="box-body">
 
                     <!-- editor -->

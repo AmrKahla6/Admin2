@@ -187,4 +187,21 @@ class bookingController extends BaseController
             return $this->sendError('success', $errormessage);
         }
     }
+
+
+    public function delbooking(Request $request)
+    {
+        $user = member::where('id', $request->user_id)->first();
+        // dd($user);
+        if ($user) {
+        $booking = DB::table('bookings')->where('user_id', $request->user_id)->where('id', $request->booking_id);
+        dd($booking);
+        $booking->delete();
+        $errormessage = 'تم حذف حجزك';
+        return $this->sendResponse('success', $errormessage);
+        }else{
+            $errormessage = 'المستخدم غير موجود';
+            return $this->sendError('success', $errormessage);
+        }
+    }
 }

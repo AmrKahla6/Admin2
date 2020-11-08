@@ -106,19 +106,19 @@ class adminchangelogoController  extends Controller
      */
     public function update(Request $request, $id)
     {
+        // return $request;
         $this->validate($request, [
             'logo'       => 'image',
         ]);
 
         $upinfo = setting::find($id);
-
-        $upinfo->website  = $request->website;
-        $upinfo->twitter   = $request->twitter;
-        $upinfo->instgram = $request->instgram;
+        // return $upinfo;
+        $upinfo->website    = $request->website;
+        $upinfo->twitter    = $request->twitter;
+        $upinfo->instgram   = $request->instgram;
         $upinfo->snapchat   = $request->snapchat;
-        $upinfo->mobile   = $request->mobile;
-        $upinfo->phone = $request->phone;
-        $upinfo->whatsapp   = $request->whatsapp;
+        $upinfo->mobile     = $request->mobile;
+        $upinfo->phone      = $request->phone;
 
 
 
