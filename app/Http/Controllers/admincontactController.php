@@ -19,7 +19,7 @@ class admincontactController  extends Controller
         $mainactive  = "contactus";
         $subactive   =  "contactus";
         $logo        = DB::table('settings')->value('logo');
-        $allcontacts = contact::orderBy('id','desc')->get();
+        $allcontacts = Contact::orderBy('id','desc')->get();
         return view('admin.contactus.index',compact('allcontacts','mainactive','logo','subactive'));
     }
 

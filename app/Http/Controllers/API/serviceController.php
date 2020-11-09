@@ -28,20 +28,6 @@ use DB;
 
 class serviceController extends BaseController
 {
-    public function allcat(Request $request)
-    {
-
-        $keyword   = $request->keyword;
-
-        $allcat = Category::all();
-        if (count($allcat) != 0) {
-
-            return $this->sendResponse('success', $allcat);
-        } else {
-            $errormessage =  'لا يوجد صالونات متاحة';
-            return $this->sendError('success', $errormessage);
-        }
-    }
 
     public function allicons(Request $request)
     {

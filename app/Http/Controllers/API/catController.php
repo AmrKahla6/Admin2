@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Category;
+use App\Categoryimages;
 use App\order;
 use App\member;
 use App\setting;
@@ -78,16 +79,28 @@ class catController extends BaseController
         if ($showcat) {
             $catinfo     = array();
             $current      = array();
-            $setting = setting::first();
-            if ($request->city_id) {
-                $districts = District::where('cities_id', $request->city_id)->get();
-                $current['districts'] = $districts;
-            }
-            $current['catinfo'] = $showcat;
-            // $current['weights'] = $weights;
-            // $current['cuttings'] = $cuttings;
 
-            return $this->sendResponse('success', $current);
+            $setting   = setting::first();
+            $images    = Categoryimages::where('category_id', $showcat->id)->get();
+            $district  = District::where('id', $showcat->district_id)->first();
+            $city      = City::where('id', $showcat->city_id)->first();
+
+            array_push(
+                $catinfo,
+                array(
+                    "id"              => $showcat->id,
+                    'name '           => $showcat->name,
+                    "des"             => $showcat->des,
+                    "lat"             => $showcat->lat,
+                    "lng"             => $showcat->lng,
+                    "district"        => $district->name,
+                    "city_id"         => $city->id,
+                    "city"            => $city->name_ar,
+                    'images'          => $images,
+                )
+            );
+
+            return $this->sendResponse('success', $catinfo);
         } else {
             $errormessage =  'الصالون غير موجود';
             return $this->sendError('success', $errormessage);

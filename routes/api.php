@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 
 //user Controller routes
 Route::POST('register', 'API\userController@register');
+Route::post('contactus', 'API\appsettingController@contactus');
 Route::post('login', 'API\userController@login');
 Route::post('profile', 'API\userController@profile');
 Route::post('rechangepass', 'API\userController@rechangepass');

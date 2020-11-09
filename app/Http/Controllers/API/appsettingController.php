@@ -8,10 +8,11 @@ use Validator;
 use DB;
 use App\setting;
 use App\contact;
-use App\Cutting;
+use App\Categoryimages;
 use App\Category;
 use App\member;
 use App\City;
+use App\slider;
 use App\District;
 use App\notification;
 use App\Booking;
@@ -35,12 +36,62 @@ class appsettingController  extends BaseController
 
     public function home(Request $request)
     {
+        $topsliders      = array();
+        $maincategories  = array();
+        $booking       = array();
+        $cities          = array();
+        $current         = array();
 
-        $items = Category::orderBy('id', 'desc')->get();
 
-        return $this->sendResponse('success', $items);
+        //top sliders
+        $sliders = slider::where('suspensed', 0)->orderBy('id', 'desc')->get();
+        foreach ($sliders as $slider) {
+            array_push(
+                $topsliders,
+                array(
+                    "id"      => $slider->id,
+                    'image'   => $slider->image,
+                    'title'   => $slider->artitle,
+                    'url'    => $slider->url,
+                    'text'    => $slider->text,
+                )
+            );
+        }
+
+        //main categories
+        $categories = Category::orderBy('id', 'desc')->get();
+        foreach ($categories as $category) {
+            $image     = Categoryimages::where('category_id', $category->id)->first();
+            if($image){
+                $image_name = $image->image ;
+            }else{
+                $image_name= null;
+            }
+            array_push(
+                $maincategories,
+                array(
+                    "id"      => $category->id,
+                    "name"    => $category->name,
+                    "des"     => $category->des,
+                    'image'   => $image_name,
+                )
+            );
+        }
+
+        $allcities = City::orderBy('id', 'desc')->get();
+
+        foreach ($allcities as $city) {
+            array_push($cities, array(
+                "id"  => $city->id,
+                "name" => $city->name,
+            ));
+        }
+
+        $current['topsliders']     = $topsliders;
+        $current['categories']     = $maincategories;
+        $current['cities']         = $cities;
+        return $this->sendResponse('success', $current);
     }
-
 
 
 

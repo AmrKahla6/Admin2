@@ -200,34 +200,21 @@ class userController extends BaseController
         }
     }
 
-    //forgetpassword process
-    public function forgetpassword(Request $request)
-    {
-        $user = member::where('email', $request->email)->first();
-        if (!$user) {
-            $errormessage = ' البريد غير صحيح';
-            return $this->sendError('success', $errormessage);
-        } else {
-            // $randomcode        = substr(str_shuffle("0123456789"), 0, 4);
-            // $user->forgetcode  = $randomcode;
-            // $user->save();
+ //forgetpassword process
+ public function forgetpassword(Request $request)
+ {
+     $user = member::where('phone', $request->phone)->first();
+     if (!$user) {
+         $errormessage = ' الهاتف غير صحيح';
+         return $this->sendError('success', $errormessage);
+     } else {
+         $randomcode        = substr(str_shuffle("0123456789"), 0, 4);
+         $user->forgetcode  = $randomcode;
+         $user->save();
 
-            $to      = $request->email;
-            $subject = "Confirm Code";
-            $txt     = "Confirm Code :". $user->forgetcode;
-            $headers = "From: kabsh@eltamiuz.net";
-            if(mail($to,$subject,$txt,$headers))
-            {
-                return $this->sendResponse('success',$randomcode);
-            }
-            else
-            {
-                return $this->sendError('success','Failed Sent Email');
-            }
-
-            return $this->sendResponse('success', $user->forgetcode);
-        }
-    }
+         return $this->sendResponse('success', $user->forgetcode);
+     }
+ }
 
     public function activcode(Request $request)
     {
