@@ -57,10 +57,7 @@ Route::group(['middleware' => ['adminauth:admin']], function () {
   Route::delete('mybookingDeleteAll', 'adminbookingController@deleteAll');
 
   //contact us
-  Route::get('adminpanel/contact-us', 'admincontactController@getContact');
-  Route::get('adminpanel/contact-us/{id}', 'admincontactController@showContact');
-  Route::post('adminpanel/contact-us', 'admincontactController@saveContact');
-  Route::delete('adminpanel/message/{id}', 'admincontactController@destroy');
+  Route::resource('adminpanel/contactus', 'admincontactController');
 
   //comments
   Route::get('adminpanel/showcomments/{id}', 'adminCategoryController@showcomments');

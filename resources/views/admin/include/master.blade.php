@@ -295,7 +295,7 @@
             <i class="fa fa-dashboard"></i> <span>تواصل معانا</span><i class="fa fa-angle-left pull-left"></i>
           </a>
           <ul class="treeview-menu">
-              <li  @if($subactive=='transfer') class="active" @endif><a href="{{asset('adminpanel/contact-us')}}"><i class="fa fa-circle-o"></i>كل الرسائل</a></li>
+              <li  @if($subactive=='transfer') class="active" @endif><a href="{{asset('adminpanel/contactus')}}"><i class="fa fa-circle-o"></i>كل الرسائل</a></li>
           </ul>
 
         @if($mainactive=='setting')
