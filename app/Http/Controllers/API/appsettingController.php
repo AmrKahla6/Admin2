@@ -43,20 +43,21 @@ class appsettingController  extends BaseController
         $current         = array();
 
 
-        //top sliders
-        $sliders = slider::where('suspensed', 0)->orderBy('id', 'desc')->get();
-        foreach ($sliders as $slider) {
-            array_push(
-                $topsliders,
-                array(
-                    "id"      => $slider->id,
-                    'image'   => $slider->image,
-                    'title'   => $slider->artitle,
-                    'url'    => $slider->url,
-                    'text'    => $slider->text,
-                )
-            );
-        }
+        // //top sliders
+        // $sliders = slider::where('suspensed', 0)->orderBy('id', 'desc')->get();
+        // dd($sliders);
+        // foreach ($sliders as $slider) {
+        //     array_push(
+        //         $topsliders,
+        //         array(
+        //             "id"      => $slider->id,
+        //             'image'   => $slider->image,
+        //             'title'   => $slider->artitle,
+        //             'url'    => $slider->url,
+        //             'text'    => $slider->text,
+        //         )
+        //     );
+        // }
 
         //main categories
         $categories = Category::orderBy('id', 'desc')->get();
@@ -83,14 +84,25 @@ class appsettingController  extends BaseController
         foreach ($allcities as $city) {
             array_push($cities, array(
                 "id"  => $city->id,
-                "name" => $city->name,
+                "name" => $city->name_ar,
             ));
         }
 
-        $current['topsliders']     = $topsliders;
+        // $current['topsliders']     = $topsliders;
         $current['categories']     = $maincategories;
         $current['cities']         = $cities;
         return $this->sendResponse('success', $current);
+    }
+
+    public function contactus(Request $request)
+    {
+        $newcontact          = new contact();
+        $newcontact->name    = $request->name;
+        $newcontact->message = $request->message;
+        $newcontact->email   = $request->email ;
+        $newcontact->save();
+        $errormessage =  'تم ارسال الرسالة بنجاح';
+        return $this->sendResponse('success', $errormessage);
     }
 
 

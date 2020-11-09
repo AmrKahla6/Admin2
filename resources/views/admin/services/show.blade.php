@@ -31,7 +31,7 @@
                         <label>(Icon) ايكون الخدمه</label>
                         <input type="text" class="form-control" value="{{ $icon ? $icon->icon : ''}}" readonly>
                     </div>
-
+{{--
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -47,7 +47,7 @@
                             </td>
                         </tr>
                     </tbody>
-                </table>
+                </table> --}}
 
 
             </div>

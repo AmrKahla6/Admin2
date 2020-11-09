@@ -19,7 +19,7 @@
                         <li>
                             <i class="fa fa-comments bg-yellow"></i>
                             <div style="direction: rtl;margin-bottom: 1%;" class="timeline-item">
-                                <span style="float:left;" class="time"><i class="fa fa-clock-o"></i>{{ $comm->created_at }}</span>
+                                <span style="float:left;" class="time"><i class="fa fa-clock-o"></i>{{ $comm->created_at->diffForHumans() }}</span>
                                 <h3 style="margin-left: 75%;" class="timeline-header"><a href="{{asset('adminpanel/users/'.$comm->user_id)}}">{{$commowner->name}}</a>  علق ع هذا الاعلان</h3>
                                 <div style="float: right;" class="timeline-body">
                                      {{$comm->comment}}

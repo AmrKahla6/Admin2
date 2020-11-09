@@ -17,7 +17,6 @@ class CreateCommentsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('member_id');
             $table->unsignedBigInteger('category_id');
-            $table->integer('parent_id')->unsigned()->nullable();
             $table->text('comment');
 
             $table->foreign('member_id')->references('id')->on('members')->onDelete('cascade');

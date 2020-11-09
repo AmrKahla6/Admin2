@@ -21,7 +21,7 @@ class adminDistrictController extends Controller
 
         $logo       = DB::table('settings')->value('logo');
         $cities     = City::all();
-        $districts  = District::all();
+        $districts  = District::orderBy('id', 'DESC')->get();
         return view('admin.cities.indexx',compact('logo','cities','districts','mainactive','subactive'));
     }
 

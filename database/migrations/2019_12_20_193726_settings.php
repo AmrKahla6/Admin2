@@ -15,13 +15,14 @@ class Settings extends Migration
     {
          Schema::create('settings', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->longText('arprivacy');
-            $table->longText('enprivacy');
-            $table->longText('arabout');
-            $table->longText('enabout');
-            $table->longText('arconditions');
-            $table->longText('enconditions');
+            $table->string('website');
+            $table->string('twitter');
+            $table->string('instgram');
+            $table->string('snapchat');
+            $table->string('mobile');
+            $table->string('phone');
             $table->string('logo');
+            $table->longText('arconditions');
         });
     }
 

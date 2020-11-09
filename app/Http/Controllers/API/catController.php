@@ -45,32 +45,46 @@ class catController extends BaseController
     public function alldistricts(Request $request)
     {
 
-        $districts = District::where('cities_id', $request->cities_id)->get();
+        $districts = District::find($request->districts_id);
+
         if ($districts) {
-            return $this->sendResponse('success', $districts);
+            $disinfo     = array();
+            $city      = City::where('id', $districts->cities_id)->first();
+            // dd($city);
+            array_push(
+                $disinfo,
+                array(
+                    "city_id"         => $city->id,
+                    "city"            => $city->name_ar,
+                    "id"              => $districts->id,
+                    'name '           => $districts->name,
+                )
+            );
+
+            return $this->sendResponse('success', $disinfo);
         } else {
             return $this->sendError('success', 'لا توجد أحياء في هذه المدينة');
         }
     }
 
-    public function citydistricts(Request $request)
-    {
-        $showdis = District::find($request->district_id);
-        // dd($showdis);
-        if ($showdis) {
-            $districtinfo     = array();
-            $current          = array();
-            if ($request->cities_id) {
-                $cities = City::find($request->cities_id);
-                $current['cities'] = $cities;
-            }
-            $current['districtinfo'] = $showdis;
-            return $this->sendResponse('success', $current);
-        } else {
-            $errormessage =  'الصالون غير موجود';
-            return $this->sendError('success', $errormessage);
-        }
-    }
+    // public function citydistricts(Request $request)
+    // {
+    //     // $showdis = District::get();
+    //     // dd($showdis);
+    //     // if ($showdis) {
+    //     //     $districtinfo     = array();
+    //     //     $current          = array();
+    //     //     if ($request->cities_id) {
+    //     //         $cities = City::where($request->cities_id);
+    //     //         $current['cities'] = $cities;
+    //     //     }
+    //     //     $current['districtinfo'] = $showdis;
+    //     //     return $this->sendResponse('success', $current);
+    //     // } else {
+    //     //     $errormessage =  'الصالون غير موجود';
+    //     //     return $this->sendError('success', $errormessage);
+    //     // }
+    // }
 
     public function showcat(Request $request)
     {

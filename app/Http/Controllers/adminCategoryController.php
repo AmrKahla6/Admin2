@@ -223,7 +223,7 @@ class adminCategoryController extends Controller
         $mainactive = 'categories';
         $subactive  = 'categorycomments';
         $logo       = DB::table('settings')->value('logo');
-        $comments   = comment::where('category_id', $id)->get();
+        $comments   = comment::where('category_id', $id)->orderBy('id', 'DESC')->get();
         return view('admin.categories.showcomments', compact('mainactive', 'logo', 'subactive', 'comments'));
     }
 
@@ -242,7 +242,7 @@ class adminCategoryController extends Controller
         $logo         = DB::table('settings')->value('logo');
         $convdates    = array();
         $showitem     = category::find($id);
-        $allrates     = rate::where('category_id',$id)->orderby('created_date','desc')->get();
+        $allrates     = rate::where('category_id',$id)->orderby('created_date','desc')->orderBy('id', 'DESC')->get();
 
 
         foreach($allrates as $comment)

@@ -5,7 +5,7 @@
   المطورين
   <small>Preview sample</small>
 </h1>
-@endsection 
+@endsection
 
 @section('content')
 
@@ -15,7 +15,7 @@
       <strong>congratulations!</strong> {{ session('updatedpass') }}
     </div>
     <?php session()->forget('updatedpass'); ?>
-    @endif 
+    @endif
               <div class="box-header with-border">
                 <h3 class="box-title">تعديل بيانات مطور</h3>
               </div>
@@ -25,12 +25,12 @@
               <div class="col-md-6">
               <h3 class="box-title"> {{$edprovider->username}}</h3>
                   <div class="col-md-12">
-                      <img class="img-thumbnail" style="width:100%; height:50%;" src="{{asset('users/images/'.$edprovider->image)}}" alt="">
+                      <img class="img-thumbnail" style="width:100%; height:50%;" src="{{asset("/../users/images/".$edprovider->image)}}" alt="">
                 </div>
               </div>
 
               <div class="col-md-6">
-        
+
                 <div class="form-group col-md-12">
                     <label>كلمة المرور الجديدة</label>
                     <input type="password" id="adminpass1" class="form-control" name="pass" >
@@ -58,6 +58,6 @@
     </div>
     {!! Form::close() !!}
        </div>
-</div> 
+</div>
 
-@endsection 
+@endsection

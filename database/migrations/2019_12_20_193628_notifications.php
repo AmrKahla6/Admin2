@@ -17,9 +17,10 @@ class Notifications extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->string('notification');
+            $table->foreign('user_id')->references('id')->on('members')->onDelete('cascade');
+
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('members')->onDelete('cascade');
         });
     }
 

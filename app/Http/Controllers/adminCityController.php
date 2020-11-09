@@ -22,7 +22,7 @@ class adminCityController extends Controller
         $subactive       = 'city';
 
         $logo = DB::table('settings')->value('logo');
-        $cities = City::all();
+        $cities = City::orderBy('id', 'DESC')->get();
         return view('admin.cities.index',compact('logo','cities','mainactive','subactive'));
     }
 
