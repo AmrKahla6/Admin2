@@ -18,6 +18,15 @@
                                                 <label>الاسم المشغل</label>
                                                 <input type="text" class="form-control" value="{{$category->name}}" readonly>
                                             </div>
+
+                                        <?php
+                                            $user  = DB::table('members')->where('id',$category->user_id)->first();
+                                          ?>
+                                         <div class="form-group col-md-12">
+                                             <label>اسم العضو</label>
+                                             <input type="text" class="form-control" value="{{$user ? $user->name : ""}}" readonly>
+                                         </div>
+
                                             <div class="form-group col-md-12">
                                                 <label>تفاصيل المشغل</label>
                                                 <input type="text" class="form-control" value="{{$category->des}}" readonly>

@@ -115,7 +115,7 @@ class adminmemberController extends Controller
     public function update(Request $request, $id)
     {
         $upmember = member::find($id);
-
+        //  dd($upmember);
         if (request()->has('suspensed')) {
             if ($upmember->suspensed == 0) {
                 DB::table('members')->where('id', $id)->update(['suspensed' => 1]);
@@ -127,22 +127,25 @@ class adminmemberController extends Controller
                 return back();
             }
         } else {
+            // dd($request->all());
             $this->validate($request, [
                 'name'        => 'required',
-                'mobile'       => 'required|unique:members,mobile,' . $id,
                 'phone'       => 'required|unique:members,phone,' . $id,
+                'pass'        => 'required|min:6',
                 'confirmpass' => 'same:pass',
             ]);
+            // dd($request->all());
 
             $upmember->name      = $request['name'];
-            $upmember->mobile     = $request['mobile'];
             $upmember->phone     = $request['phone'];
             $upmember->password  = $request['pass'] ? Hash::make($request['pass']) : $upmember->password;
+            // dd($upmember);
             $upmember->save();
             session()->flash('success', 'تم تعديل بيانات العضو بنجاح');
             return back();
         }
     }
+
 
     /**
      * Remove the specified resource from storage.

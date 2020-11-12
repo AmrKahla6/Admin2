@@ -18,9 +18,9 @@
           <ul class="timeline">
         @if(count($convdates) > 0)
             @foreach($convdates as $obj)
-            <?php
+             <?php
               $numdate = date('Y-m-d', strtotime($obj));
-              $adrates = DB::table('rates')->where('created_date','=',$numdate)->where('category_id',$showitem->id)->orderby('created_time','desc')->get();
+              $adrates = DB::table('rates')->where('category_id',$showitem->id)->orderby('id','desc')->get();
              ?>
                 <li class="time-label"><span class="bg-red">{{ $obj}}</span></li>
 
@@ -29,8 +29,8 @@
                         <li>
                             <i class="fa fa-star-half-o bg-yellow"></i>
                             <div style="direction: rtl;margin-bottom: 1%;" class="timeline-item">
-                                <span style="float:left;" class="time"><i class="fa fa-clock-o"></i>  {{ $comm->created_time }}</span>
-                                <h3 style="float:right;" class="timeline-header"><a href="{{asset('adminpanel/users/'.$comm->user_id)}}">{{$commowner}}</a>قام بتقييم هذا المنتج</h3>
+                                {{-- <span style="float:left;" class="time"><i class="fa fa-clock-o"></i>  {{ $comm->created_time }}</span> --}}
+                                <h3 style="float:right;" class="timeline-header"><a href="{{asset('adminpanel/users/'.$comm->user_id)}}">{{$commowner}}</a>  قام بتقييم هذا المنتج</h3>
                                 <br><br>
                                 <div style="float: right;margin-right:0;" class="timeline-body">
                                 <span class="fa fa-star @if($comm->rate == 1 || $comm->rate > 1) checked @endif"></span>

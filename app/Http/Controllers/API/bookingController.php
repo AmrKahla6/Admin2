@@ -189,19 +189,104 @@ class bookingController extends BaseController
     }
 
 
-    public function delbooking(Request $request)
+   public function upbook(Request $request)
+   {
+    $upbook = Booking::where('id', $request->booking_id)->first();
+
+    if($upbook)
     {
         $user = member::where('id', $request->user_id)->first();
         // dd($user);
         if ($user) {
-        $booking = DB::table('bookings')->where('user_id', $request->user_id)->where('id', $request->booking_id);
-        dd($booking);
-        $booking->delete();
-        $errormessage = 'تم حذف حجزك';
-        return $this->sendResponse('success', $errormessage);
-        }else{
-            $errormessage = 'المستخدم غير موجود';
+            $upbook->name            = $request->name;
+            $upbook->phone           = $request->phone;
+            $upbook->booking_number  = $request->booking_number;
+            $upbook->total           = $request->total;
+            $upbook->status          = $request->status;
+            $upbook->paid            = $request->paid;
+            $upbook->user_id         = $request->user_id;
+            $upbook->category_id     = $request->category_id;
+            $upbook->service_id      = $request->service_id;
+
+            $upbook->save();
+
+            return $this->sendResponse('success', 'تم تعديل الحجز بنجاح');
+         }else {
+                $errormessage = 'المستخدم غير موجود';
+                return $this->sendError('success', $errormessage);
+            }
+        }else {
+        $errormessage = 'المنتج غير موجود';
+        return $this->sendError('success', $errormessage);
+    }
+   }
+
+
+   public function delbooking(Request $request)
+   {
+       $delbook = Booking::where('id', $request->booking_id)->first();
+       if ($delbook) {
+        //    Categoryimages::where('category_id', $request->category_id)->delete();
+           // favorite_item::where('category_id', $request->category_id)->delete();
+        //    Comment::where('category_id', $request->category_id)->delete();
+        //    Rate::where('category_id', $request->category_id)->delete();
+           $delbook->delete();
+           return $this->sendResponse('success', 'تم حذف الحجز بنجاح');
+       } else {
+           return $this->sendError('success', 'هذا الحجز غير موجود');
+       }
+   }
+
+
+    public function bookings(Request $request)
+    {
+        $lastbooking = array();
+
+        $bookings = Booking::where('id', $request->booking_id)->get();
+        if (count($bookings) > 0) {
+
+            foreach($bookings as $booking)
+            {
+                $user     = member::where('id', $booking->user_id)->first();
+                $category = Category::where('id', $booking->category_id)->first();
+                $servce   = Service::where('id', $booking->service_id)->first();
+                $humantime  = 'منذ'.Carbon::createFromTimeStamp(strtotime($booking->created_at))->diffForHumans();
+                 $arhumantime = str_replace(
+                    array('0','1','2','3','4','5','6','7','8','9'),
+                    array('٩', '٨', '٧', '٦', '٥', '٤', '٣', '٢', '١','٠'),
+                    $humantime
+                    );
+                    array_push(
+                        $lastbooking,
+                        array(
+                            "id"                     => $booking->id,
+                            'name'                   => $booking->name,
+                            'phone'                  => $booking->phone,
+                            'booking Number'         => $booking->booking_number,
+                            'total'                  => $booking->total,
+                            'status'                 => $booking->status,
+                            'paid'                   => $booking->paid,
+                            'user_id'                => $booking->user_id,
+                            'category_id'            => $booking->category_id,
+                            'category name'          => $category->name,
+                            'service_id'             => $booking->service_id,
+                            'service name'           => $servce->name,
+                            'price'                  => $servce->price,
+                            'created_at'             => $humantime,
+                        )
+                    );
+            }
+            return $this->sendResponse('success', $lastbooking);
+        } else {
+            $errormessage =  'لا يوجد صالونات متاحة';
             return $this->sendError('success', $errormessage);
         }
     }
+
+
+
+
 }
+
+
+

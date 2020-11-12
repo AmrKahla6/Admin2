@@ -37,11 +37,14 @@ Route::post('home', 'API\appsettingController@home');
 
 
 //category routes
+Route::post('makecat', 'API\catController@makecat');
+Route::post('upcat', 'API\catController@upcat');
 Route::post('allcities', 'API\catController@allcities');
 Route::post('alldistricts', 'API\catController@alldistricts');
 Route::post('citydistricts', 'API\catController@citydistricts');
 Route::post('showcat', 'API\catController@showcat');
-
+Route::post('delcat', 'API\catController@delcat');
+Route::post('delimage', 'API\catController@delimage');
 
 //servies routes
 Route::post('allcat', 'API\serviceController@allcat');
@@ -65,6 +68,8 @@ Route::post('deleterate', 'API\ratesController@deleterate');
 Route::post('makebooking', 'API\bookingController@makebooking');
 Route::post('mybooking', 'API\bookingController@mybooking');
 Route::post('showbooking', 'API\bookingController@showbooking');
+Route::post('upbook', 'API\bookingController@upbook');
+Route::post('bookings', 'API\bookingController@bookings');
 Route::post('delbooking', 'API\bookingController@delbooking');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {

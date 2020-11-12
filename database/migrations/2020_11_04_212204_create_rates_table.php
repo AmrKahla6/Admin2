@@ -18,10 +18,6 @@ class CreateRatesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('category_id')->nullable();;
             $table->integer('rate')->nullable();;
-            $table->integer('deliver_id')->nullable();
-            $table->integer('deliver_rate')->nullable();
-            $table->date('created_date')->nullable();
-            $table->time('created_time');
 
             $table->foreign('user_id')->references('id')->on('members')->onDelete('cascade');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');

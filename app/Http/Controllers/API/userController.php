@@ -7,9 +7,10 @@ use LaravelFCM\Message\OptionsBuilder;
 use LaravelFCM\Message\PayloadDataBuilder;
 use LaravelFCM\Message\PayloadNotificationBuilder;
 use FCM;
+use App\District;
 use App\member;
-use App\order;
-use App\item;
+use App\Category;
+use App\City;
 use App\notification;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -261,6 +262,17 @@ class userController extends BaseController
             $errormessage = 'هذا المستخدم غير موجود';
             return $this->sendError('success', $errormessage);
         } else {
+            $category = Category::where('user_id',$user->id)->get();
+            $city     = City::where('id',$user->id)->first();
+            $distr    = District::where('id',$user->id)->first();
+            // dd($city);
+            // dd($category);
+            if($category)
+            {
+                $user['salons_name']  =  $category;
+                $user['city_name']    =  $city->name_ar;
+                $user['distr_name']   =  $distr->name;
+            }
             return $this->sendResponse('success', $user);
         }
     }

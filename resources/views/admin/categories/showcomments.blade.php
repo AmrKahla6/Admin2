@@ -15,11 +15,11 @@
         @if(count($comments) >0)
 
                 @foreach($comments as $comm)
-                <?php $commowner = DB::table('members')->where('id',$comm->member_id)->first(); ?>
+                <?php $commowner = DB::table('members')->where('id',$comm->user_id)->first(); ?>
                         <li>
                             <i class="fa fa-comments bg-yellow"></i>
                             <div style="direction: rtl;margin-bottom: 1%;" class="timeline-item">
-                                <span style="float:left;" class="time"><i class="fa fa-clock-o"></i>{{ $comm->created_at->diffForHumans() }}</span>
+                                {{-- <span style="float:left;" class="time"><i class="fa fa-clock-o"></i>{{ $comm ? $comm->created_at->diffForHumans() : '' }}</span> --}}
                                 <h3 style="margin-left: 75%;" class="timeline-header"><a href="{{asset('adminpanel/users/'.$comm->user_id)}}">{{$commowner->name}}</a>  علق ع هذا الاعلان</h3>
                                 <div style="float: right;" class="timeline-body">
                                      {{$comm->comment}}

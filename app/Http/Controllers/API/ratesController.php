@@ -36,10 +36,6 @@ class ratesController extends BaseController
                 $newrate->user_id         = $request->user_id;
                 $newrate->category_id     = $request->category_id;
                 $newrate->rate            = $request->rate;
-                $newrate->deliver_id      = $request->deliver_id;
-                $newrate->deliver_rate    = $request->deliver_rate;
-                $newrate->created_date    = $request->created_date;
-                $newrate->created_time    = $request->created_time;
                 $newrate->save();
                 // dd($newrate);
 
@@ -133,6 +129,8 @@ class ratesController extends BaseController
                 foreach ($myrate as $rate) {
                         $cat   = Category::where('id',$rate->category_id)->first();
                         $categoryarr  = array();
+                        $user  = member::where('id',$rate->user_id)->first();
+                        $categoryarr  = array();
 
 
                         // return $categoryarr;
@@ -142,11 +140,8 @@ class ratesController extends BaseController
                                 "id"              => $rate->id,
                                 "user_id"         => $rate->user_id,
                                 "rate"            => $rate->rate,
-                                "deliver_id"      => $rate->deliver_id,
-                                "deliver_rate"    => $rate->deliver_rate,
-                                "created_date"    => $rate->created_date,
-                                "created_time"    => $rate->created_time,
-                                "categorys"       => $cat,
+                                "categorys"       => $cat->name,
+                                "user-name"       => $user->name,
                             )
                         );
                         // return $this->sendResponse('success', $ratedetails);

@@ -29,14 +29,13 @@ class commentsController extends BaseController
     public function makecomment(Request $request)
     {
 
-            $user = member::where('id', $request->member_id)->first();
+            $user = member::where('id', $request->user_id)->first();
             // return $user;
             if ($user) {
                 $newcomment                  = new Comment();
-                $newcomment->member_id       = $request->member_id;
+                $newcomment->user_id         = $request->user_id;
                 $newcomment->category_id     = $request->category_id;
                 $newcomment->comment         = $request->comment;
-                $newcomment->created_at      = $request->created_at;
                 $newcomment->save();
                 // dd($newcomment);
 
@@ -119,10 +118,10 @@ class commentsController extends BaseController
 
     public function mycomment(Request $request)
     {
-        $user = member::where('id', $request->member_id)->first();
+        $user = member::where('id', $request->user_id)->first();
         if ($user) {
 
-            $mycomment = Comment::where('member_id', $request->member_id)->get();
+            $mycomment = Comment::where('user_id', $request->user_id)->get();
             // dd($mycomment);
             $commentdetails = array();
 
@@ -137,10 +136,9 @@ class commentsController extends BaseController
                             $commentdetails,
                             array(
                                 "id"              => $comment->id,
-                                "member_id"       => $comment->member_id,
+                                "user_id"         => $comment->user_id,
                                 "comment"         => $comment->comment,
-                                "created_at"      => $comment->created_at,
-                                "categorys"       => $cat,
+                                "categorys"       => $cat->name,
                             )
                         );
                         // return $this->sendResponse('success', $commentdetails);

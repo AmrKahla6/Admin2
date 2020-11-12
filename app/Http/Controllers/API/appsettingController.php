@@ -38,31 +38,16 @@ class appsettingController  extends BaseController
     {
         $topsliders      = array();
         $maincategories  = array();
-        $booking       = array();
         $cities          = array();
         $current         = array();
-
-
-        // //top sliders
-        // $sliders = slider::where('suspensed', 0)->orderBy('id', 'desc')->get();
-        // dd($sliders);
-        // foreach ($sliders as $slider) {
-        //     array_push(
-        //         $topsliders,
-        //         array(
-        //             "id"      => $slider->id,
-        //             'image'   => $slider->image,
-        //             'title'   => $slider->artitle,
-        //             'url'    => $slider->url,
-        //             'text'    => $slider->text,
-        //         )
-        //     );
-        // }
 
         //main categories
         $categories = Category::orderBy('id', 'desc')->get();
         foreach ($categories as $category) {
             $image     = Categoryimages::where('category_id', $category->id)->first();
+            $city      = DB::table('cities')->where('id',$category->city_id)->first();
+
+            // dd($city);
             if($image){
                 $image_name = $image->image ;
             }else{
@@ -75,6 +60,7 @@ class appsettingController  extends BaseController
                     "name"    => $category->name,
                     "des"     => $category->des,
                     'image'   => $image_name,
+                    'city'    => $city->name_ar,
                 )
             );
         }
@@ -85,6 +71,7 @@ class appsettingController  extends BaseController
             array_push($cities, array(
                 "id"  => $city->id,
                 "name" => $city->name_ar,
+                "imge" => $city->image,
             ));
         }
 

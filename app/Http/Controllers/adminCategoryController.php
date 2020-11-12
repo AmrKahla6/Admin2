@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use App\order_item;
 use App\Category;
 use App\City;
+use App\member;
 use App\Comment;
 use App\Rate;
 use App\Categoryimages;
@@ -30,10 +31,11 @@ class adminCategoryController extends Controller
         $subactive       = 'category';
         $logo            = DB::table('settings')->value('logo');
         $cities          = City::all();
+        $users           = member::all();
         $categories      = Category::orderBy('id', 'desc')->get();
         // $allcategories   = category::where('parent',0)->get();
         // $categories = Category::all();
-        return view('admin.categories.index', compact('mainactive', 'subactive', 'logo', 'categories' , 'cities'));
+        return view('admin.categories.index', compact('mainactive', 'subactive', 'logo', 'categories' , 'cities' , 'users'));
     }
 
     /**
@@ -58,6 +60,7 @@ class adminCategoryController extends Controller
         $this->validate($request, [
             'name'          => 'required',
             'des'           => 'required',
+            'user_id'       => 'required',
             'city_id'       => 'required',
             'district_id'   => 'required',
         ]);
@@ -65,6 +68,7 @@ class adminCategoryController extends Controller
         $newcategory                  = new Category;
         $newcategory->name            = $request['name'];
         $newcategory->des             = $request['des'];
+        $newcategory->user_id         = $request['user_id'];
         $newcategory->city_id         = $request['city_id'];
         $newcategory->district_id     = $request['district_id'];
         $newcategory->lat             = $request['lat'];
@@ -135,10 +139,11 @@ class adminCategoryController extends Controller
         $subactive       = 'category';
         $logo            = DB::table('settings')->value('logo');
         $cities          = City::orderBy('id', 'desc')->get();
+        $users           = member::orderBy('id', 'desc')->get();
         $adimages        = Categoryimages::where('category_id', $id)->get();
         // $allcategories   = category::where('parent',0)->get();
         $category        = Category::find($id);
-        return view('admin.categories.edit', compact('mainactive', 'subactive', 'logo', 'category' , 'cities'));
+        return view('admin.categories.edit', compact('mainactive', 'subactive', 'logo', 'category' , 'cities' , 'users'));
     }
 
     /**
@@ -154,6 +159,7 @@ class adminCategoryController extends Controller
         $this->validate($request, [
             'name'          => 'required',
             'des'           => 'required',
+            'user_id'       => 'required',
             'city_id'       => 'required',
             'district_id'   => 'required',
 
@@ -161,6 +167,7 @@ class adminCategoryController extends Controller
 
         $upcategory->name            = $request['name'];
         $upcategory->des             = $request['des'];
+        $upcategory->user_id         = $request['user_id'];
         $upcategory->city_id         = $request['city_id'];
         $upcategory->district_id     = $request['district_id'];
         $upcategory->lat             = $request['lat'];
@@ -242,7 +249,7 @@ class adminCategoryController extends Controller
         $logo         = DB::table('settings')->value('logo');
         $convdates    = array();
         $showitem     = category::find($id);
-        $allrates     = rate::where('category_id',$id)->orderby('created_date','desc')->orderBy('id', 'DESC')->get();
+        $allrates     = rate::where('category_id',$id)->orderBy('id', 'DESC')->get();
 
 
         foreach($allrates as $comment)

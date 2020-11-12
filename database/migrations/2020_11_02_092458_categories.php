@@ -15,6 +15,7 @@ class Categories extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id');
             $table->string('name');
             $table->string('des');
             $table->float('lat')->nullable();
@@ -24,6 +25,7 @@ class Categories extends Migration
             $table->unsignedBigInteger('district_id')->nullable();
 
             $table->foreign('district_id')->references('id')->on('districts')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('members')->onDelete('cascade');
             $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade');
             $table->timestamps();
         });

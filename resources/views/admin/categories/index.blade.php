@@ -32,6 +32,18 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group col-md-12">
+                                    <label>اختر العضو</label>
+                                    <div class="form-group col-md-12">
+                                        <select name="user_id" id="user_id">
+                                            <option value="">اختر العضو</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{$user->id}}">{{$user->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
                                 <div class="col-md-12">
                                     <div class="box box-info">
                                         <div class="box-header">

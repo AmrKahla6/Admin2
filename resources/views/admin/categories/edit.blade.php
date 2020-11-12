@@ -25,6 +25,18 @@
             </div>
 
             <div class="form-group col-md-12">
+                <label>اختر العضو</label>
+                <div class="form-group col-md-12">
+                    <select name="user_id" id="user_id">
+                     {{-- <option value="">اختر المدينة</option> --}}
+                     @foreach ($users as $user)
+                        <option value="{{ $user->id }}" {{ old('user_id') == $user->id || $category->user_id == $user->id  ? 'selected' : '' }} >{{$user->name}}</option>
+                     @endforeach
+                    </select>
+                 </div>
+            </div>
+
+            <div class="form-group col-md-12">
                 <label>صور اكثر عن الاعلان [يمكنك رفع اكثر من صورة]</label>
                 <input type="file" name="items[]" multiple>
                 @if ($errors->has('items'))
